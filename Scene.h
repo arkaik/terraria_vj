@@ -6,6 +6,7 @@
 #include "ShaderProgram.h"
 #include "TileMap.h"
 #include "Player.h"
+#include "Inventory.h"
 
 
 // Scene contains all the entities of our game.
@@ -27,6 +28,7 @@ private:
 	void initShaders();
 
 private:
+	Node *gui;
 	TileMap *map;
 	Player *player;
 	ShaderProgram texProgram;

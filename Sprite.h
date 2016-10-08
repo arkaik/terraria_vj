@@ -19,7 +19,9 @@ class Sprite
 public:
 	// Textured quads can only be created inside an OpenGL context
 	static Sprite *createSprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Texture *spritesheet, ShaderProgram *program);
-
+	static Sprite *createSprite(const Texture & tex, const glm::vec4 & rect, ShaderProgram *program);
+	Sprite();
+	Sprite(const Texture& texture, const glm::vec4 &rect, ShaderProgram *program);
 	Sprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Texture *spritesheet, ShaderProgram *program);
 
 	void update(int deltaTime);
@@ -31,11 +33,19 @@ public:
 	void addKeyframe(int animId, const glm::vec2 &frame);
 	void changeAnimation(int animId);
 	int animation() const;
-	
 	void setPosition(const glm::vec2 &pos);
 
+	void setTexture(const Texture &tex);
+	void setTextureRect(const glm::vec4 &rectangle);
+	const Texture* getTexture() const;
+	const glm::vec4& getTextureRect() const;
+
 private:
-	Texture *texture;
+	void updatePositions();
+	void updateTexCoords();
+
+private:
+	const Texture *texture;
 	ShaderProgram *shaderProgram;
 	GLuint vao;
 	GLuint vbo;
@@ -45,7 +55,7 @@ private:
 	float timeAnimation;
 	glm::vec2 texCoordDispl;
 	vector<AnimKeyframes> animations;
-
+	glm::vec4 texRect;
 };
 
 

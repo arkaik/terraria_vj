@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Game.cpp" />
+    <ClCompile Include="..\Inventory.cpp" />
     <ClCompile Include="..\main.cpp" />
     <ClCompile Include="..\Player.cpp" />
     <ClCompile Include="..\Scene.cpp" />
@@ -20,10 +21,11 @@
     <ClCompile Include="..\Sprite.cpp" />
     <ClCompile Include="..\Texture.cpp" />
     <ClCompile Include="..\TileMap.cpp" />
-    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="..\Node.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Game.h" />
+    <ClInclude Include="..\Inventory.h" />
     <ClInclude Include="..\Player.h" />
     <ClInclude Include="..\Scene.h" />
     <ClInclude Include="..\Shader.h" />
@@ -31,7 +33,7 @@
     <ClInclude Include="..\Sprite.h" />
     <ClInclude Include="..\Texture.h" />
     <ClInclude Include="..\TileMap.h" />
-    <ClInclude Include="Node.h" />
+    <ClInclude Include="..\Node.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5BE6CA2A-E5A8-40CC-9015-047CE0C78036}</ProjectGuid>

@@ -11,14 +11,55 @@ Sprite *Sprite::createSprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInS
 	return quad;
 }
 
+Sprite *Sprite::createSprite(const Texture & tex, const glm::vec4 & rect, ShaderProgram *program)
+{
+	Sprite *quad = new Sprite(tex, rect, program);
+
+	return quad;
+}
+
+Sprite::Sprite()
+{
+	texture = NULL;
+}
+
+Sprite::Sprite(const Texture & tex, const glm::vec4 & rect, ShaderProgram *program)
+{
+	setTexture(tex);
+	setTextureRect(rect);
+
+	int wtex = tex.width();
+	int htex = tex.height();
+	glm::vec2 percentSizeSS = glm::vec2(rect.z / wtex, rect.w / htex);
+	float vertices[24] = { 0.f, 0.f, 0.f, 0.f,
+		rect.x, 0.f, percentSizeSS.x, 0.f,
+		rect.x, rect.y, percentSizeSS.x, percentSizeSS.y,
+		0.f, 0.f, 0.f, 0.f,
+		rect.x, rect.y, percentSizeSS.x, percentSizeSS.y,
+		0.f, rect.y, 0.f, percentSizeSS.y };
+
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(float), vertices, GL_STATIC_DRAW);
+	posLocation = program->bindVertexAttribute("position", 2, 4 * sizeof(float), 0);
+	texCoordLocation = program->bindVertexAttribute("texCoord", 2, 4 * sizeof(float), (void *)(2 * sizeof(float)));
+	texture = texture;
+	shaderProgram = program;
+	currentAnimation = -1;
+	position = glm::vec2(0.f);
+
+}
+
 
 Sprite::Sprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Texture *spritesheet, ShaderProgram *program)
 {
 	float vertices[24] = {0.f, 0.f, 0.f, 0.f, 
-												quadSize.x, 0.f, sizeInSpritesheet.x, 0.f, 
-												quadSize.x, quadSize.y, sizeInSpritesheet.x, sizeInSpritesheet.y, 
+												quadSize.x, 0.f, sizeInSpritesheet.x, 0.f,
+												quadSize.x, quadSize.y, sizeInSpritesheet.x, sizeInSpritesheet.y,
 												0.f, 0.f, 0.f, 0.f, 
-												quadSize.x, quadSize.y, sizeInSpritesheet.x, sizeInSpritesheet.y, 
+												quadSize.x, quadSize.y, sizeInSpritesheet.x, sizeInSpritesheet.y,
 												0.f, quadSize.y, 0.f, sizeInSpritesheet.y};
 
 	glGenVertexArrays(1, &vao);
@@ -104,6 +145,18 @@ int Sprite::animation() const
 void Sprite::setPosition(const glm::vec2 &pos)
 {
 	position = pos;
+}
+
+void Sprite::setTexture(const Texture & tex)
+{
+	texture = &tex;
+}
+
+void Sprite::setTextureRect(const glm::vec4 & rectangle)
+{
+	if (rectangle != texRect) {
+		texRect = rectangle;
+	}
 }
 
 
