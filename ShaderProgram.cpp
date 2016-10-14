@@ -1,4 +1,5 @@
 #include <glm/gtc/type_ptr.hpp>
+#include <iostream>
 #include "ShaderProgram.h"
 
 
@@ -66,6 +67,14 @@ const string &ShaderProgram::log() const
 	return errorLog;
 }
 
+void ShaderProgram::setUniform1i(const string & uniformName, int v0)
+{
+	GLint location = glGetUniformLocation(programId, uniformName.c_str());
+
+	if (location != -1)
+		glUniform1i(location, v0);
+}
+
 void ShaderProgram::setUniform2f(const string &uniformName, float v0, float v1)
 {
 	GLint location = glGetUniformLocation(programId, uniformName.c_str());
@@ -96,5 +105,6 @@ void ShaderProgram::setUniformMatrix4f(const string &uniformName, glm::mat4 &mat
 
 	if(location != -1)
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
+
 }
 

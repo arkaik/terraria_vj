@@ -1,15 +1,24 @@
 #pragma once
 
-#include "Node.h"
 #include "Sprite.h"
 
-class Inventory : public Node {
+class Inventory {
 public:
-	void init(ShaderProgram sp);
+	void init(ShaderProgram &sp);
 	void render();
+	void selectObject(int s);
 
 private:
-	std::vector<Sprite> inv_back;
-	std::vector<Sprite> inv_obj;
 	Texture tex;
+	// Sprites dels backgrounds de l'inventari
+	std::vector<Sprite*> inv_back;
+	//Sprites dels objectes accesibles de l'inventari
+	std::vector<Sprite*> inv_obj;
+	//Posicions centrals de cada casella de l'inventari
+	std::vector<glm::vec2> inv_mid;
+
+	//Inventari obert
+	bool opened;
+	//Objecte seleccionat
+	int selected;
 };

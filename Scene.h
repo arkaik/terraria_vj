@@ -28,13 +28,13 @@ private:
 	void initShaders();
 
 private:
-	Node *gui;
+	Inventory *gui;
 	TileMap *map;
 	Player *player;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
-
+	glm::mat4 ftcMatrix;
 };
 
 

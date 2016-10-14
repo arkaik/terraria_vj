@@ -47,14 +47,18 @@ void Game::specialKeyReleased(int key)
 
 void Game::mouseMove(int x, int y)
 {
+	
 }
 
-void Game::mousePress(int button)
+void Game::mousePress(int button, int x, int y)
 {
+	mouse_btn[button] = true;
+	mouse_pos = glm::vec2(x, y);
 }
 
 void Game::mouseRelease(int button)
 {
+	mouse_btn[button] = false;
 }
 
 bool Game::getKey(int key) const
@@ -66,6 +70,11 @@ bool Game::getSpecialKey(int key) const
 {
 	return specialKeys[key];
 }
+
+glm::ivec2 Game::getMousePosition() {
+	return mouse_pos;
+}
+
 
 
 

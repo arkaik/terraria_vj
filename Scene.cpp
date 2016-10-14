@@ -48,6 +48,11 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	glm::vec2 ppos = player->getPosition();
+	float nx = ppos.x - float(SCREEN_WIDTH) / 2;
+	float ny = ppos.y - float(SCREEN_HEIGHT) / 2;
+	projection = glm::ortho(nx, ppos.x + float(SCREEN_WIDTH) / 2, ppos.y + float(SCREEN_HEIGHT) / 2, ny);
+	ftcMatrix = glm::translate(glm::mat4(1.f), glm::vec3(nx, ny, 0.f));
 }
 
 void Scene::render()
@@ -56,13 +61,16 @@ void Scene::render()
 
 	texProgram.use();
 	texProgram.setUniformMatrix4f("projection", projection);
+	texProgram.setUniformMatrix4f("ftcMatrix", ftcMatrix);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+	texProgram.setUniform1i("fixedToCamera", 0);
 	map->render();
 	player->render();
 	gui->render();
+	
 }
 
 void Scene::initShaders()

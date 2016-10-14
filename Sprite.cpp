@@ -2,6 +2,7 @@
 #include <GL/gl.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Sprite.h"
+#include <iostream>
 
 
 Sprite *Sprite::createSprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Texture *spritesheet, ShaderProgram *program)
@@ -11,68 +12,66 @@ Sprite *Sprite::createSprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInS
 	return quad;
 }
 
-Sprite *Sprite::createSprite(const Texture & tex, const glm::vec4 & rect, ShaderProgram *program)
+Sprite *Sprite::createSprite(Texture *tex, const glm::vec4 rect, ShaderProgram *program)
 {
 	Sprite *quad = new Sprite(tex, rect, program);
 
 	return quad;
 }
 
-Sprite::Sprite()
+Sprite::Sprite() :
+	texture(NULL),
+	texRect()
 {
-	texture = NULL;
 }
 
-Sprite::Sprite(const Texture & tex, const glm::vec4 & rect, ShaderProgram *program)
+Sprite::Sprite(Texture *tex, const glm::vec4 rect, ShaderProgram *program)
 {
-	setTexture(tex);
 	setTextureRect(rect);
-
-	int wtex = tex.width();
-	int htex = tex.height();
-	glm::vec2 percentSizeSS = glm::vec2(rect.z / wtex, rect.w / htex);
-	float vertices[24] = { 0.f, 0.f, 0.f, 0.f,
-		rect.x, 0.f, percentSizeSS.x, 0.f,
-		rect.x, rect.y, percentSizeSS.x, percentSizeSS.y,
-		0.f, 0.f, 0.f, 0.f,
-		rect.x, rect.y, percentSizeSS.x, percentSizeSS.y,
-		0.f, rect.y, 0.f, percentSizeSS.y };
+	int wtex = tex->width();
+	int htex = tex->height();
+	glm::vec4 texCoord = glm::vec4(rect.x / wtex, rect.y / htex, (rect.x+rect.z) / wtex, (rect.y+rect.w) / htex);
+	float vertices[16] = { 0.f, 0.f, texCoord.x, texCoord.y,
+		0.f, rect.w, texCoord.x, texCoord.w,
+		rect.z, 0.f, texCoord.z, texCoord.y,
+		rect.z, rect.w, texCoord.z, texCoord.w };
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(float), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(float), vertices, GL_STATIC_DRAW);
 	posLocation = program->bindVertexAttribute("position", 2, 4 * sizeof(float), 0);
 	texCoordLocation = program->bindVertexAttribute("texCoord", 2, 4 * sizeof(float), (void *)(2 * sizeof(float)));
-	texture = texture;
+	texture = tex;
 	shaderProgram = program;
 	currentAnimation = -1;
-	position = glm::vec2(0.f);
-
+	setPosition(glm::vec2(0.f));
+	setOrigin(glm::vec2(0.f));
+	fixedToCamera = 0;
+	
 }
 
 
 Sprite::Sprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Texture *spritesheet, ShaderProgram *program)
 {
-	float vertices[24] = {0.f, 0.f, 0.f, 0.f, 
-												quadSize.x, 0.f, sizeInSpritesheet.x, 0.f,
-												quadSize.x, quadSize.y, sizeInSpritesheet.x, sizeInSpritesheet.y,
-												0.f, 0.f, 0.f, 0.f, 
-												quadSize.x, quadSize.y, sizeInSpritesheet.x, sizeInSpritesheet.y,
-												0.f, quadSize.y, 0.f, sizeInSpritesheet.y};
+	vertices[0] = 0.f; vertices[1] = 0.f;	vertices[2] = 0.f; vertices[3] = 0.f;
+	vertices[4] = 0.f; vertices[5] = quadSize.y;	vertices[6] = 0.f; vertices[7] = sizeInSpritesheet.y;
+	vertices[8] = quadSize.x; vertices[9] = 0.f; vertices[10] = sizeInSpritesheet.x; vertices[11] = 0.f;
+	vertices[12] = quadSize.x; vertices[13] = quadSize.y;	vertices[14] = sizeInSpritesheet.x; vertices[15] = sizeInSpritesheet.y;
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(float), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(float), vertices, GL_STATIC_DRAW);
 	posLocation = program->bindVertexAttribute("position", 2, 4*sizeof(float), 0);
 	texCoordLocation = program->bindVertexAttribute("texCoord", 2, 4*sizeof(float), (void *)(2*sizeof(float)));
 	texture = spritesheet;
 	shaderProgram = program;
 	currentAnimation = -1;
-	position = glm::vec2(0.f);
+	setPosition(glm::vec2(0.f));
+	fixedToCamera = 0;
 }
 
 void Sprite::update(int deltaTime)
@@ -89,18 +88,21 @@ void Sprite::update(int deltaTime)
 	}
 }
 
-void Sprite::render() const
+void Sprite::render()
 {
-	glm::mat4 modelview = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 0.f));
-	shaderProgram->setUniformMatrix4f("modelview", modelview);
+	shaderProgram->setUniformMatrix4f("modelview", getTransform());
 	shaderProgram->setUniform2f("texCoordDispl", texCoordDispl.x, texCoordDispl.y);
+	shaderProgram->setUniform1i("fixedToCamera", fixedToCamera);
+	glm::vec4 npos = getTransform() * glm::vec4(getPosition(), 0.f, 1.f);
 	glEnable(GL_TEXTURE_2D);
 	texture->use();
+	//glFlush();
 	glBindVertexArray(vao);
 	glEnableVertexAttribArray(posLocation);
 	glEnableVertexAttribArray(texCoordLocation);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glDisable(GL_TEXTURE_2D);
+	//glBindVertexArray(0);
 }
 
 void Sprite::free()
@@ -142,11 +144,6 @@ int Sprite::animation() const
 	return currentAnimation;
 }
 
-void Sprite::setPosition(const glm::vec2 &pos)
-{
-	position = pos;
-}
-
 void Sprite::setTexture(const Texture & tex)
 {
 	texture = &tex;
@@ -156,7 +153,54 @@ void Sprite::setTextureRect(const glm::vec4 & rectangle)
 {
 	if (rectangle != texRect) {
 		texRect = rectangle;
+		updatePositions();
+		updateTexCoords();
 	}
+}
+
+void Sprite::setFixToCamera(bool ftc) {
+	if (ftc)
+		fixedToCamera = 1;
+	else
+		fixedToCamera = 0;
+}
+
+glm::vec4 Sprite::getLocalBounds() const
+{
+	float width = std::abs(texRect.z);
+	float height = std::abs(texRect.w);
+	return glm::vec4(0.f, 0.f, width, height);
+}
+
+void Sprite::updatePositions()
+{
+	glm::vec4 bounds = getLocalBounds();
+
+	vertices[0] = 0;
+	vertices[1] = 0;
+	vertices[4] = 0;
+	vertices[5] = bounds.w;
+	vertices[8] = bounds.z;
+	vertices[9] = 0;
+	vertices[12] = bounds.z;
+	vertices[13] = bounds.w;
+}
+
+void Sprite::updateTexCoords()
+{
+	float left = static_cast<float>(texRect.x);
+	float right = left + texRect.z;
+	float top = static_cast<float>(texRect.y);
+	float bottom = top + texRect.w;
+
+	vertices[2] = left;
+	vertices[3] = top;
+	vertices[6] = left;
+	vertices[7] = bottom;
+	vertices[10] = right;
+	vertices[11] = top;
+	vertices[14] = right;
+	vertices[15] = bottom;
 }
 
 

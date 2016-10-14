@@ -21,7 +21,7 @@
     <ClCompile Include="..\Sprite.cpp" />
     <ClCompile Include="..\Texture.cpp" />
     <ClCompile Include="..\TileMap.cpp" />
-    <ClCompile Include="..\Node.cpp" />
+    <ClCompile Include="..\Transformable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Game.h" />
@@ -33,7 +33,15 @@
     <ClInclude Include="..\Sprite.h" />
     <ClInclude Include="..\Texture.h" />
     <ClInclude Include="..\TileMap.h" />
-    <ClInclude Include="..\Node.h" />
+    <ClInclude Include="..\Transformable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\bub.png" />
+    <Image Include="images\items.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\texture.frag" />
+    <None Include="shaders\texture.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5BE6CA2A-E5A8-40CC-9015-047CE0C78036}</ProjectGuid>
