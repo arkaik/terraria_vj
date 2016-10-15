@@ -48,6 +48,7 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	gui->update(deltaTime);
 	glm::vec2 ppos = player->getPosition();
 	float nx = ppos.x - float(SCREEN_WIDTH) / 2;
 	float ny = ppos.y - float(SCREEN_HEIGHT) / 2;

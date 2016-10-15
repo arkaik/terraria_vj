@@ -5,8 +5,8 @@
 #include "Scene.h"
 
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 720
 
 
 // Game is a singleton (a class with a single instance) that represents our whole application
@@ -41,13 +41,16 @@ public:
 	
 	bool getKey(int key) const;
 	bool getSpecialKey(int key) const;
-
+	bool getReleasedKey(int key);
+	bool getMouseKey(int key) const;
 	glm::ivec2 getMousePosition();
+
 private:
 	bool bPlay;                       // Continue to play game?
 	Scene scene;                      // Scene to render
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time
+	bool rel_keys[256]; //Release keys
 	glm::ivec2 mouse_pos;
 	bool mouse_btn[3];
 };

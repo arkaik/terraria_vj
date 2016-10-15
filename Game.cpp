@@ -33,6 +33,7 @@ void Game::keyPressed(int key)
 void Game::keyReleased(int key)
 {
 	keys[key] = false;
+	rel_keys[key] = true;
 }
 
 void Game::specialKeyPressed(int key)
@@ -69,6 +70,19 @@ bool Game::getKey(int key) const
 bool Game::getSpecialKey(int key) const
 {
 	return specialKeys[key];
+}
+
+bool Game::getReleasedKey(int key)
+{
+	bool rel = rel_keys[key];
+	if (rel) rel_keys[key] = false;
+	
+	return rel;
+}
+
+bool Game::getMouseKey(int key) const
+{
+	return mouse_btn[key];
 }
 
 glm::ivec2 Game::getMousePosition() {

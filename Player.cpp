@@ -49,6 +49,12 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
+
+	if (Game::instance().getMouseKey(0))
+	{
+		glm::ivec2 mpos = Game::instance().getMousePosition();
+	}
+
 	if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
 		if(sprite->animation() != MOVE_LEFT)
@@ -99,7 +105,7 @@ void Player::update(int deltaTime)
 		posPlayer.y += FALL_STEP;
 		if(map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
-			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
+			if(Game::instance().getKey(32))
 			{
 				bJumping = true;
 				jumpAngle = 0;
