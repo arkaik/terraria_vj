@@ -11,9 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Enemigo.cpp" />
+    <ClCompile Include="..\Estar.cpp" />
     <ClCompile Include="..\Game.cpp" />
     <ClCompile Include="..\Inventory.cpp" />
     <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="..\MaquinaEstado.cpp" />
     <ClCompile Include="..\Player.cpp" />
     <ClCompile Include="..\Scene.cpp" />
     <ClCompile Include="..\Shader.cpp" />
@@ -24,8 +27,11 @@
     <ClCompile Include="..\Transformable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Enemigo.h" />
+    <ClInclude Include="..\Estar.h" />
     <ClInclude Include="..\Game.h" />
     <ClInclude Include="..\Inventory.h" />
+    <ClInclude Include="..\MaquinaEstado.h" />
     <ClInclude Include="..\Player.h" />
     <ClInclude Include="..\Scene.h" />
     <ClInclude Include="..\Shader.h" />
