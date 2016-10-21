@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <glm/glm.hpp>
-#include "Texture.h"
+#include "TextureFactory.h"
 #include "ShaderProgram.h"
 #include "AnimKeyframes.h"
 #include "Transformable.h"
@@ -20,10 +20,12 @@ public:
 	// Textured quads can only be created inside an OpenGL context
 	static Sprite *createSprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Texture *spritesheet, ShaderProgram *program);
 	static Sprite *createSprite(Texture *tex, const glm::vec4 rect, ShaderProgram *program);
-	Sprite();
+	static Sprite *createSprite(std::string ntex, const glm::vec4 rect, ShaderProgram *program);
+	static Sprite *createSprite(glm::vec2 geom[2], glm::vec2 texCoords[2], ShaderProgram *program);
+	Sprite(glm::vec2 geom[2], glm::vec2 texCoords[2], ShaderProgram *program);
 	Sprite(Texture *texture, const glm::vec4 rect, ShaderProgram *program);
 	Sprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Texture *spritesheet, ShaderProgram *program);
-
+	Sprite();
 	void update(int deltaTime);
 	void render();
 	void free();

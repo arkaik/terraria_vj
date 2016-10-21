@@ -43,6 +43,8 @@ public:
 	bool getSpecialKey(int key) const;
 	bool getReleasedKey(int key);
 	bool getMouseKey(int key) const;
+	bool getPressedMouseKey(int key);
+	bool getReleasedMouseKey(int key);
 	glm::ivec2 getMousePosition();
 
 private:
@@ -53,6 +55,8 @@ private:
 	bool rel_keys[256]; //Release keys
 	glm::ivec2 mouse_pos;
 	bool mouse_btn[3];
+	bool pres_mouse_btn[3];
+	bool rel_mouse_btn[3];
 };
 
 

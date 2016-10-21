@@ -48,18 +48,20 @@ void Game::specialKeyReleased(int key)
 
 void Game::mouseMove(int x, int y)
 {
-	
+	mouse_pos = glm::vec2(x, y);
 }
 
 void Game::mousePress(int button, int x, int y)
 {
 	mouse_btn[button] = true;
+	pres_mouse_btn[button] = true;
 	mouse_pos = glm::vec2(x, y);
 }
 
 void Game::mouseRelease(int button)
 {
 	mouse_btn[button] = false;
+	rel_mouse_btn[button] = true;
 }
 
 bool Game::getKey(int key) const
@@ -85,11 +87,25 @@ bool Game::getMouseKey(int key) const
 	return mouse_btn[key];
 }
 
+bool Game::getPressedMouseKey(int key)
+{
+	bool pre = pres_mouse_btn[key];
+	if (pre) pres_mouse_btn[key] = false;
+
+	return pre;
+}
+
+bool Game::getReleasedMouseKey(int key)
+{
+	bool rel = rel_mouse_btn[key];
+	if (rel) rel_mouse_btn[key] = false;
+
+	return rel;
+}
+
 glm::ivec2 Game::getMousePosition() {
 	return mouse_pos;
 }
-
-
 
 
 

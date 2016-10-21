@@ -52,7 +52,11 @@ void Player::update(int deltaTime)
 
 	if (Game::instance().getMouseKey(0))
 	{
-		glm::ivec2 mpos = Game::instance().getMousePosition();
+		glm::vec2 mpos = Game::instance().getMousePosition();
+		glm::vec2 ppos = sprite->getPosition();
+		glm::vec2 opos = ppos - glm::vec2(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+		glm::vec2 smpos = opos + mpos;
+		inventory->getSelectedObject()->action(this, smpos, map);
 	}
 
 	if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
@@ -122,6 +126,11 @@ void Player::render()
 	sprite->render();
 }
 
+void Player::setInventory(Inventory * inv)
+{
+	inventory = inv;
+}
+
 void Player::setTileMap(TileMap *tileMap)
 {
 	map = tileMap;
@@ -135,6 +144,11 @@ void Player::setPosition(const glm::vec2 &pos)
 
 glm::vec2 Player::getPosition() {
 	return sprite->getPosition();
+}
+
+void Player::addToInventory(GameObject *go)
+{
+	inventory->addObject(go);
 }
 
 

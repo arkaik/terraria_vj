@@ -5,6 +5,7 @@
 #include "Game.h"
 
 
+
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
@@ -17,6 +18,7 @@ Scene::Scene()
 	map = NULL;
 	player = NULL;
 	gui = NULL;
+	gui2 = NULL;
 }
 
 Scene::~Scene()
@@ -27,12 +29,15 @@ Scene::~Scene()
 		delete player;
 	if (gui != NULL)
 		delete gui;
+	if (gui2 != NULL)
+		delete gui2;
 }
 
 
 void Scene::init()
 {
 	initShaders();
+	GameObject::program = &texProgram;
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -40,6 +45,9 @@ void Scene::init()
 	player->setTileMap(map);
 	gui = new Inventory();
 	gui->init(texProgram);
+	player->setInventory(gui);
+	gui2 = new Health();
+	gui2->init(texProgram);
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 }
@@ -49,6 +57,7 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	gui->update(deltaTime);
+	gui2->update(deltaTime);
 	glm::vec2 ppos = player->getPosition();
 	float nx = ppos.x - float(SCREEN_WIDTH) / 2;
 	float ny = ppos.y - float(SCREEN_HEIGHT) / 2;
@@ -70,6 +79,7 @@ void Scene::render()
 	texProgram.setUniform1i("fixedToCamera", 0);
 	map->render();
 	player->render();
+	gui2->render();
 	gui->render();
 	
 }
