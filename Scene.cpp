@@ -114,5 +114,9 @@ void Scene::initShaders()
 	fShader.free();
 }
 
+glm::vec2 Scene::getPlayerPos() {
+	return player->getPosition();
+}
+
 
 
