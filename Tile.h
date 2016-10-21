@@ -23,6 +23,7 @@ public:
 	glm::vec4 getTexRect();
 	
 	bool needsUpdate();
+	void setNeedUpdate(bool b);
 
 private:
 	glm::vec2 position;

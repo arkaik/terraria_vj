@@ -42,3 +42,8 @@ bool Tile::needsUpdate()
 {
 	return needUpdate;
 }
+
+void Tile::setNeedUpdate(bool b)
+{
+	needUpdate = b;
+}

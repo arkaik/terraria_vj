@@ -59,8 +59,8 @@ void Player::update(int deltaTime)
 		inventory->getSelectedObject()->action(this, smpos, map);
 	}
 
-	if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
-	{
+	if(Game::instance().getKey(97))
+	{  
 		if(sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
 		posPlayer.x -= 2;
@@ -70,7 +70,7 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_LEFT);
 		}
 	}
-	else if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
+	else if(Game::instance().getKey(100))
 	{
 		if(sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);
@@ -109,7 +109,7 @@ void Player::update(int deltaTime)
 		posPlayer.y += FALL_STEP;
 		if(map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
-			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
+			if(Game::instance().getKey(119))
 			{
 				bJumping = true;
 				jumpAngle = 0;

@@ -181,6 +181,7 @@ void TileMap::updateLevel()
 					texCoordTile[1] = texCoordTile[0] + tileTexSize;
 					tileMap[j][i].setTexRect(glm::vec4(texCoordTile[0], texCoordTile[1]));
 					tc = tileMap[j][i].getTexRect();
+					tileMap[j][i].setNeedUpdate(false);
 				}
 				
 				//texCoordTile[0] += halfTexel;
