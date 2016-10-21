@@ -23,6 +23,7 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	glm::vec2 getPlayerPos();
 
 private:
 	void initShaders();

@@ -51,10 +51,10 @@
     <ClCompile Include="..\Enemigo.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="..\MaquinaEstado.cpp">
+    <ClCompile Include="..\Estar.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="..\Estar.cpp">
+    <ClCompile Include="..\Estado.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,10 +92,10 @@
     <ClInclude Include="..\Enemigo.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\MaquinaEstado.h">
+    <ClInclude Include="..\Estar.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\Estar.h">
+    <ClInclude Include="..\Estado.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
