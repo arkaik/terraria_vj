@@ -1,8 +1,9 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 #include "TileMap.h"
-#include "Sprite.h"
+#include "Text.h"
 
 using namespace std;
 
@@ -41,5 +42,6 @@ private:
 	Sprite* sprite;
 	bool accumulate;
 	int num_obj;
+	Text* num_text;
 
 };

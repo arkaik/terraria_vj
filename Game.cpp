@@ -58,10 +58,11 @@ void Game::mousePress(int button, int x, int y)
 	mouse_pos = glm::vec2(x, y);
 }
 
-void Game::mouseRelease(int button)
+void Game::mouseRelease(int button, int x, int y)
 {
 	mouse_btn[button] = false;
 	rel_mouse_btn[button] = true;
+	mouse_pos = glm::vec2(x, y);
 }
 
 bool Game::getKey(int key) const

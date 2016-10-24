@@ -6,6 +6,7 @@
 #include "ShaderProgram.h"
 #include "Sprite.h"
 #include <string>
+#include <vector>
 
 #define NUM_CHARACTERS (128 - 32)
 
@@ -25,16 +26,22 @@ public:
 	Text();
 	~Text();
 
-	bool init(const char *filename);
+	bool init(const char *filename, ShaderProgram * sp);
 	void destroy();
 
-	ShaderProgram &getProgram();
+	//ShaderProgram &getProgram();
 	int getSize() const;
-	void render(char c, const glm::vec2 &pixel, int size, const glm::vec4 &color);
-	void render(const string &str, const glm::vec2 &pixel, int size, const glm::vec4 &color);
+	//void render(char c, const glm::vec2 &pixel, int size, const glm::vec4 &color);
+	void render();
+
+	void setText(string s);
+	void setPosition(glm::vec2 p);
+	void setSize(int sz);
+
+	static ShaderProgram *sprogram;
 
 private:
-	void initShaders();
+	//void initShaders();
 	bool extractCharSizes(int *maxCharWidth, int *maxCharHeight);
 	void createTextureAtlas();
 
@@ -42,14 +49,16 @@ private:
 	int fontSize, textureSize, maxCharWidth, maxCharHeight;
 	FT_Face face;
 	CharMetrics chars[NUM_CHARACTERS];
-	Texture textureAtlas;
-	ShaderProgram program;
-	Sprite *quad;
+	Texture* textureAtlas;
+	ShaderProgram* program;
+	std::vector<Sprite*> quad;
 	string text_str;
 
 	static bool bLibInit;
 	static FT_Library library;
 
+	glm::vec2 pos;
+	float scaleFactor;
 
 };
 

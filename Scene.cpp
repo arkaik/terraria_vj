@@ -68,20 +68,14 @@ void Scene::update(int deltaTime)
 void Scene::render()
 {
 	glm::mat4 modelview;
-
 	texProgram.use();
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniformMatrix4f("ftcMatrix", ftcMatrix);
-	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-	modelview = glm::mat4(1.0f);
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	texProgram.setUniform1i("fixedToCamera", 0);
 	map->render();
+	texProgram.default();
 	player->render();
-	gui2->render();
 	gui->render();
-	
+	gui2->render();
 }
 
 void Scene::initShaders()
@@ -112,6 +106,8 @@ void Scene::initShaders()
 	texProgram.bindFragmentOutput("outColor");
 	vShader.free();
 	fShader.free();
+	GLenum error = glGetError();
+	
 }
 
 glm::vec2 Scene::getPlayerPos() {

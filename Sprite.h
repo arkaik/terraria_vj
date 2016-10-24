@@ -42,7 +42,9 @@ public:
 	const glm::vec4& getTextureRect() const;
 
 	void setFixToCamera(bool ftc);
+	void setCText(bool ct);
 	glm::vec4 getLocalBounds() const;
+	void setColor(glm::vec4 c);
 
 private:
 	void updatePositions();
@@ -62,7 +64,10 @@ private:
 	glm::vec2 texCoordDispl;
 	vector<AnimKeyframes> animations;
 	
+	int ctext;
 	int fixedToCamera;
+	
+	glm::vec4 color;
 };
 
 

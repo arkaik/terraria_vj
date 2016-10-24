@@ -30,18 +30,19 @@ void Inventory::init(ShaderProgram &sp)
 			inv_obj[i][j] = nullptr;
 		}
 
-	glm::vec2 iob1 = inv_mid[0][0] - glm::vec2( (52 * 0.9) / 2.0 );
-	glm::vec2 iob2 = inv_mid[INV_HEIGHT-1][INV_WIDTH-1] + glm::vec2((52 * 0.9) / 2.0);
+	glm::vec2 iob1 = inv_mid[0][0] - glm::vec2( (52.0 * 0.9) / 2.0 );
+	glm::vec2 iob2 = inv_mid[INV_HEIGHT-1][INV_WIDTH-1] + glm::vec2((52.0 * 0.9) / 2.0);
 	openedBounds = glm::vec4(iob1, iob2);
+
+	if (!obj_name.init("fonts/AndyBold.ttf", &sp))
+		cout << "Could not load font!!!" << endl;
+	obj_name.setSize(28);
+	obj_name.setPosition(glm::vec2(150, 0));
 
 	inv_obj[0][0] = new Pickaxe();
 	inv_obj[0][0]->setPosition(inv_mid[0][0]);
-
-	// Select which font you want to use
-	if (!obj_name.init("fonts/halcyon.ttf"))
-		//if(!text.init("fonts/OpenSans-Bold.ttf"))
-		//if(!text.init("fonts/DroidSerif.ttf"))
-		cout << "Could not load font!!!" << endl;
+	selectObject(0);
+	
 }
 
 void Inventory::update(int deltatime) {
@@ -56,22 +57,40 @@ void Inventory::update(int deltatime) {
 		}
 	}
 
-	if (insideOpenedInventory(Game::instance().getMousePosition()))
+	/*if (insideOpenedInventory(Game::instance().getMousePosition()))
 	{
 		if (Game::instance().getPressedMouseKey(0))
 		{
-			//drag_drop = ;
+			int ox = Game::instance().getMousePosition().x / openedBounds.z;
+			int oy = Game::instance().getMousePosition().y / openedBounds.w;
+			
+			drag_drop = inv_obj[oy][ox];
+			inv_obj[oy][ox] = nullptr;
 		}
 		else if (Game::instance().getReleasedMouseKey(0))
 		{
-
+			glm::vec2 mp = Game::instance().getMousePosition();
+			int fx = mp.x / 52;
+			int fy = mp.y / 52;
+			inv_obj[fy][fx] = drag_drop;
+			drag_drop->setPosition(inv_mid[fy][fx]);
 		}
+	}*/
 
-	}
+	for (int y = 0; y < INV_HEIGHT; y++)
+		for (int x = 0; x < INV_WIDTH; x++) {
+			if (inv_obj[y][x] != nullptr && inv_obj[y][x]->getNumObj() == 0) {
+				delete inv_obj[y][x];
+				inv_obj[y][x] = nullptr;
+				free_space = glm::vec2(y, x);
+				obj_name.setText("");
+			}
+		}
 }
 
 void Inventory::render()
 {
+	
 	for (int i = 0; i < INV_WIDTH; i++) {
 		inv_back[0][i]->render();
 		if (inv_obj[0][i] != nullptr)
@@ -82,12 +101,14 @@ void Inventory::render()
 		for (int y = 1; y < INV_HEIGHT; y++)
 			for (int x = 0; x < INV_WIDTH; x++) {
 				inv_back[y][x]->render();
-				if (inv_obj[y][x] != nullptr)
+				
+				if (inv_obj[y][x] != nullptr) {
 					inv_obj[y][x]->render();
+				}	
 			}
 	}
 
-	obj_name.render("Videogames!!!", glm::vec2(10, 20), 32, glm::vec4(1, 1, 1, 1));
+	obj_name.render();
 }
 
 void Inventory::selectObject(int s) {
@@ -95,6 +116,13 @@ void Inventory::selectObject(int s) {
 	inv_back[0][selected]->setScale(glm::vec2(0.9,0.9));
 	selected = s;
 	inv_back[0][s]->setScale(glm::vec2(1.1, 1.1));
+	if (inv_obj[0][s] != nullptr) {
+		obj_name.setText(inv_obj[0][s]->getName());
+	}
+	else {
+		obj_name.setText("");
+	}
+	
 }
 
 GameObject * Inventory::getSelectedObject()

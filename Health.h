@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Sprite.h"
+#include "Text.h"
+#include "GameObject.h"
 #include <vector>
 
 using namespace std;
@@ -17,5 +18,6 @@ private:
 	std::vector<Sprite*> h_cor;
 	//Posicions centrals de cada cor
 	std::vector<glm::vec2> h_mid;
+	Text thealth;
 
 };

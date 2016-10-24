@@ -13,21 +13,16 @@ FT_Library Text::library;
 
 Text::Text()
 {
-	quad = NULL;
 }
 
 Text::~Text()
 {
 	destroy();
-	if (quad != NULL)
-	{
-		quad->free();
-		delete quad;
-	}
 }
 
-bool Text::init(const char *filename)
+bool Text::init(const char *filename, ShaderProgram * sp)
 {
+	program = sp;
 	FT_Error error;
 
 	if (!bLibInit)
@@ -51,117 +46,92 @@ bool Text::init(const char *filename)
 	if (floor(float(textureSize) / maxCharWidth) * floor(float(textureSize) / maxCharHeight) < (128 - 32))
 		return false;
 	createTextureAtlas();
-	initShaders();
 
-	glm::vec2 geom[2] = { glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f) };
-	glm::vec2 texCoords[2] = { glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f) };
+	//glm::vec2 geom[2] = { glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f) };
+	//glm::vec2 texCoords[2] = { glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f) };
 
-	quad = Sprite::createSprite( glm::vec2(1, 1), glm::vec2(1,1), &textureAtlas, &program);
+	scaleFactor = 1;
+	pos = glm::vec2(0.0);
+	quad = std::vector<Sprite*>();
 
 	return true;
 }
 
+void Text::setText(string s)
+{
+	text_str = s;
 
+	glm::vec2 minTexCoord, sizeTexCoord;
+	glm::vec2 apos = pos;
+
+	quad = std::vector<Sprite*>(text_str.size());
+	for (int i = 0; i < int(text_str.size()); i++)
+	{
+		CharMetrics cm = chars[text_str[i] - 32];
+		minTexCoord = glm::vec2(float(cm.tx), float(cm.ty));
+		sizeTexCoord = glm::vec2(float(cm.sx), float(cm.sy));
+		quad[i] = Sprite::createSprite(textureAtlas, glm::vec4(minTexCoord, sizeTexCoord), program);
+		quad[i]->setPosition(glm::vec2(apos.x + scaleFactor * cm.bl, (apos.y - scaleFactor * cm.bt)+maxCharHeight*scaleFactor));
+		quad[i]->setScale(glm::vec2(scaleFactor));
+		quad[i]->setFixToCamera(true);
+		quad[i]->setCText(true);
+		quad[i]->setColor(glm::vec4(0.f,0.f,0.f,1.f));
+		apos.x += scaleFactor * cm.ax;
+	}
+}
+
+void Text::setPosition(glm::vec2 p)
+{
+	pos = p;
+	glm::vec2 apos = pos;
+	for (int i = 0; i < int(quad.size()); i++) {
+		CharMetrics cm = chars[text_str[i] - 32];
+		quad[i]->setPosition(glm::vec2(apos.x + scaleFactor * cm.bl, (apos.y - scaleFactor * cm.bt) + maxCharHeight*scaleFactor));
+		apos.x += scaleFactor * cm.ax;
+	}
+}
+
+void Text::setSize(int sz)
+{
+	scaleFactor = float(sz) / fontSize;
+	glm::vec2 apos = pos;
+	for (int i = 0; i < int(quad.size()); i++) {
+		CharMetrics cm = chars[text_str[i] - 32];
+		quad[i]->setScale(glm::vec2(scaleFactor));
+		quad[i]->setPosition(glm::vec2(apos.x + scaleFactor * cm.bl, (apos.y - scaleFactor * cm.bt) + maxCharHeight*scaleFactor));
+		apos.x += scaleFactor * cm.ax;
+	}
+}
 
 void Text::destroy()
 {
 	FT_Done_Face(face);
 }
 
-ShaderProgram &Text::getProgram()
+/*ShaderProgram &Text::getProgram()
 {
-	return program;
-}
+	return *program;
+}*/
 
 int Text::getSize() const
 {
 	return fontSize;
 }
 
-void Text::render(char c, const glm::vec2 &pixel, int size, const glm::vec4 &color)
+
+void Text::render()
 {
-	int vp[4];
-	glm::mat4 projection, modelview;
-	glm::vec2 minTexCoord, maxTexCoord;
-
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-	program.use();
-	//glGetIntegerv(GL_VIEWPORT, vp);
-	projection = glm::ortho(0.f, float(vp[2] - 1), float(vp[3] - 1), 0.f);
-	program.setUniformMatrix4f("projection", projection);
-	program.setUniform4f("color", color.r, color.g, color.b, color.a);
-	modelview = glm::mat4(1.0f);
-	modelview = glm::translate(modelview, glm::vec3(pixel.x, pixel.y - size, 0.f));
-	modelview = glm::scale(modelview, (float(size) / fontSize) * glm::vec3(chars[c - 32].sx, chars[c - 32].sy, 0.f));
-	program.setUniformMatrix4f("modelview", modelview);
-	minTexCoord = glm::vec2(float(chars[c - 32].tx) / textureSize, float(chars[c - 32].ty) / textureSize);
-	maxTexCoord = glm::vec2(float(chars[c - 32].tx + chars[c - 32].sx) / textureSize, float(chars[c - 32].ty + chars[c - 32].sy) / textureSize);
-	program.setUniform2f("minTexCoord", minTexCoord.s, minTexCoord.t);
-	program.setUniform2f("maxTexCoord", maxTexCoord.s, maxTexCoord.t);
-	quad->render();
-	glDisable(GL_BLEND);
-}
-
-void Text::render(const string &str, const glm::vec2 &pixel, int size, const glm::vec4 &color)
-{
-	int vp[4];
-	glm::mat4 projection, modelview;
-	glm::vec2 minTexCoord, maxTexCoord, pos = pixel;
-
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-	program.use();
-	//glGetIntegerv(GL_VIEWPORT, vp);
-	//projection = glm::ortho(0.f, float(vp[2] - 1), float(vp[3] - 1), 0.f);
-	//program.setUniformMatrix4f("projection", projection);
-	program.setUniform4f("color", color.r, color.g, color.b, color.a);
-
-	for (unsigned int i = 0; i<str.length(); i++)
+	for (unsigned int i = 0; i<int(quad.size()); i++)
 	{
-		modelview = glm::mat4(1.0f);
-		modelview = glm::translate(modelview, glm::vec3(pos.x + (float(size) / fontSize) * chars[str[i] - 32].bl, pos.y - (float(size) / fontSize) * chars[str[i] - 32].bt, 0.f));
-		modelview = glm::scale(modelview, (float(size) / fontSize) * glm::vec3(chars[str[i] - 32].sx, chars[str[i] - 32].sy, 0.f));
-		program.setUniformMatrix4f("modelview", modelview);
-		minTexCoord = glm::vec2(float(chars[str[i] - 32].tx) / textureSize, float(chars[str[i] - 32].ty) / textureSize);
-		maxTexCoord = glm::vec2(float(chars[str[i] - 32].tx + chars[str[i] - 32].sx) / textureSize, float(chars[str[i] - 32].ty + chars[str[i] - 32].sy) / textureSize);
-		program.setUniform2f("minTexCoord", minTexCoord.s, minTexCoord.t);
-		program.setUniform2f("maxTexCoord", maxTexCoord.s, maxTexCoord.t);
-		quad->render();
-		pos.x += (float(size) / fontSize) * chars[str[i] - 32].ax;
+		//glm::vec2 po = glm::vec2(pos.x + scaleFactor * chars[str[i] - 32].bl, pos.y - scaleFactor * chars[str[i] - 32].bt);
+		//quad[i]->setPosition(glm::vec2(pos.x + scaleFactor * chars[str[i] - 32].bl, pos.y - scaleFactor * chars[str[i] - 32].bt));
+		//quad[i]->setScale(scaleFactor * glm::vec2(chars[str[i] - 32].sx, chars[str[i] - 32].sy));
+		
+		quad[i]->render();
+		
+		//pos.x += scaleFactor * chars[str[i] - 32].ax;
 	}
 
-	glDisable(GL_BLEND);
-}
-
-void Text::initShaders()
-{
-	Shader vShader, fShader;
-
-	vShader.free();
-	fShader.free();
-	vShader.initFromFile(VERTEX_SHADER, "shaders/text.vert");
-	if (!vShader.isCompiled())
-	{
-		cout << "Vertex Shader Error" << endl;
-		cout << "" << vShader.log() << endl << endl;
-	}
-	fShader.initFromFile(FRAGMENT_SHADER, "shaders/text.frag");
-	if (!fShader.isCompiled())
-	{
-		cout << "Fragment Shader Error" << endl;
-		cout << "" << fShader.log() << endl << endl;
-	}
-	program.init();
-	program.addShader(vShader);
-	program.addShader(fShader);
-	program.link();
-	if (!program.isLinked())
-	{
-		cout << "Shader Linking Error" << endl;
-		cout << "" << program.log() << endl << endl;
-	}
-	program.bindFragmentOutput("outColor");
 }
 
 bool Text::extractCharSizes(int *maxCharWidth, int *maxCharHeight)
@@ -183,11 +153,10 @@ bool Text::extractCharSizes(int *maxCharWidth, int *maxCharHeight)
 
 void Text::createTextureAtlas()
 {
-	unsigned char c;
 	int x = 0, y = 0;
-
-	textureAtlas.createEmptyTexture(textureSize, textureSize);
-	for (c = 32; c<128; c++)
+	textureAtlas = new Texture();
+	textureAtlas->createEmptyTexture(textureSize, textureSize);
+	for (unsigned char c = 32; c<128; c++)
 	{
 		FT_Load_Char(face, c, FT_LOAD_RENDER);
 		chars[c - 32].tx = x;
@@ -198,7 +167,7 @@ void Text::createTextureAtlas()
 		chars[c - 32].ay = face->glyph->advance.y >> 6;
 		chars[c - 32].bl = face->glyph->bitmap_left;
 		chars[c - 32].bt = face->glyph->bitmap_top;
-		textureAtlas.loadSubtextureFromGlyphBuffer(face->glyph->bitmap.buffer, x, y, face->glyph->bitmap.width, face->glyph->bitmap.rows);
+		textureAtlas->loadSubtextureFromGlyphBuffer(face->glyph->bitmap.buffer, x, y, face->glyph->bitmap.width, face->glyph->bitmap.rows);
 		x += maxCharWidth;
 		if ((x + maxCharWidth) >= textureSize)
 		{
@@ -206,7 +175,9 @@ void Text::createTextureAtlas()
 			y += maxCharHeight;
 		}
 	}
-	textureAtlas.generateMipmap();
-	textureAtlas.setWrapS(GL_CLAMP_TO_EDGE);
-	textureAtlas.setWrapT(GL_CLAMP_TO_EDGE);
+	textureAtlas->generateMipmap();
+	textureAtlas->setWrapS(GL_CLAMP_TO_EDGE);
+	textureAtlas->setWrapT(GL_CLAMP_TO_EDGE);
 }
+
+ShaderProgram* Text::sprogram = nullptr;

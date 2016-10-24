@@ -56,7 +56,8 @@ void Player::update(int deltaTime)
 		glm::vec2 ppos = sprite->getPosition();
 		glm::vec2 opos = ppos - glm::vec2(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 		glm::vec2 smpos = opos + mpos;
-		inventory->getSelectedObject()->action(this, smpos, map);
+		if (inventory->getSelectedObject() != nullptr)
+			inventory->getSelectedObject()->action(this, smpos, map);
 	}
 
 	if(Game::instance().getKey(97))
