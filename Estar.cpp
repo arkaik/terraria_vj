@@ -2,6 +2,7 @@
 #include "Atacar.h"
 
 Estar::Estar(const Scene& sc,const glm::ivec2& pe):Estado(sc, pe){}
+
 Estado* Estar::cambiarEstado() {
 	if (jugadorCerca()) return (Atacar*) this;
 }

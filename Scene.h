@@ -3,6 +3,7 @@
 
 
 #include <glm/glm.hpp>
+#include "BasicScene.h"
 #include "SoundController.h"
 #include "ShaderProgram.h"
 #include "TileMap.h"
@@ -16,7 +17,7 @@
 // It is responsible for updating and render them.
 
 
-class Scene
+class Scene : public BasicScene
 {
 
 public:
