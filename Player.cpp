@@ -52,28 +52,33 @@ void Player::update(int deltaTime)
 
 	if (Game::instance().getMouseKey(0))
 	{
-		glm::ivec2 mpos = Game::instance().getMousePosition();
+		glm::vec2 mpos = Game::instance().getMousePosition();
+		glm::vec2 ppos = sprite->getPosition();
+		glm::vec2 opos = ppos - glm::vec2(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+		glm::vec2 smpos = opos + mpos;
+		if (inventory->getSelectedObject() != nullptr)
+			inventory->getSelectedObject()->action(this, smpos, map);
 	}
 
-	if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
-	{
+	if(Game::instance().getKey(97))
+	{  
 		if(sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
-		posPlayer.x -= 4;
-		if(map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+		posPlayer.x -= 2;
+		if(map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)) || !map->inbounds(posPlayer))
 		{
-			posPlayer.x += 4;
+			posPlayer.x += 2;
 			sprite->changeAnimation(STAND_LEFT);
 		}
 	}
-	else if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
+	else if(Game::instance().getKey(100))
 	{
 		if(sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);
-		posPlayer.x += 4;
-		if(map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+		posPlayer.x += 2;
+		if(map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)) || !map->inbounds(posPlayer))
 		{
-			posPlayer.x -= 4;
+			posPlayer.x -= 2;
 			sprite->changeAnimation(STAND_RIGHT);
 		}
 	}
@@ -93,6 +98,11 @@ void Player::update(int deltaTime)
 			bJumping = false;
 			posPlayer.y = startY;
 		}
+		// Podemos quitarlo si hace falta
+		else if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 32)))
+		{
+			bJumping = false;
+		}
 		else
 		{
 			posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
@@ -105,7 +115,7 @@ void Player::update(int deltaTime)
 		posPlayer.y += FALL_STEP;
 		if(map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
-			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
+			if(Game::instance().getKey(119))
 			{
 				bJumping = true;
 				jumpAngle = 0;
@@ -121,6 +131,11 @@ void Player::render()
 	sprite->render();
 }
 
+void Player::setInventory(Inventory * inv)
+{
+	inventory = inv;
+}
+
 void Player::setTileMap(TileMap *tileMap)
 {
 	map = tileMap;
@@ -134,6 +149,17 @@ void Player::setPosition(const glm::vec2 &pos)
 
 glm::vec2 Player::getPosition() {
 	return sprite->getPosition();
+}
+
+glm::vec2 Player::getMapPosition()
+{
+	glm::vec2 ret = (glm::ivec2(sprite->getPosition()) - tileMapDispl) / 16;
+	return glm::vec2(ret.y, ret.x);
+}
+
+void Player::addToInventory(GameObject *go)
+{
+	inventory->addObject(go);
 }
 
 

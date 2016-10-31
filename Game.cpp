@@ -6,6 +6,7 @@
 void Game::init()
 {
 	bPlay = true;
+	bubble_mouse_event = false;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	scene.init();
 }
@@ -48,18 +49,27 @@ void Game::specialKeyReleased(int key)
 
 void Game::mouseMove(int x, int y)
 {
-	
+	mouse_pos = glm::vec2(x, y);
 }
 
 void Game::mousePress(int button, int x, int y)
 {
+	bubble_mouse_event = false;
 	mouse_btn[button] = true;
+	pres_mouse_btn[button] = true;
 	mouse_pos = glm::vec2(x, y);
 }
 
-void Game::mouseRelease(int button)
+void Game::mouseRelease(int button, int x, int y)
 {
 	mouse_btn[button] = false;
+	rel_mouse_btn[button] = true;
+	mouse_pos = glm::vec2(x, y);
+}
+
+void Game::bubble_event()
+{
+	bubble_mouse_event = true;
 }
 
 bool Game::getKey(int key) const
@@ -82,14 +92,29 @@ bool Game::getReleasedKey(int key)
 
 bool Game::getMouseKey(int key) const
 {
+	if (bubble_mouse_event) return false;
 	return mouse_btn[key];
+}
+
+bool Game::getPressedMouseKey(int key)
+{
+	bool pre = pres_mouse_btn[key];
+	if (pre) pres_mouse_btn[key] = false;
+
+	return pre;
+}
+
+bool Game::getReleasedMouseKey(int key)
+{
+	bool rel = rel_mouse_btn[key];
+	if (rel) rel_mouse_btn[key] = false;
+
+	return rel;
 }
 
 glm::ivec2 Game::getMousePosition() {
 	return mouse_pos;
 }
-
-
 
 
 

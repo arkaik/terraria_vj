@@ -37,12 +37,15 @@ public:
 	void specialKeyReleased(int key);
 	void mouseMove(int x, int y);
 	void mousePress(int button, int x, int y);
-	void mouseRelease(int button);
+	void mouseRelease(int button, int x, int y);
+	void bubble_event();
 	
 	bool getKey(int key) const;
 	bool getSpecialKey(int key) const;
 	bool getReleasedKey(int key);
 	bool getMouseKey(int key) const;
+	bool getPressedMouseKey(int key);
+	bool getReleasedMouseKey(int key);
 	glm::ivec2 getMousePosition();
 
 private:
@@ -53,6 +56,9 @@ private:
 	bool rel_keys[256]; //Release keys
 	glm::ivec2 mouse_pos;
 	bool mouse_btn[3];
+	bool pres_mouse_btn[3];
+	bool rel_mouse_btn[3];
+	bool bubble_mouse_event;
 };
 
 

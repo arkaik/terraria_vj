@@ -19,9 +19,46 @@ Sprite *Sprite::createSprite(Texture *tex, const glm::vec4 rect, ShaderProgram *
 	return quad;
 }
 
+Sprite *Sprite::createSprite(std::string ntex, const glm::vec4 rect, ShaderProgram *program)
+{
+	Texture* texptr = TextureFactory::instance().getTexture(ntex);
+	Sprite *quad = new Sprite(texptr, rect, program);
+
+	return quad;
+}
+
+Sprite * Sprite::createSprite(glm::vec2 geom[2], glm::vec2 texCoords[2], ShaderProgram * program)
+{
+	Sprite *quad = new Sprite(geom, texCoords, program);
+
+	return quad;
+}
+
+Sprite::Sprite(glm::vec2 geom[2], glm::vec2 texCoords[2], ShaderProgram * program)
+{
+	float vertices[16] = { geom[0].x, geom[0].y, texCoords[0].x, texCoords[0].y,
+		geom[1].x, geom[0].y, texCoords[1].x, texCoords[0].y,
+		geom[1].x, geom[1].y, texCoords[1].x, texCoords[1].y,
+		geom[0].x, geom[1].y, texCoords[0].x, texCoords[1].y };
+
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(float), vertices, GL_STATIC_DRAW);
+	posLocation = program->bindVertexAttribute("position", 2, 4 * sizeof(float), 0);
+	texCoordLocation = program->bindVertexAttribute("texCoord", 2, 4 * sizeof(float), (void *)(2 * sizeof(float)));
+	//setPosition(glm::vec2(0.f));
+	setOrigin(glm::vec2(0.f));
+	//fixedToCamera = 0;
+}
+
 Sprite::Sprite() :
 	texture(NULL),
-	texRect()
+	texRect(),
+	fixedToCamera(0),
+	ctext(0),
+	color(glm::vec4(1.0, 1.0, 1.0, 1.0))
 {
 }
 
@@ -49,7 +86,8 @@ Sprite::Sprite(Texture *tex, const glm::vec4 rect, ShaderProgram *program)
 	setPosition(glm::vec2(0.f));
 	setOrigin(glm::vec2(0.f));
 	fixedToCamera = 0;
-	
+	color = glm::vec4(1.0, 1.0, 1.0, 1.0);
+	ctext = 0;
 }
 
 
@@ -72,6 +110,8 @@ Sprite::Sprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Te
 	currentAnimation = -1;
 	setPosition(glm::vec2(0.f));
 	fixedToCamera = 0;
+	color = glm::vec4(1.0,1.0,1.0,1.0);
+	ctext = 0;
 }
 
 void Sprite::update(int deltaTime)
@@ -90,9 +130,12 @@ void Sprite::update(int deltaTime)
 
 void Sprite::render()
 {
+	//shaderProgram->use();
 	shaderProgram->setUniformMatrix4f("modelview", getTransform());
 	shaderProgram->setUniform2f("texCoordDispl", texCoordDispl.x, texCoordDispl.y);
 	shaderProgram->setUniform1i("fixedToCamera", fixedToCamera);
+	shaderProgram->setUniform1i("ctext", ctext);
+	shaderProgram->setUniform4f("color", color.r, color.g, color.b, color.a);
 	glm::vec4 npos = getTransform() * glm::vec4(getPosition(), 0.f, 1.f);
 	glEnable(GL_TEXTURE_2D);
 	texture->use();
@@ -102,6 +145,7 @@ void Sprite::render()
 	glEnableVertexAttribArray(texCoordLocation);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glDisable(GL_TEXTURE_2D);
+	shaderProgram->default();
 	//glBindVertexArray(0);
 }
 
@@ -159,10 +203,14 @@ void Sprite::setTextureRect(const glm::vec4 & rectangle)
 }
 
 void Sprite::setFixToCamera(bool ftc) {
-	if (ftc)
-		fixedToCamera = 1;
-	else
-		fixedToCamera = 0;
+	if (ftc) fixedToCamera = 1;
+	else fixedToCamera = 0;
+}
+
+void Sprite::setCText(bool ct)
+{
+	if (ct) ctext = 1;
+	else ctext = 0;
 }
 
 glm::vec4 Sprite::getLocalBounds() const
@@ -170,6 +218,11 @@ glm::vec4 Sprite::getLocalBounds() const
 	float width = std::abs(texRect.z);
 	float height = std::abs(texRect.w);
 	return glm::vec4(0.f, 0.f, width, height);
+}
+
+void Sprite::setColor(glm::vec4 c)
+{
+	color = c;
 }
 
 void Sprite::updatePositions()

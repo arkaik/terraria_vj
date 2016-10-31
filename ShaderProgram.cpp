@@ -57,6 +57,15 @@ void ShaderProgram::use()
 	glUseProgram(programId);
 }
 
+void ShaderProgram::default()
+{
+	setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+	setUniformMatrix4f("modelview", glm::mat4(1.0f));
+	setUniform2f("texCoordDispl", 0.f, 0.f);
+	setUniform1i("fixedToCamera", 0);
+	setUniform1i("chartext", 0);
+}
+
 bool ShaderProgram::isLinked()
 {
 	return linked;

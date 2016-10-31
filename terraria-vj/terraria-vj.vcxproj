@@ -12,40 +12,76 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Atacar.cpp" />
+    <ClCompile Include="..\CopperOreObj.cpp" />
     <ClCompile Include="..\Enemigo.cpp" />
     <ClCompile Include="..\Estado.cpp" />
     <ClCompile Include="..\Estar.cpp" />
     <ClCompile Include="..\Game.cpp" />
+    <ClCompile Include="..\GameObject.cpp" />
+    <ClCompile Include="..\GameObjectFactory.cpp" />
+    <ClCompile Include="..\GoldBarObj.cpp" />
+    <ClCompile Include="..\GoldOreObj.cpp" />
+    <ClCompile Include="..\GroundObj.cpp" />
+    <ClCompile Include="..\Health.cpp" />
     <ClCompile Include="..\Inventory.cpp" />
+    <ClCompile Include="..\IronBarObj.cpp" />
+    <ClCompile Include="..\IronOreObj.cpp" />
     <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="..\Pickaxe.cpp" />
     <ClCompile Include="..\Player.cpp" />
+    <ClCompile Include="..\Recipe.cpp" />
+    <ClCompile Include="..\RecipeBook.cpp" />
+    <ClCompile Include="..\RockObj.cpp" />
     <ClCompile Include="..\Scene.cpp" />
     <ClCompile Include="..\Shader.cpp" />
     <ClCompile Include="..\ShaderProgram.cpp" />
+    <ClCompile Include="..\SilverOreObj.cpp" />
     <ClCompile Include="..\Sprite.cpp" />
+    <ClCompile Include="..\Text.cpp" />
     <ClCompile Include="..\Texture.cpp" />
+    <ClCompile Include="..\TextureFactory.cpp" />
+    <ClCompile Include="..\Tile.cpp" />
     <ClCompile Include="..\TileMap.cpp" />
     <ClCompile Include="..\Transformable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Atacar.h" />
+    <ClInclude Include="..\CopperOreObj.h" />
     <ClInclude Include="..\Enemigo.h" />
     <ClInclude Include="..\Estado.h" />
     <ClInclude Include="..\Estar.h" />
     <ClInclude Include="..\Game.h" />
+    <ClInclude Include="..\GameObject.h" />
+    <ClInclude Include="..\GameObjectFactory.h" />
+    <ClInclude Include="..\GoldBarObj.h" />
+    <ClInclude Include="..\GoldOreObj.h" />
+    <ClInclude Include="..\GroundObj.h" />
+    <ClInclude Include="..\Health.h" />
     <ClInclude Include="..\Inventory.h" />
+    <ClInclude Include="..\IronBarObj.h" />
+    <ClInclude Include="..\IronOreObj.h" />
+    <ClInclude Include="..\Item.h" />
+    <ClInclude Include="..\Pickaxe.h" />
     <ClInclude Include="..\Player.h" />
+    <ClInclude Include="..\Recipe.h" />
+    <ClInclude Include="..\RecipeBook.h" />
+    <ClInclude Include="..\RockObj.h" />
     <ClInclude Include="..\Scene.h" />
     <ClInclude Include="..\Shader.h" />
     <ClInclude Include="..\ShaderProgram.h" />
+    <ClInclude Include="..\SilverOreObj.h" />
     <ClInclude Include="..\Sprite.h" />
+    <ClInclude Include="..\Text.h" />
     <ClInclude Include="..\Texture.h" />
+    <ClInclude Include="..\TextureFactory.h" />
+    <ClInclude Include="..\Tile.h" />
     <ClInclude Include="..\TileMap.h" />
     <ClInclude Include="..\Transformable.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="images\bub.png" />
     <Image Include="images\items.png" />
+    <Image Include="images\tiles.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\texture.frag" />
@@ -94,13 +130,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\libs\Simple OpenGL Image Library\src;..\..\..\libs\freeglut\include;..\..\..\libs\glew-1.13.0\include;..\..\..\libs\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libs\Simple OpenGL Image Library\src;..\libs\freeglut\include;..\libs\glew-1.13.0\include;..\libs\freetype-2.3.5-1-bin\include\;..\libs\freetype-2.3.5-1-bin\include\freetype2;..\libs\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\..\libs\Simple OpenGL Image Library\projects\VC9\Debug;..\..\..\libs\freeglut\lib;..\..\..\libs\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SOIL.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libs\freetype-2.3.5-1-bin\lib;..\libs\Simple OpenGL Image Library\projects\VC9\Debug;..\libs\freeglut\lib;..\libs\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>freetype.lib;SOIL.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

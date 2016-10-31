@@ -7,6 +7,8 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "Inventory.h"
+#include "Health.h"
+
 
 
 // Scene contains all the entities of our game.
@@ -31,6 +33,7 @@ private:
 
 private:
 	Inventory *gui;
+	Health *gui2;
 	TileMap *map;
 	Player *player;
 	ShaderProgram texProgram;

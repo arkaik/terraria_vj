@@ -20,6 +20,7 @@ Scene::Scene()
 	gui = NULL;
 	enemigo = NULL;
 	radioDeteccionPlayer = 0;
+	gui2 = NULL;
 }
 
 Scene::~Scene()
@@ -32,12 +33,15 @@ Scene::~Scene()
 		delete gui;
 	if (enemigo != NULL)
 		delete enemigo;
+	if (gui2 != NULL)
+		delete gui2;
 }
 
 
 void Scene::init()
 {
 	initShaders();
+	GameObject::program = &texProgram;
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	radioDeteccionPlayer = 5*map->getTileSize();
 	player = new Player();
@@ -50,6 +54,9 @@ void Scene::init()
 	enemigo->setTileMap(map);
 	gui = new Inventory();
 	gui->init(texProgram);
+	player->setInventory(gui);
+	gui2 = new Health();
+	gui2->init(texProgram);
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 }
@@ -60,6 +67,8 @@ void Scene::update(int deltaTime)
 	player->update(deltaTime);
 	enemigo->update(deltaTime);
 	gui->update(deltaTime);
+	gui2->update(deltaTime);
+	player->update(deltaTime);
 	glm::vec2 ppos = player->getPosition();
 	float nx = ppos.x - float(SCREEN_WIDTH) / 2;
 	float ny = ppos.y - float(SCREEN_HEIGHT) / 2;
@@ -70,20 +79,15 @@ void Scene::update(int deltaTime)
 void Scene::render()
 {
 	glm::mat4 modelview;
-
 	texProgram.use();
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniformMatrix4f("ftcMatrix", ftcMatrix);
-	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-	modelview = glm::mat4(1.0f);
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	texProgram.setUniform1i("fixedToCamera", 0);
+	texProgram.default();
 	map->render();
 	player->render();
 	enemigo->render();
 	gui->render();
-	
+	gui2->render();
 }
 
 void Scene::initShaders()
@@ -114,6 +118,8 @@ void Scene::initShaders()
 	texProgram.bindFragmentOutput("outColor");
 	vShader.free();
 	fShader.free();
+	GLenum error = glGetError();
+	
 }
 
 glm::vec2 Scene::getPlayerPos() {
