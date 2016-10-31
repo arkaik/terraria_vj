@@ -4,6 +4,7 @@
 #include <string>
 #include "TileMap.h"
 #include "Text.h"
+#include "SoundController.h"
 
 using namespace std;
 
