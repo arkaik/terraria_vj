@@ -2,6 +2,8 @@
 
 #include <glm\glm.hpp>
 
+class Inventory;
+
 class Tile
 {
 public:
@@ -10,7 +12,9 @@ public:
 		Ground,
 		Rock,
 		Iron,
-		Gold
+		Gold,
+		Silver,
+		Copper
 	};
 
 	Tile();

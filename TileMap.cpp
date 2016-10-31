@@ -37,7 +37,7 @@ void TileMap::render() const
 	glBindVertexArray(vao);
 	glEnableVertexAttribArray(posLocation);
 	glEnableVertexAttribArray(texCoordLocation);
-	glDrawArrays(GL_TRIANGLES, 0, 6 * nTiles);
+	glDrawArrays(GL_TRIANGLES, 0, 24 * mapSize.x * mapSize.y);
 	glDisable(GL_TEXTURE_2D);
 }
 
@@ -77,8 +77,8 @@ bool TileMap::loadLevel(const string &levelFile)
 	sstream.str(line);
 	sstream >> tilesheetSize.x >> tilesheetSize.y;
 	tileTexSize = glm::vec2(float(tileSize) / tilesheet.width(), float(tileSize) / tilesheet.height());
-	
 	tileMap = vector<vector<Tile> >(mapSize.y, vector<Tile>(mapSize.x));
+	vertices = new float[mapSize.y * mapSize.x * 24];
 
 	map = new int[mapSize.x * mapSize.y];
 	for(int j=0; j<mapSize.y; j++)
@@ -110,39 +110,56 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 	nTiles = 0;
 	minCoordsMap = minCoords;
 	glm::vec2 posTile, texCoordTile[2], halfTexel;
-	vector<float> vertices = vector<float>();
-	
+	vertices = new float[int(mapSize.y) * int(mapSize.x) * 24];
+
 	halfTexel = glm::vec2(0.5f / tilesheet.width(), 0.5f / tilesheet.height());
 	for(int j=0; j<mapSize.y; j++)
 	{
 		for(int i=0; i<mapSize.x; i++)
 		{
 			tile = map[j * mapSize.x + i];
+			posTile = glm::vec2(minCoords.x + i * tileSize, minCoords.y + j * tileSize);
+			int vid = j * mapSize.x * 24 + i * 24;
 			if(tile != 0)
 			{
 				// Non-empty tile
 				nTiles++;
-				posTile = glm::vec2(minCoords.x + i * tileSize, minCoords.y + j * tileSize);
+				
 				int rndTile = rand() % 4;
 				texCoordTile[0] = glm::vec2(float(rndTile*16) / tilesheet.width(), float((tile-1)*16) / tilesheet.height());
+
 				texCoordTile[1] = texCoordTile[0] + tileTexSize;
 				tileMap[j][i].setTexRect(glm::vec4(texCoordTile[0], texCoordTile[1]));
-				//texCoordTile[0] += halfTexel;
-				//texCoordTile[1] -= halfTexel;
-				// First triangle
-				vertices.push_back(posTile.x); vertices.push_back(posTile.y);
-				vertices.push_back(texCoordTile[0].x); vertices.push_back(texCoordTile[0].y);
-				vertices.push_back(posTile.x + blockSize); vertices.push_back(posTile.y);
-				vertices.push_back(texCoordTile[1].x); vertices.push_back(texCoordTile[0].y);
-				vertices.push_back(posTile.x + blockSize); vertices.push_back(posTile.y + blockSize);
-				vertices.push_back(texCoordTile[1].x); vertices.push_back(texCoordTile[1].y);
-				// Second triangle
-				vertices.push_back(posTile.x); vertices.push_back(posTile.y);
-				vertices.push_back(texCoordTile[0].x); vertices.push_back(texCoordTile[0].y);
-				vertices.push_back(posTile.x + blockSize); vertices.push_back(posTile.y + blockSize);
-				vertices.push_back(texCoordTile[1].x); vertices.push_back(texCoordTile[1].y);
-				vertices.push_back(posTile.x); vertices.push_back(posTile.y + blockSize);
-				vertices.push_back(texCoordTile[0].x); vertices.push_back(texCoordTile[1].y);
+				
+				//First triangle 1
+				vertices[vid] = posTile.x; vertices[vid+1] = posTile.y;
+				vertices[vid + 2] = texCoordTile[0].x; vertices[vid + 3] = texCoordTile[0].y;
+				vertices[vid + 4] = posTile.x + blockSize; vertices[vid + 5] = posTile.y;
+				vertices[vid + 6] = texCoordTile[1].x; vertices[vid + 7] = texCoordTile[0].y;
+				vertices[vid + 8] = posTile.x + blockSize; vertices[vid + 9] = posTile.y + blockSize;
+				vertices[vid + 10] = texCoordTile[1].x; vertices[vid + 11] = texCoordTile[1].y;
+				// Second triangle 1
+				vertices[vid+12] = posTile.x; vertices[vid+13] = posTile.y;
+				vertices[vid+14] = texCoordTile[0].x; vertices[vid+15] = texCoordTile[0].y;
+				vertices[vid+16] = posTile.x + blockSize; vertices[vid+17] = posTile.y + blockSize;
+				vertices[vid+18] = texCoordTile[1].x; vertices[vid+19] = texCoordTile[1].y;
+				vertices[vid+20] = posTile.x; vertices[vid+21] = posTile.y + blockSize;
+				vertices[vid+22] = texCoordTile[0].x; vertices[vid+23] = texCoordTile[1].y;
+				
+			}
+			else {
+				vertices[vid] = posTile.x; vertices[vid + 1] = posTile.x;
+				vertices[vid + 2] = 0; vertices[vid + 3] = 0;
+				vertices[vid + 4] = posTile.x; vertices[vid + 5] = posTile.x;
+				vertices[vid + 6] = 0; vertices[vid + 7] = 0;
+				vertices[vid + 8] = posTile.x + blockSize; vertices[vid + 9] = posTile.x;
+				vertices[vid + 10] = 0; vertices[vid + 11] = 0;
+				vertices[vid + 12] = posTile.x; vertices[vid + 13] = posTile.x;
+				vertices[vid + 14] = 0; vertices[vid + 15] = 0;
+				vertices[vid + 16] = posTile.x + blockSize; vertices[vid + 17] = posTile.x;
+				vertices[vid + 18] = 0; vertices[vid + 19] = 0;
+				vertices[vid + 20] = posTile.x; vertices[vid + 21] = posTile.x;
+				vertices[vid + 22] = 0; vertices[vid + 23] = 0;
 			}
 		}
 	}
@@ -151,69 +168,64 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 	glBindVertexArray(vao);
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, 24 * nTiles * sizeof(float), &vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 24 * mapSize.x * mapSize.y * sizeof(float), &vertices[0], GL_STATIC_DRAW);
 	posLocation = program.bindVertexAttribute("position", 2, 4*sizeof(float), 0);
 	texCoordLocation = program.bindVertexAttribute("texCoord", 2, 4*sizeof(float), (void *)(2*sizeof(float)));
 }
 
-void TileMap::updateLevel()
+void TileMap::updateTile(int i, int j, Tile::Type t, glm::vec4 texRect)
 {
-	int tile;
-	nTiles = 0;
-	glm::vec2 posTile, texCoordTile[2];
-	vector<float> vertices = vector<float>();
-	//halfTexel = glm::vec2(0.5f / tilesheet.width(), 0.5f / tilesheet.height());
-	for (int j = 0; j<mapSize.y; j++)
+	int vid = j * mapSize.x * 24 + i * 24;
+	glm::vec2 posTile = glm::vec2(minCoordsMap.x + i * tileSize, minCoordsMap.y + j * tileSize);
+	if (t != Tile::Void)
 	{
-		for (int i = 0; i<mapSize.x; i++)
-		{
-			glm::vec4 tc = tileMap[j][i].getTexRect();
-			tile = int(tileMap[j][i].getType());
+		// Non-empty tile
+		glm::vec4 tc = tileMap[j][i].getTexRect();
 
-			if (tile != 0)
-			{
-				// Non-empty tile
-				nTiles++;
-				posTile = glm::vec2(minCoordsMap.x + i * tileSize, minCoordsMap.y + j * tileSize);
-				if (tc == glm::vec4(0) || tileMap[j][i].needsUpdate()) {
-					int rndTile = rand() % 4;
-					texCoordTile[0] = glm::vec2(float(rndTile * 16) / tilesheet.width(), float((tile - 1) * 16) / tilesheet.height());
-					texCoordTile[1] = texCoordTile[0] + tileTexSize;
-					tileMap[j][i].setTexRect(glm::vec4(texCoordTile[0], texCoordTile[1]));
-					tc = tileMap[j][i].getTexRect();
-					tileMap[j][i].setNeedUpdate(false);
-				}
-				
-				//texCoordTile[0] += halfTexel;
-				//texCoordTile[1] -= halfTexel;
-				// First triangle
-				vertices.push_back(posTile.x); vertices.push_back(posTile.y);
-				vertices.push_back(tc.x); vertices.push_back(tc.y);
-				vertices.push_back(posTile.x + blockSize); vertices.push_back(posTile.y);
-				vertices.push_back(tc.z); vertices.push_back(tc.y);
-				vertices.push_back(posTile.x + blockSize); vertices.push_back(posTile.y + blockSize);
-				vertices.push_back(tc.z); vertices.push_back(tc.w);
-				// Second triangle
-				vertices.push_back(posTile.x); vertices.push_back(posTile.y);
-				vertices.push_back(tc.x); vertices.push_back(tc.y);
-				vertices.push_back(posTile.x + blockSize); vertices.push_back(posTile.y + blockSize);
-				vertices.push_back(tc.z); vertices.push_back(tc.w);
-				vertices.push_back(posTile.x); vertices.push_back(posTile.y + blockSize);
-				vertices.push_back(tc.x); vertices.push_back(tc.w);
-			}
-			
-			
-		}
+		int rndTile = rand() % 4;
+		glm::vec2 texCoordTile0, texCoordTile1;
+		texCoordTile0 = glm::vec2(float(rndTile * 16) / tilesheet.width(), float((int(t) - 1) * 16) / tilesheet.height());
+		texCoordTile1 = texCoordTile0 + tileTexSize;
+
+		//First triangle 1
+		vertices[vid] = posTile.x; vertices[vid+1] = posTile.y;
+		vertices[vid + 2] = texCoordTile0.x; vertices[vid + 3] = texCoordTile0.y;
+		vertices[vid + 4] = posTile.x + blockSize; vertices[vid + 5] = posTile.y;
+		vertices[vid + 6] = texCoordTile1.x; vertices[vid + 7] = texCoordTile0.y;
+		vertices[vid + 8] = posTile.x + blockSize; vertices[vid + 9] = posTile.y + blockSize;
+		vertices[vid + 10] = texCoordTile1.x; vertices[vid + 11] = texCoordTile1.y;
+		// Second triangle 1
+		vertices[vid+12] = posTile.x; vertices[vid+13] = posTile.y;
+		vertices[vid+14] = texCoordTile0.x; vertices[vid+15] = texCoordTile0.y;
+		vertices[vid+16] = posTile.x + blockSize; vertices[vid+17] = posTile.y + blockSize;
+		vertices[vid+18] = texCoordTile1.x; vertices[vid+19] = texCoordTile1.y;
+		vertices[vid+20] = posTile.x; vertices[vid+21] = posTile.y + blockSize;
+		vertices[vid+22] = texCoordTile0.x; vertices[vid+23] = texCoordTile1.y;
+		
+	}
+	else {
+		vertices[vid] = posTile.x; vertices[vid + 1] = posTile.y;
+		vertices[vid + 2] = 0; vertices[vid + 3] = 0;
+		vertices[vid + 4] = posTile.x; vertices[vid + 5] = posTile.y;
+		vertices[vid + 6] = 0; vertices[vid + 7] = 0;
+		vertices[vid + 8] = posTile.x; vertices[vid + 9] = posTile.y;
+		vertices[vid + 10] = 0; vertices[vid + 11] = 0;
+		vertices[vid + 12] = posTile.x; vertices[vid + 13] = posTile.y;
+		vertices[vid + 14] = 0; vertices[vid + 15] = 0;
+		vertices[vid + 16] = posTile.x; vertices[vid + 17] = posTile.y;
+		vertices[vid + 18] = 0; vertices[vid + 19] = 0;
+		vertices[vid + 20] = posTile.x; vertices[vid + 21] = posTile.y;
+		vertices[vid + 22] = 0; vertices[vid + 23] = 0;
 	}
 
 	//glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 	//glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, 24 * nTiles * sizeof(float), &vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 24 * mapSize.x * mapSize.y * sizeof(float), &vertices[0], GL_STATIC_DRAW);
 	posLocation = shaderprogram->bindVertexAttribute("position", 2, 4 * sizeof(float), 0);
 	texCoordLocation = shaderprogram->bindVertexAttribute("texCoord", 2, 4 * sizeof(float), (void *)(2 * sizeof(float)));
-	
+
 }
 
 // Collision tests for axis aligned bounding boxes.
@@ -271,6 +283,24 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 		}
 	}
 	
+	return false;
+}
+
+bool TileMap::collisionMoveUp(const glm::ivec2 & pos, const glm::ivec2 & size)
+{
+	int x0, x1, y;
+
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y = pos.y / tileSize;
+	for (int x = x0; x <= x1; x++)
+	{
+		if (int(tileMap[y][x].getType()) != 0)
+		{	
+				return true;
+		}
+	}
+
 	return false;
 }
 

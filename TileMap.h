@@ -2,6 +2,7 @@
 #define _TILE_MAP_INCLUDE
 
 #include <vector>
+
 #include <glm/glm.hpp>
 #include "Tile.h"
 #include "Texture.h"
@@ -33,10 +34,10 @@ public:
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size);
 	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size);
 	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY);
-	
+	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size);
 	Tile* getTile(float x, float y);
 
-	void updateLevel();
+	void updateTile(int i, int j, Tile::Type t, glm::vec4 texRect);
 
 	bool inbounds(glm::ivec2 p);
 
@@ -57,8 +58,8 @@ private:
 	vector<vector<Tile> > tileMap;
 	ShaderProgram *shaderprogram;
 	int nTiles;
+	float *vertices;
 };
-
 
 #endif // _TILE_MAP_INCLUDE
 

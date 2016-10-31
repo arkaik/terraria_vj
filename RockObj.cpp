@@ -14,6 +14,7 @@ void RockObj::action(Player * player, glm::vec2 mouse_pos, TileMap * map)
 	{
 		t->setType(Tile::Rock);
 		decrementNum();
-		map->updateLevel();
+		glm::vec2 tpos = t->getPosition();
+		map->updateTile(tpos.x, tpos.y, Tile::Type::Rock, t->getTexRect());
 	}
 }

@@ -65,7 +65,7 @@ void Player::update(int deltaTime)
 		if(sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
 		posPlayer.x -= 2;
-		if(map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+		if(map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)) || !map->inbounds(posPlayer))
 		{
 			posPlayer.x += 2;
 			sprite->changeAnimation(STAND_LEFT);
@@ -76,7 +76,7 @@ void Player::update(int deltaTime)
 		if(sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);
 		posPlayer.x += 2;
-		if(map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+		if(map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)) || !map->inbounds(posPlayer))
 		{
 			posPlayer.x -= 2;
 			sprite->changeAnimation(STAND_RIGHT);
@@ -97,6 +97,11 @@ void Player::update(int deltaTime)
 		{
 			bJumping = false;
 			posPlayer.y = startY;
+		}
+		// Podemos quitarlo si hace falta
+		else if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 32)))
+		{
+			bJumping = false;
 		}
 		else
 		{
@@ -145,6 +150,12 @@ void Player::setPosition(const glm::vec2 &pos)
 
 glm::vec2 Player::getPosition() {
 	return sprite->getPosition();
+}
+
+glm::vec2 Player::getMapPosition()
+{
+	glm::vec2 ret = (glm::ivec2(sprite->getPosition()) - tileMapDispl) / 16;
+	return glm::vec2(ret.y, ret.x);
 }
 
 void Player::addToInventory(GameObject *go)

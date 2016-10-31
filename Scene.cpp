@@ -5,7 +5,6 @@
 #include "Game.h"
 
 
-
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
@@ -55,9 +54,9 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
-	player->update(deltaTime);
 	gui->update(deltaTime);
 	gui2->update(deltaTime);
+	player->update(deltaTime);
 	glm::vec2 ppos = player->getPosition();
 	float nx = ppos.x - float(SCREEN_WIDTH) / 2;
 	float ny = ppos.y - float(SCREEN_HEIGHT) / 2;
@@ -71,8 +70,8 @@ void Scene::render()
 	texProgram.use();
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniformMatrix4f("ftcMatrix", ftcMatrix);
-	map->render();
 	texProgram.default();
+	map->render();
 	player->render();
 	gui->render();
 	gui2->render();

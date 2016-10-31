@@ -86,6 +86,12 @@ void GameObject::decrementNum()
 	else num_text->setText("");
 }
 
+void GameObject::decrementNum(int n)
+{
+	num_obj -= n;
+	if (num_obj < 0) num_obj = 0;
+}
+
 ShaderProgram* GameObject::program = nullptr;
 
 bool operator==(GameObject & lhs, GameObject & rhs)

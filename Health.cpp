@@ -16,11 +16,11 @@ void Health::init(ShaderProgram & sp)
 		h_cor[i]->setFixToCamera(true);
 	}
 
-	/*if (!thealth.init("fonts/AndyBold.ttf", &sp))
+	if (!thealth.init("fonts/AndyBold.ttf", &sp))
 		std::cout << "Could not load font!!!" << endl;
 	thealth.setSize(28);
-	thealth.setPosition(glm::vec2(350, 0));
-	thealth.setText("Life: 100/100");*/
+	thealth.setPosition(h_mid[0] + glm::vec2(100, -55));
+	thealth.setText("Life: 100/100");
 }
 
 void Health::update(int deltatime)
@@ -32,5 +32,5 @@ void Health::render()
 	for (int i = 0; i < int(h_cor.size()); i++)
 		h_cor[i]->render();
 
-	/*thealth.render();*/
+	//thealth.render();
 }

@@ -33,6 +33,7 @@ void Tile::setTexRect(glm::vec4 rect)
 	texRect = rect;
 }
 
+
 glm::vec4 Tile::getTexRect()
 {
 	return texRect;

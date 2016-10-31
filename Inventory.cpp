@@ -7,6 +7,15 @@
 
 void Inventory::init(ShaderProgram &sp)
 {
+	rb.init();
+
+	rec_mid = std::vector<glm::vec2>(5);
+	for (int ix = 0; ix < 5; ix++) {
+		rec_mid[ix] = glm::vec2(32+52*ix, 350);
+	}
+
+	sprogram = sp;
+	updateRecipes = false;
 	opened = false;
 	selected = 0;
 	free_space = glm::ivec2(0, 1);
@@ -33,6 +42,9 @@ void Inventory::init(ShaderProgram &sp)
 	glm::vec2 iob1 = inv_mid[0][0] - glm::vec2( (52.0 * 0.9) / 2.0 );
 	glm::vec2 iob2 = inv_mid[INV_HEIGHT-1][INV_WIDTH-1] + glm::vec2((52.0 * 0.9) / 2.0);
 	openedBounds = glm::vec4(iob1, iob2);
+	glm::vec2 rob1 = rec_mid[0] - glm::vec2((52.0 * 0.9) / 2.0);
+	glm::vec2 rob2 = rec_mid[0] + glm::vec2((52.0 * 0.9) / 2.0);
+	recipesBounds = glm::vec4(rob1, rob2);
 
 	if (!obj_name.init("fonts/AndyBold.ttf", &sp))
 		cout << "Could not load font!!!" << endl;
@@ -42,7 +54,8 @@ void Inventory::init(ShaderProgram &sp)
 	inv_obj[0][0] = new Pickaxe();
 	inv_obj[0][0]->setPosition(inv_mid[0][0]);
 	selectObject(0);
-	
+
+	swapObjectPos = glm::vec2(-1);
 }
 
 void Inventory::update(int deltatime) {
@@ -57,25 +70,46 @@ void Inventory::update(int deltatime) {
 		}
 	}
 
-	/*if (insideOpenedInventory(Game::instance().getMousePosition()))
+	if (insideOpenedInventory(Game::instance().getMousePosition()))
 	{
-		if (Game::instance().getPressedMouseKey(0))
-		{
-			int ox = Game::instance().getMousePosition().x / openedBounds.z;
-			int oy = Game::instance().getMousePosition().y / openedBounds.w;
-			
-			drag_drop = inv_obj[oy][ox];
-			inv_obj[oy][ox] = nullptr;
-		}
-		else if (Game::instance().getReleasedMouseKey(0))
+		if (Game::instance().getReleasedMouseKey(0))
 		{
 			glm::vec2 mp = Game::instance().getMousePosition();
-			int fx = mp.x / 52;
-			int fy = mp.y / 52;
-			inv_obj[fy][fx] = drag_drop;
-			drag_drop->setPosition(inv_mid[fy][fx]);
+			int tx = floor(mp.x/55.00);
+			int ty = floor(mp.y/55.00);
+			if (swapObjectPos == glm::vec2(-1)) {
+				glm::vec2 mt = glm::vec2(tx,ty);
+				swapObjectPos = mt;
+			}
+			else if (glm::vec2(tx,ty) != swapObjectPos){
+				int ox = floor(swapObjectPos.x);
+				int oy = floor(swapObjectPos.y);
+				GameObject* aux = inv_obj[oy][ox];
+				inv_obj[oy][ox] = inv_obj[ty][tx];
+				inv_obj[ty][tx] = aux;
+				if (inv_obj[ty][tx] != nullptr) inv_obj[ty][tx]->setPosition(inv_mid[ty][tx]);
+				if (inv_obj[oy][ox] != nullptr) inv_obj[oy][ox]->setPosition(inv_mid[oy][ox]);
+
+				swapObjectPos = glm::vec2(-1);
+			}
 		}
-	}*/
+	}
+
+	if (insideOpenedRecipe(Game::instance().getMousePosition())) {
+		if (Game::instance().getReleasedMouseKey(0))
+		{
+			glm::vec2 mp = Game::instance().getMousePosition() - glm::ivec2(recipesBounds.x, recipesBounds.y);
+			int tx = floor(mp.x / 55.00);
+			Recipe* r = rec_rec[tx];
+			if (r->canBuild(inv_obj)) {
+				GameObject* go = rec_obj[tx];
+				Item itgo = RecipeBook::stringToItemType(go->getName());
+				addObject(GameObjectFactory::instance().createItemObject(itgo));
+			}
+			
+		}
+		Game::instance().bubble_event();
+	}
 
 	for (int y = 0; y < INV_HEIGHT; y++)
 		for (int x = 0; x < INV_WIDTH; x++) {
@@ -86,6 +120,39 @@ void Inventory::update(int deltatime) {
 				obj_name.setText("");
 			}
 		}
+
+	if (updateRecipes) {
+		rec_obj = vector<GameObject*>();
+		rec_rec = vector<Recipe*>();
+		int c = 0;
+		std::set<string>::iterator it;
+		for (it = nameset.begin(); it != nameset.end() && c < 5; ++it) {
+			string objname = *it;
+			std::vector<Recipe*> vr = rb.getRecipesByName(objname);
+			for (int jt = 0; jt < int(vr.size()) && c < 5; ++jt) {
+				Item vi = vr[jt]->getType();
+				GameObject* gi = GameObjectFactory::instance().createItemObject(vi);
+				rec_obj.push_back(gi);
+				rec_rec.push_back(vr[jt]);
+				c += 1;
+			}
+		}
+		
+		rec_back = vector<Sprite*>(c);
+		for (int cc = 0; cc < c; cc++) {
+			rec_obj[cc]->setPosition(rec_mid[cc]);
+			rec_back[cc] = Sprite::createSprite(&tex, glm::vec4(0, 96, 64, 64), &sprogram);
+			rec_back[cc]->setPosition(rec_mid[cc]);
+			rec_back[cc]->setScale(glm::vec2(0.9, 0.9));
+			rec_back[cc]->setOrigin(32, 32);
+			rec_back[cc]->setFixToCamera(true);
+		}
+
+		glm::vec2 rob1 = rec_mid[0] - glm::vec2((52.0 * 0.9) / 2.0);
+		glm::vec2 rob2 = rec_mid[c] + glm::vec2((52.0 * 0.9) / 2.0);
+		recipesBounds = glm::vec4(rob1, rob2);
+		updateRecipes = false;
+	}
 }
 
 void Inventory::render()
@@ -106,9 +173,15 @@ void Inventory::render()
 					inv_obj[y][x]->render();
 				}	
 			}
+
+		for (int c = 0; c < int(rec_back.size()); c++) {
+			rec_back[c]->render();
+			rec_obj[c]->render();
+		}
 	}
 
 	obj_name.render();
+
 }
 
 void Inventory::selectObject(int s) {
@@ -148,6 +221,9 @@ void Inventory::addObject(GameObject *go)
 		inv_obj[free_space.x][free_space.y]->setPosition(inv_mid[free_space.x][free_space.y]);
 		updateFreeSpace();
 	}
+
+	nameset.insert(go->getName());
+	updateRecipes = true;
 }
 
 bool Inventory::insideOpenedInventory(glm::vec2 p)
@@ -156,6 +232,16 @@ bool Inventory::insideOpenedInventory(glm::vec2 p)
 	bool b2 = p.x < openedBounds.z;
 	bool b3 = p.y > openedBounds.y;
 	bool b4 = p.y < openedBounds.w;
+	bool inside = (b1 && b2 && b3 && b4);
+	return opened && inside;
+}
+
+bool Inventory::insideOpenedRecipe(glm::vec2 p)
+{
+	bool b1 = p.x > recipesBounds.x;
+	bool b2 = p.x < recipesBounds.z;
+	bool b3 = p.y > recipesBounds.y;
+	bool b4 = p.y < recipesBounds.w;
 	bool inside = (b1 && b2 && b3 && b4);
 	return opened && inside;
 }

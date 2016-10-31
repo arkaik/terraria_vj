@@ -38,6 +38,7 @@ public:
 	void mouseMove(int x, int y);
 	void mousePress(int button, int x, int y);
 	void mouseRelease(int button, int x, int y);
+	void bubble_event();
 	
 	bool getKey(int key) const;
 	bool getSpecialKey(int key) const;
@@ -57,6 +58,7 @@ private:
 	bool mouse_btn[3];
 	bool pres_mouse_btn[3];
 	bool rel_mouse_btn[3];
+	bool bubble_mouse_event;
 };
 
 

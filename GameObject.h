@@ -32,6 +32,7 @@ public:
 	int getNumObj();
 	void incrementNum();
 	void decrementNum();
+	void decrementNum(int n);
 
 	static ShaderProgram *program;
 
