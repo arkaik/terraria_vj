@@ -21,6 +21,7 @@ Scene::Scene()
 	enemigo = NULL;
 	radioDeteccionPlayer = 0;
 	gui2 = NULL;
+	
 }
 
 Scene::~Scene()
@@ -41,6 +42,7 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
+	SoundController::instance().playMusic("../sounds/overworld-day.wav");
 	GameObject::program = &texProgram;
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	radioDeteccionPlayer = 5*map->getTileSize();
