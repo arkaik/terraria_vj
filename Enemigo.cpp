@@ -60,7 +60,7 @@ void Enemigo::update(int deltaTime)
 			estado = nuevo;
 		}
 	}
-	//estado->update();
+	estado->update(deltaTime);
 }
 
 void Enemigo::render()
@@ -77,7 +77,6 @@ void Enemigo::setPosition(const glm::vec2 &pos)
 {
 	posEnemigo = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemigo.x), float(tileMapDispl.y + posEnemigo.y)));
-	estado->setPosition(&posEnemigo);
 }
 
 glm::vec2 Enemigo::getPosition() {

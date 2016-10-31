@@ -12,9 +12,8 @@ private:
 	static const int numAtaques = 3;
 	int ataquesRealizados;
 	void hacerAtaque(int deltaTime);
-	glm::vec2 velocidad;
-	glm::ivec2 posPlayerAnterior, posEnemigoAnterior;
-	double angulo;
+	glm::vec2 velocidad, direccion;
+	glm::vec2 posPlayerAnterior, posEnemigoAnterior;
 	bool tocado;//Para cambiar solo una vez la aceleracion
 	bool distanciaActualVsDistanciaAnterior(const glm::vec2 posP);
 };
