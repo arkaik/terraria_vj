@@ -1,11 +1,18 @@
+#define _USE_MATH_DEFINES // for C++
+#include <cmath>
 #include "Estar.h"
 #include "Atacar.h"
 #include "Enemigo.h"
 #include <iostream>
 
-Estar::Estar(Scene* sc,glm::ivec2* pe, const glm::ivec2& tMD, Sprite* sp):Estado(sc, pe,tMD, sp){}
+Estar::Estar(Scene* sc,glm::ivec2* pe, const glm::ivec2& tMD, Sprite* sp):Estado(sc, pe,tMD, sp) {
+	numVueltas = 0;
+	angulo = 0.0f;
+	posInicial = *pe;
+}
+
 Estado* Estar::cambiarEstado() {
-	if (jugadorCerca()) {
+	if (numVueltas == numCiclos && jugadorCerca()) {
 		std::cout << "cambio a atacar" << std::endl;
 		return new Atacar(escena, posEnemigo,tileMapDisplay,spEnem);
 	}
@@ -22,5 +29,21 @@ bool Estar::jugadorCerca() {
 }
 
 void Estar::update(int deltaTime) {
-
+	float rad = angulo*M_PI / 180.0f;
+	float x = (float(distanciaCentro) * sqrt(2) * cos(rad)) / (sin(rad)*sin(rad) + 1);
+	float y = (float(distanciaCentro) * sqrt(2) * cos(rad)* sin(rad)) / (sin(rad)*sin(rad) + 1);
+	posEnemigo->x = posInicial.x + x;
+	posEnemigo->y = posInicial.y + y;
+	spEnem->setPosition(glm::vec2(float(tileMapDisplay.x + posEnemigo->x), float(tileMapDisplay.y + posEnemigo->y)));
+	angulo += 3.0f;
+	if (angulo == 360.0f) {
+		angulo = 0.0f;
+		++numVueltas;
+		if (numVueltas > numCiclos) numVueltas = numCiclos;//Para que lo detecte el cambio de estado
+	}
 }
+
+/*float Estar::distanciaPosInicial() {
+	return sqrt((posEnemigo->x - posInicial.x)*(posEnemigo->x - posInicial.x) + 
+		(posEnemigo->y - posInicial.y)*(posEnemigo->y - posInicial.y));
+}*/

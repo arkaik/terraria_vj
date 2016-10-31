@@ -11,6 +11,10 @@ private:
 	bool jugadorCerca();
 	//TODO: crear movimiento ciclico 
 	glm::vec2 posInicial;
+	static const int numCiclos = 2;
+	int numVueltas;
+	static const int distanciaCentro = 30;
+	float angulo;
 };
 
 #endif

@@ -45,14 +45,14 @@ void Scene::init()
 	SoundController::instance().playMusic("../sounds/overworld-day.wav");
 	GameObject::program = &texProgram;
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	radioDeteccionPlayer = 5*map->getTileSize();
+	radioDeteccionPlayer = 30*map->getTileSize();
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	player->setTileMap(map);
 	enemigo = new Enemigo(this);
 	enemigo->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	enemigo->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 10* map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+	enemigo->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 40* map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	enemigo->setTileMap(map);
 	gui = new Inventory();
 	gui->init(texProgram);
