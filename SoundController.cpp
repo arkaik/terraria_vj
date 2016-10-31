@@ -19,3 +19,7 @@ SoundController::~SoundController()
 void SoundController::playSound(std::string s) {
 	engine->play2D(s.c_str(), false);
 }
+
+void SoundController::playMusic(std::string s) {
+	engine->play2D(s.c_str(), true);
+}

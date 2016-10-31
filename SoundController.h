@@ -18,6 +18,7 @@ public:
 	SoundController();
 	~SoundController();
 	void playSound(std::string s);
+	void playMusic(std::string s);
 
 private:
 	irrklang::ISoundEngine* engine;

@@ -18,6 +18,7 @@ Scene::Scene()
 	player = NULL;
 	gui = NULL;
 	gui2 = NULL;
+	
 }
 
 Scene::~Scene()
@@ -36,6 +37,7 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
+	SoundController::instance().playMusic("../sounds/overworld-day.wav");
 	GameObject::program = &texProgram;
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
