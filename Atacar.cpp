@@ -36,8 +36,8 @@ void Atacar::hacerAtaque(int deltaTime) {
 		direccion.y /= hyp;
 	}
 	else {//Si en medio de embestida
-		if (!tocado) { velocidad += 4; }
-		else {velocidad -= 4;}
+		if (!tocado) { velocidad += 10; }
+		else {velocidad -= 14;}
 	}
 	posEnemigo->x = posEnemigo->x + velocidad*float(deltaTime) / 1000.f*direccion.x;
 	posEnemigo->y = posEnemigo->y + velocidad*float(deltaTime) / 1000.f*direccion.y;
