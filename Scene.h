@@ -12,6 +12,7 @@
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
 
+class Enemigo;
 
 class Scene
 {
@@ -24,7 +25,7 @@ public:
 	void update(int deltaTime);
 	void render();
 	glm::vec2 getPlayerPos();
-
+	int radioDeteccionPlayer;
 private:
 	void initShaders();
 
@@ -36,6 +37,7 @@ private:
 	float currentTime;
 	glm::mat4 projection;
 	glm::mat4 ftcMatrix;
+	Enemigo* enemigo;
 };
 
 

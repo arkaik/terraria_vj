@@ -1,14 +1,26 @@
 #include "Estar.h"
 #include "Atacar.h"
+#include "Enemigo.h"
+#include <iostream>
 
-Estar::Estar(const Scene& sc,const glm::ivec2& pe):Estado(sc, pe){}
+Estar::Estar(Scene* sc,glm::ivec2* pe, const glm::ivec2& tMD, Sprite* sp):Estado(sc, pe,tMD, sp){}
 Estado* Estar::cambiarEstado() {
-	if (jugadorCerca()) return (Atacar*) this;
+	if (jugadorCerca()) {
+		std::cout << "cambio a atacar" << std::endl;
+		return new Atacar(escena, posEnemigo,tileMapDisplay,spEnem);
+	}
+	return this;
 }
 
 bool Estar::jugadorCerca() {
-	return (posEnemigo.x - 20 < escena.getPlayerPos().x && escena.getPlayerPos().x < posEnemigo.x) ||
-		(posEnemigo.x < escena.getPlayerPos().x && escena.getPlayerPos().x < posEnemigo.x + 20) || 
-		(posEnemigo.y - 20 < escena.getPlayerPos().y && escena.getPlayerPos().y < posEnemigo.y) || 
-		(posEnemigo.y < escena.getPlayerPos().y && escena.getPlayerPos().y < posEnemigo.y + 20);
+	int rdp = escena->radioDeteccionPlayer;
+	//x+y = rdp es la circumferencia si x^2+y^2 <= rdp^2 esta dentro sino fuera
+	glm::vec2 posP = escena->getPlayerPos();
+	glm::vec2 posEnem = getCoordsRealesEnem();
+	glm::vec2 pp = glm::vec2(posP.x - posEnem.x, posP.y - posEnem.y);
+	return pp.x*pp.x + pp.y*pp.y <= rdp*rdp;
+}
+
+void Estar::update(int deltaTime) {
+
 }

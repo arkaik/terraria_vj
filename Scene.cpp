@@ -11,12 +11,15 @@
 #define INIT_PLAYER_X_TILES 4
 #define INIT_PLAYER_Y_TILES 25
 
+#include "Enemigo.h"
 
 Scene::Scene()
 {
 	map = NULL;
 	player = NULL;
 	gui = NULL;
+	enemigo = NULL;
+	radioDeteccionPlayer = 0;
 }
 
 Scene::~Scene()
@@ -27,6 +30,8 @@ Scene::~Scene()
 		delete player;
 	if (gui != NULL)
 		delete gui;
+	if (enemigo != NULL)
+		delete enemigo;
 }
 
 
@@ -34,10 +39,15 @@ void Scene::init()
 {
 	initShaders();
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	radioDeteccionPlayer = 5*map->getTileSize();
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	player->setTileMap(map);
+	enemigo = new Enemigo(this);
+	enemigo->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	enemigo->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 10* map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+	enemigo->setTileMap(map);
 	gui = new Inventory();
 	gui->init(texProgram);
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
@@ -48,6 +58,7 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	enemigo->update(deltaTime);
 	gui->update(deltaTime);
 	glm::vec2 ppos = player->getPosition();
 	float nx = ppos.x - float(SCREEN_WIDTH) / 2;
@@ -70,6 +81,7 @@ void Scene::render()
 	texProgram.setUniform1i("fixedToCamera", 0);
 	map->render();
 	player->render();
+	enemigo->render();
 	gui->render();
 	
 }

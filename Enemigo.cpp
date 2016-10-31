@@ -11,16 +11,19 @@
 #define JUMP_HEIGHT 96
 #define FALL_STEP 4
 
+#include "Scene.h"
 
 enum EnemigoAnims
 {
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
 };
 
+Enemigo::Enemigo(Scene* escena) {
+	sc = escena;
+}
 
 void Enemigo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
-	estado = (Estado*)Estar::instance;
 	spritesheet.loadFromFile("images/bub.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);
@@ -44,44 +47,20 @@ void Enemigo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemigo.x), float(tileMapDispl.y + posEnemigo.y)));
-
+	estado = new Estar(sc, &posEnemigo, tileMapDispl,sprite);
 }
 
 void Enemigo::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-	estado = estado->cambiarEstado();
-	/*if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
-	{
-		if (sprite->animation() != MOVE_LEFT)
-			sprite->changeAnimation(MOVE_LEFT);
-		posEnemigo.x -= 2;
-		if (map->collisionMoveLeft(posEnemigo, glm::ivec2(32, 32)))
-		{
-			posEnemigo.x += 2;
-			sprite->changeAnimation(STAND_LEFT);
+	Estado* nuevo = estado->cambiarEstado();
+	if (nuevo != NULL) {
+		if (nuevo != estado) {
+			delete estado;
+			estado = nuevo;
 		}
 	}
-	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
-	{
-		if (sprite->animation() != MOVE_RIGHT)
-			sprite->changeAnimation(MOVE_RIGHT);
-		posEnemigo.x += 2;
-		if (map->collisionMoveRight(posEnemigo, glm::ivec2(32, 32)))
-		{
-			posEnemigo.x -= 2;
-			sprite->changeAnimation(STAND_RIGHT);
-		}
-	}
-	else
-	{
-		if (sprite->animation() == MOVE_LEFT)
-			sprite->changeAnimation(STAND_LEFT);
-		else if (sprite->animation() == MOVE_RIGHT)
-			sprite->changeAnimation(STAND_RIGHT);
-	}
-
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemigo.x), float(tileMapDispl.y + posEnemigo.y)));*/
+	//estado->update();
 }
 
 void Enemigo::render()
@@ -98,6 +77,7 @@ void Enemigo::setPosition(const glm::vec2 &pos)
 {
 	posEnemigo = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemigo.x), float(tileMapDispl.y + posEnemigo.y)));
+	estado->setPosition(&posEnemigo);
 }
 
 glm::vec2 Enemigo::getPosition() {
