@@ -4,15 +4,17 @@
 #include "Estado.h"
 class Estar : public Estado {
 public:
-	static Estar &instance(const Scene& sc, const glm::ivec2& pe) {
-		static Estar e(sc, pe);
-		return e;
-	}
-	Estar(const Scene& sc, const glm::ivec2& pe);
-	virtual Estado* cambiarEstado();
+	Estar(Scene* sc, glm::ivec2* pe,const glm::ivec2& tMD, Sprite* sp);
+	Estado* cambiarEstado();
+	void update(int deltaTime);
 private:
 	bool jugadorCerca();
-
+	//TODO: crear movimiento ciclico 
+	glm::vec2 posInicial;
+	static const int numCiclos = 2;
+	int numVueltas;
+	static const int distanciaCentro = 30;
+	float angulo;
 };
 
 #endif

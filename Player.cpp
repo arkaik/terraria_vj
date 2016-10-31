@@ -10,6 +10,7 @@
 #define JUMP_HEIGHT 96
 #define FALL_STEP 4
 
+//cambio de aumento pos de 2 a 4
 
 enum PlayerAnims
 {
@@ -43,7 +44,6 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
-	
 }
 
 void Player::update(int deltaTime)
@@ -123,7 +123,6 @@ void Player::update(int deltaTime)
 			}
 		}
 	}
-	
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 

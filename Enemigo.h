@@ -9,9 +9,12 @@
 // all properties it needs to track its movement, jumping, and collisions.
 
 
+class Scene;
+
 class Enemigo
 {
 public:
+	Enemigo(Scene* sc);
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();
@@ -19,12 +22,12 @@ public:
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
 	glm::vec2 getPosition();
-
 private:
-	glm::ivec2 tileMapDispl, posEnemigo;
+	glm::ivec2 posEnemigo;
+	glm::ivec2  tileMapDispl;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
 	Estado* estado;
-	Scene sc;
+	Scene* sc;
 };

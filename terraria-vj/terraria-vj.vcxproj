@@ -26,6 +26,7 @@
     <ClCompile Include="..\IronBarObj.cpp" />
     <ClCompile Include="..\IronOreObj.cpp" />
     <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="..\MenuScene.cpp" />
     <ClCompile Include="..\Pickaxe.cpp" />
     <ClCompile Include="..\Player.cpp" />
     <ClCompile Include="..\Recipe.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="..\Transformable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\BasicScene.h" />
     <ClInclude Include="..\CopperOreObj.h" />
     <ClInclude Include="..\Enemigo.h" />
     <ClInclude Include="..\Estado.h" />
@@ -60,6 +62,7 @@
     <ClInclude Include="..\IronBarObj.h" />
     <ClInclude Include="..\IronOreObj.h" />
     <ClInclude Include="..\Item.h" />
+    <ClInclude Include="..\MenuScene.h" />
     <ClInclude Include="..\Pickaxe.h" />
     <ClInclude Include="..\Player.h" />
     <ClInclude Include="..\Recipe.h" />

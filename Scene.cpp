@@ -11,12 +11,15 @@
 #define INIT_PLAYER_X_TILES 4
 #define INIT_PLAYER_Y_TILES 25
 
+#include "Enemigo.h"
 
 Scene::Scene()
 {
 	map = NULL;
 	player = NULL;
 	gui = NULL;
+	enemigo = NULL;
+	radioDeteccionPlayer = 0;
 	gui2 = NULL;
 	
 }
@@ -29,6 +32,8 @@ Scene::~Scene()
 		delete player;
 	if (gui != NULL)
 		delete gui;
+	if (enemigo != NULL)
+		delete enemigo;
 	if (gui2 != NULL)
 		delete gui2;
 }
@@ -40,10 +45,15 @@ void Scene::init()
 	SoundController::instance().playMusic("../sounds/overworld-day.ogg");
 	GameObject::program = &texProgram;
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	radioDeteccionPlayer = 30*map->getTileSize();
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	player->setTileMap(map);
+	enemigo = new Enemigo(this);
+	enemigo->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	enemigo->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 40* map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+	enemigo->setTileMap(map);
 	gui = new Inventory();
 	gui->init(texProgram);
 	player->setInventory(gui);
@@ -56,9 +66,10 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
+	player->update(deltaTime);
+	enemigo->update(deltaTime);
 	gui->update(deltaTime);
 	gui2->update(deltaTime);
-	player->update(deltaTime);
 	glm::vec2 ppos = player->getPosition();
 	float nx = ppos.x - float(SCREEN_WIDTH) / 2;
 	float ny = ppos.y - float(SCREEN_HEIGHT) / 2;
@@ -75,6 +86,7 @@ void Scene::render()
 	texProgram.default();
 	map->render();
 	player->render();
+	enemigo->render();
 	gui->render();
 	gui2->render();
 }
