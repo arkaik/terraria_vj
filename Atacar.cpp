@@ -28,7 +28,7 @@ void Atacar::hacerAtaque(int deltaTime) {
 			tocado = false;
 		}
 		posPlayerAnterior = posP;
-		posEnemigoAnterior = *posEnemigo;
+		posEnemigoAnterior = glm::vec2(posEnemigo->x,posEnemigo->y);
 		++velocidad;
 		direccion.x = posP.x - posEnemigo->x; direccion.y = posP.y - posEnemigo->y;
 		float hyp = sqrt(direccion.x*direccion.x + direccion.y*direccion.y);
@@ -36,8 +36,8 @@ void Atacar::hacerAtaque(int deltaTime) {
 		direccion.y /= hyp;
 	}
 	else {//Si en medio de embestida
-		if (!tocado) { velocidad += 10; }
-		else {velocidad -= 14;}
+		if (!tocado) { velocidad += 15;}
+		else {velocidad -= 25;}
 	}
 	posEnemigo->x = posEnemigo->x + velocidad*float(deltaTime) / 1000.f*direccion.x;
 	posEnemigo->y = posEnemigo->y + velocidad*float(deltaTime) / 1000.f*direccion.y;

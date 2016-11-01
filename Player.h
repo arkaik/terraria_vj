@@ -24,7 +24,7 @@ public:
 	void setPosition(const glm::vec2 &pos);
 	glm::vec2 getPosition();
 	glm::vec2 getMapPosition();
-
+	glm::ivec2 getPlayerPosition();
 	void addToInventory(GameObject *go);
 	
 private:

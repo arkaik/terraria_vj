@@ -28,6 +28,7 @@ public:
 	void update(int deltaTime);
 	void render();
 	glm::vec2 getPlayerPos();
+	glm::ivec2 getPlayerPosition();
 	int radioDeteccionPlayer;
 private:
 	void initShaders();

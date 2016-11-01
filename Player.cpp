@@ -60,7 +60,7 @@ void Player::update(int deltaTime)
 			inventory->getSelectedObject()->action(this, smpos, map);
 	}
 
-	if(Game::instance().getKey(97))
+	if(Game::instance().getKey('a'))
 	{  
 		if(sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
@@ -71,7 +71,7 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_LEFT);
 		}
 	}
-	else if(Game::instance().getKey(100))
+	else if(Game::instance().getKey('d'))
 	{
 		if(sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);
@@ -99,7 +99,7 @@ void Player::update(int deltaTime)
 			posPlayer.y = startY;
 		}
 		// Podemos quitarlo si hace falta
-		else if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 32)))
+		else if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
 			bJumping = false;
 		}
@@ -115,7 +115,7 @@ void Player::update(int deltaTime)
 		posPlayer.y += FALL_STEP;
 		if(map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
-			if(Game::instance().getKey(119))
+			if(Game::instance().getKey('w'))
 			{
 				bJumping = true;
 				jumpAngle = 0;
@@ -149,6 +149,10 @@ void Player::setPosition(const glm::vec2 &pos)
 
 glm::vec2 Player::getPosition() {
 	return sprite->getPosition();
+}
+
+glm::ivec2 Player::getPlayerPosition() {
+	return posPlayer;
 }
 
 glm::vec2 Player::getMapPosition()

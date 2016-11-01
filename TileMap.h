@@ -34,7 +34,7 @@ public:
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size);
 	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size);
 	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY);
-	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size);
+	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size, int* posY);
 	Tile* getTile(float x, float y);
 
 	void updateTile(int i, int j, Tile::Type t, glm::vec4 texRect);
