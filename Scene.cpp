@@ -50,9 +50,9 @@ void Scene::init()
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	player->setTileMap(map);
-	enemigo = new Enemigo(this);
+	//Al crear el enemigo se le pasa su posicion
+	enemigo = new Enemigo(this, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize() - 20* map->getTileSize()));
 	enemigo->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	enemigo->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 40* map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	enemigo->setTileMap(map);
 	gui = new Inventory();
 	gui->init(texProgram);
@@ -130,6 +130,10 @@ void Scene::initShaders()
 
 glm::vec2 Scene::getPlayerPos() {
 	return player->getPosition();
+}
+
+glm::ivec2 Scene::getPlayerPosition() {
+	return player->getPlayerPosition();
 }
 
 

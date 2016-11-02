@@ -14,6 +14,7 @@
     <ClCompile Include="..\Atacar.cpp" />
     <ClCompile Include="..\CopperOreObj.cpp" />
     <ClCompile Include="..\Enemigo.cpp" />
+    <ClCompile Include="..\Esqueletillo.cpp" />
     <ClCompile Include="..\Estado.cpp" />
     <ClCompile Include="..\Estar.cpp" />
     <ClCompile Include="..\Game.cpp" />
@@ -51,6 +52,7 @@
     <ClInclude Include="..\BasicScene.h" />
     <ClInclude Include="..\CopperOreObj.h" />
     <ClInclude Include="..\Enemigo.h" />
+    <ClInclude Include="..\Esqueletillo.h" />
     <ClInclude Include="..\Estado.h" />
     <ClInclude Include="..\Estar.h" />
     <ClInclude Include="..\Game.h" />

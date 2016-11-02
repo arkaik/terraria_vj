@@ -90,6 +90,9 @@
     <ClCompile Include="..\Estado.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="..\Atacar.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
     <ClCompile Include="..\SilverOreObj.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -114,7 +117,7 @@
     <ClCompile Include="..\MenuScene.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="..\Atacar.cpp">
+    <ClCompile Include="..\Esqueletillo.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
@@ -191,6 +194,9 @@
     <ClInclude Include="..\Estado.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\Atacar.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
     <ClInclude Include="..\RecipeBook.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -221,7 +227,7 @@
     <ClInclude Include="..\MenuScene.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\Atacar.h">
+    <ClInclude Include="..\Esqueletillo.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

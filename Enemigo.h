@@ -14,7 +14,7 @@ class Scene;
 class Enemigo
 {
 public:
-	Enemigo(Scene* sc);
+	Enemigo(Scene* sc, const glm::ivec2 &pos);
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();

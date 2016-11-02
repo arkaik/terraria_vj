@@ -286,7 +286,7 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	return false;
 }
 
-bool TileMap::collisionMoveUp(const glm::ivec2 & pos, const glm::ivec2 & size)
+bool TileMap::collisionMoveUp(const glm::ivec2 & pos, const glm::ivec2 & size, int* posY)
 {
 	int x0, x1, y;
 
@@ -297,7 +297,12 @@ bool TileMap::collisionMoveUp(const glm::ivec2 & pos, const glm::ivec2 & size)
 	{
 		if (int(tileMap[y][x].getType()) != 0)
 		{	
+			return true;
+			/* TODO: mejorar la colision hacia arriba
+			if (*posY - tileSize * y - size.y <= 4)
+			{
 				return true;
+			}*/
 		}
 	}
 

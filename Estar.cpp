@@ -8,7 +8,7 @@
 Estar::Estar(Scene* sc,glm::ivec2* pe, const glm::ivec2& tMD, Sprite* sp):Estado(sc, pe,tMD, sp) {
 	numVueltas = 0;
 	angulo = 0.0f;
-	posInicial = *pe;
+	posInicial = glm::vec2(pe->x,pe->y);
 }
 
 Estado* Estar::cambiarEstado() {
@@ -42,8 +42,3 @@ void Estar::update(int deltaTime) {
 		if (numVueltas > numCiclos) numVueltas = numCiclos;//Para que lo detecte el cambio de estado
 	}
 }
-
-/*float Estar::distanciaPosInicial() {
-	return sqrt((posEnemigo->x - posInicial.x)*(posEnemigo->x - posInicial.x) + 
-		(posEnemigo->y - posInicial.y)*(posEnemigo->y - posInicial.y));
-}*/

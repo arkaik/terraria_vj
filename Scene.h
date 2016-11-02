@@ -30,6 +30,7 @@ public:
 	void render();
 	BasicScene* changeState();
 	glm::vec2 getPlayerPos();
+	glm::ivec2 getPlayerPosition();
 	int radioDeteccionPlayer;
 private:
 	void initShaders();

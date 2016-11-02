@@ -18,8 +18,9 @@ enum EnemigoAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
 };
 
-Enemigo::Enemigo(Scene* escena) {
+Enemigo::Enemigo(Scene* escena, const glm::ivec2 &pos) {
 	sc = escena;
+	posEnemigo = pos;
 }
 
 void Enemigo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)

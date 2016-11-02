@@ -14,7 +14,7 @@ private:
 	void hacerAtaque(int deltaTime);
 	float velocidad;
 	glm::vec2 direccion;
-	glm::vec2 posPlayerAnterior, posEnemigoAnterior;
+	glm::ivec2 posPlayerAnterior, posEnemigoAnterior;
 	bool tocado;//Para cambiar solo una vez la aceleracion
 	bool distanciaActualVsDistanciaAnterior(const glm::vec2 posP);
 };
