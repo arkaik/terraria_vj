@@ -16,11 +16,7 @@ void Health::init(ShaderProgram & sp)
 		h_cor[i]->setFixToCamera(true);
 	}
 
-	if (!thealth.init("fonts/AndyBold.ttf", &sp))
-		std::cout << "Could not load font!!!" << endl;
-	thealth.setSize(28);
-	thealth.setPosition(h_mid[0] + glm::vec2(100, -55));
-	thealth.setText("Life: 100/100");
+	//Sprite life:
 }
 
 void Health::update(int deltatime)

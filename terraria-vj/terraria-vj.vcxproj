@@ -41,6 +41,7 @@
     <ClCompile Include="..\SilverOreObj.cpp" />
     <ClCompile Include="..\SoundController.cpp" />
     <ClCompile Include="..\Sprite.cpp" />
+    <ClCompile Include="..\Sword.cpp" />
     <ClCompile Include="..\Text.cpp" />
     <ClCompile Include="..\Texture.cpp" />
     <ClCompile Include="..\TextureFactory.cpp" />
@@ -81,6 +82,7 @@
     <ClInclude Include="..\SilverOreObj.h" />
     <ClInclude Include="..\SoundController.h" />
     <ClInclude Include="..\Sprite.h" />
+    <ClInclude Include="..\Sword.h" />
     <ClInclude Include="..\Text.h" />
     <ClInclude Include="..\Texture.h" />
     <ClInclude Include="..\TextureFactory.h" />

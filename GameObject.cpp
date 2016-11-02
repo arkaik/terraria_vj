@@ -4,7 +4,6 @@
 
 GameObject::GameObject() {
 	accumulate = false;
-	equipable = false;
 	num_obj = 1;
 	name = "";
 	num_text = new Text();
@@ -68,20 +67,12 @@ void GameObject::setAccumulate(bool b)
 
 }
 
-void GameObject::setEquipate(bool b)
-{
-	equipable = b;
-}
 
 bool GameObject::canAccumulate()
 {
 	return accumulate;
 }
 
-bool GameObject::canEquipate()
-{
-	return equipable;
-}
 
 int GameObject::getNumObj()
 {
