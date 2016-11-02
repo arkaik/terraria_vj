@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Atacar.cpp" />
     <ClCompile Include="..\CopperOreObj.cpp" />
     <ClCompile Include="..\Enemigo.cpp" />
     <ClCompile Include="..\Estado.cpp" />
@@ -46,6 +47,7 @@
     <ClCompile Include="..\Transformable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Atacar.h" />
     <ClInclude Include="..\BasicScene.h" />
     <ClInclude Include="..\CopperOreObj.h" />
     <ClInclude Include="..\Enemigo.h" />

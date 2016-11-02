@@ -114,6 +114,9 @@
     <ClCompile Include="..\MenuScene.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="..\Atacar.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Game.h">
@@ -216,6 +219,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="..\MenuScene.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Atacar.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

@@ -91,6 +91,11 @@ void Scene::render()
 	gui2->render();
 }
 
+BasicScene* Scene::changeState()
+{
+	return this;
+}
+
 void Scene::initShaders()
 {
 	Shader vShader, fShader;
