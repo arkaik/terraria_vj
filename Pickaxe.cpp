@@ -6,6 +6,7 @@ Pickaxe::Pickaxe()
 {
 	setName("Iron Pickaxe");
 	setSprite(Sprite::createSprite("images/items.png", glm::vec4(32, 0, 32, 32), GameObject::program));
+	setEquipate(true);
 }
 
 void Pickaxe::action(Player *player, glm::vec2 mouse_pos, TileMap *map)

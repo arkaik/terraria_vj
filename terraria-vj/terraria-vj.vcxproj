@@ -13,8 +13,8 @@
   <ItemGroup>
     <ClCompile Include="..\Atacar.cpp" />
     <ClCompile Include="..\CopperOreObj.cpp" />
+    <ClCompile Include="..\CreditScene.cpp" />
     <ClCompile Include="..\Enemigo.cpp" />
-    <ClCompile Include="..\Esqueletillo.cpp" />
     <ClCompile Include="..\Estado.cpp" />
     <ClCompile Include="..\Estar.cpp" />
     <ClCompile Include="..\Game.cpp" />
@@ -24,6 +24,7 @@
     <ClCompile Include="..\GoldOreObj.cpp" />
     <ClCompile Include="..\GroundObj.cpp" />
     <ClCompile Include="..\Health.cpp" />
+    <ClCompile Include="..\HelpScene.cpp" />
     <ClCompile Include="..\Inventory.cpp" />
     <ClCompile Include="..\IronBarObj.cpp" />
     <ClCompile Include="..\IronOreObj.cpp" />
@@ -51,8 +52,9 @@
     <ClInclude Include="..\Atacar.h" />
     <ClInclude Include="..\BasicScene.h" />
     <ClInclude Include="..\CopperOreObj.h" />
+    <ClInclude Include="..\CreditScene.h" />
+    <ClInclude Include="..\EndScene.h" />
     <ClInclude Include="..\Enemigo.h" />
-    <ClInclude Include="..\Esqueletillo.h" />
     <ClInclude Include="..\Estado.h" />
     <ClInclude Include="..\Estar.h" />
     <ClInclude Include="..\Game.h" />
@@ -62,6 +64,7 @@
     <ClInclude Include="..\GoldOreObj.h" />
     <ClInclude Include="..\GroundObj.h" />
     <ClInclude Include="..\Health.h" />
+    <ClInclude Include="..\HelpScene.h" />
     <ClInclude Include="..\Inventory.h" />
     <ClInclude Include="..\IronBarObj.h" />
     <ClInclude Include="..\IronOreObj.h" />

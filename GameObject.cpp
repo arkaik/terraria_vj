@@ -4,6 +4,7 @@
 
 GameObject::GameObject() {
 	accumulate = false;
+	equipable = false;
 	num_obj = 1;
 	name = "";
 	num_text = new Text();
@@ -35,6 +36,11 @@ void GameObject::setSprite(Sprite * spr)
 	num_text->setPosition(sprite->getPosition() + glm::vec2(8, 4));
 }
 
+Sprite* GameObject::getSprite()
+{
+	return sprite;
+}
+
 void GameObject::setPosition(float x, float y)
 {
 	sprite->setPosition(x, y);
@@ -62,9 +68,19 @@ void GameObject::setAccumulate(bool b)
 
 }
 
+void GameObject::setEquipate(bool b)
+{
+	equipable = b;
+}
+
 bool GameObject::canAccumulate()
 {
 	return accumulate;
+}
+
+bool GameObject::canEquipate()
+{
+	return equipable;
 }
 
 int GameObject::getNumObj()

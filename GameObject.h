@@ -21,6 +21,7 @@ public:
 	void render();
 
 	void setSprite(Sprite* spr);
+	Sprite* getSprite();
 
 	void setPosition(float x, float y);
 	void setPosition(glm::vec2 pos);
@@ -29,7 +30,9 @@ public:
 	string getName();
 
 	void setAccumulate(bool b);
+	void setEquipate(bool b);
 	bool canAccumulate();
+	bool canEquipate();
 	int getNumObj();
 	void incrementNum();
 	void decrementNum();
@@ -45,5 +48,6 @@ private:
 	bool accumulate;
 	int num_obj;
 	Text* num_text;
+	bool equipable;
 
 };

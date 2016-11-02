@@ -3,7 +3,7 @@
 GoldBarObj::GoldBarObj()
 {
 	setName("Gold Bar");
-	setSprite(Sprite::createSprite("images/items.png", glm::vec4(64, 64, 32, 32), GameObject::program));
+	setSprite(Sprite::createSprite("images/items.png", glm::vec4(32, 64, 32, 32), GameObject::program));
 	setAccumulate(true);
 }
 
