@@ -30,7 +30,9 @@ void CreditScene::init()
 	n2 = Sprite::createSprite("images/gui.png", glm::vec4(0, 384, 256, 64), &texProgram);
 	//n2->setOrigin(126, 32);
 	n2->setPosition(400, 450);
-	
+
+	background = Sprite::createSprite("images/MapBG11.png", glm::vec4(0, 0, 112, 65), &texProgram);
+	background->setScale(glm::vec2(12, 12));
 }
 
 void CreditScene::update(int deltatime)
@@ -47,6 +49,7 @@ void CreditScene::render()
 	//texProgram.setUniformMatrix4f("ftcMatrix", ftcMatrix);
 	texProgram.default();
 
+	background->render();
 	n1->render();
 	n2->render();
 }

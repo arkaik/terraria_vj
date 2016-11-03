@@ -35,6 +35,9 @@ private:
 	Sprite *sprite;
 	TileMap *map;
 	Inventory *inventory;
+
+	float radius;
+	//vector<Enemigo> collisionList;
 };
 
 

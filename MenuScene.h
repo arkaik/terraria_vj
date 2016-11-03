@@ -22,6 +22,9 @@ private:
 	Sprite* button2;
 	Sprite* button3;
 	Sprite* button4;
+
+	Sprite* background;
+
 	bool bplay;
 	bool bhelp;
 	bool bcredit;

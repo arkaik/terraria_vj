@@ -1,5 +1,8 @@
 #pragma once
 #include "BasicScene.h"
+#include "Sprite.h"
+#include "Game.h"
+#include <iostream>
 
 class HelpScene : public BasicScene
 {
@@ -13,5 +16,10 @@ public:
 	BasicScene* changeState();
 
 private:
-
+	void initShaders();
+	ShaderProgram texProgram;
+	glm::mat4 projection;
+	Sprite* instructions;
+	Sprite* background;
+	bool bmenu;
 };

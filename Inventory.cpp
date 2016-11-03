@@ -115,17 +115,32 @@ void Inventory::update(int deltatime) {
 		Game::instance().bubble_event();
 	}
 
+	set<string> dead = set<string>();
+
 	for (int y = 0; y < INV_HEIGHT; y++)
 		for (int x = 0; x < INV_WIDTH; x++) {
 			if (inv_obj[y][x] != nullptr && inv_obj[y][x]->getNumObj() == 0) {
+				dead.insert(inv_obj[y][x]->getName());
 				delete inv_obj[y][x];
 				inv_obj[y][x] = nullptr;
 				free_space = glm::vec2(y, x);
 				obj_name.setText("");
 			}
+			else if (inv_obj[y][x] != nullptr){
+				set<string>::iterator it = dead.find(inv_obj[y][x]->getName());
+				if (it != dead.end())
+					dead.erase(*it);
+			}
 		}
 
 	if (updateRecipes) {
+
+		std::set<string>::iterator at;
+		for (at = dead.begin(); at != dead.end(); ++at) {
+			string objname = *at;
+			nameset.erase(objname);
+		}
+
 		rec_obj = vector<GameObject*>();
 		rec_rec = vector<Recipe*>();
 		int c = 0;

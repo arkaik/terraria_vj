@@ -8,6 +8,9 @@ MenuScene::MenuScene()
 {
 	button1 = NULL;
 	button2 = NULL;
+	button3 = NULL;
+	button4 = NULL;
+	background = NULL;
 }
 
 MenuScene::~MenuScene()
@@ -17,6 +20,15 @@ MenuScene::~MenuScene()
 
 	if (button2 != NULL)
 		delete button2;
+
+	if (button3 != NULL)
+		delete button3;
+
+	if (button4 != NULL)
+		delete button4;
+
+	if (background != NULL)
+		delete background;
 }
 
 void MenuScene::init()
@@ -29,13 +41,16 @@ void MenuScene::init()
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	button1 = Sprite::createSprite("images/gui.png", glm::vec4(0, 0, 64, 32), &texProgram);
-	button1->setPosition(500, 250);
+	button1->setPosition(550, 250);
 	button2 = Sprite::createSprite("images/gui.png", glm::vec4(0, 128, 64, 32), &texProgram);
-	button2->setPosition(500, 300);
+	button2->setPosition(550, 300);
 	button3 = Sprite::createSprite("images/gui.png", glm::vec4(0, 64, 96, 32), &texProgram);
-	button3->setPosition(500, 350);
+	button3->setPosition(550, 350);
 	button4 = Sprite::createSprite("images/gui.png", glm::vec4(0, 192, 64, 32), &texProgram);
-	button4->setPosition(500, 400);
+	button4->setPosition(550, 400);
+
+	background = Sprite::createSprite("images/MapBG9.png", glm::vec4(0, 0, 112, 65), &texProgram);
+	background->setScale(glm::vec2(12,12));
 }
 
 void MenuScene::update(int deltatime)
@@ -59,6 +74,8 @@ void MenuScene::render()
 	texProgram.setUniformMatrix4f("projection", projection);
 	//texProgram.setUniformMatrix4f("ftcMatrix", ftcMatrix);
 	texProgram.default();
+
+	background->render();
 
 	button1->render();
 	button2->render();

@@ -21,6 +21,6 @@ private:
 	glm::mat4 projection;
 	Sprite* n1;
 	Sprite* n2;
-
+	Sprite* background;
 	bool bmenu;
 };
