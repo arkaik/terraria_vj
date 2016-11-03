@@ -12,11 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Atacar.cpp" />
+    <ClCompile Include="..\AtacarEsq.cpp" />
     <ClCompile Include="..\CopperOreObj.cpp" />
     <ClCompile Include="..\Enemigo.cpp" />
     <ClCompile Include="..\Esqueletillo.cpp" />
     <ClCompile Include="..\Estado.cpp" />
+    <ClCompile Include="..\EstadoEsq.cpp" />
     <ClCompile Include="..\Estar.cpp" />
+    <ClCompile Include="..\EstarEsq.cpp" />
     <ClCompile Include="..\Game.cpp" />
     <ClCompile Include="..\GameObject.cpp" />
     <ClCompile Include="..\GameObjectFactory.cpp" />
@@ -48,11 +51,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Atacar.h" />
+    <ClInclude Include="..\AtacarEsq.h" />
     <ClInclude Include="..\CopperOreObj.h" />
     <ClInclude Include="..\Enemigo.h" />
     <ClInclude Include="..\Esqueletillo.h" />
     <ClInclude Include="..\Estado.h" />
+    <ClInclude Include="..\EstadoEsq.h" />
     <ClInclude Include="..\Estar.h" />
+    <ClInclude Include="..\EstarEsq.h" />
     <ClInclude Include="..\Game.h" />
     <ClInclude Include="..\GameObject.h" />
     <ClInclude Include="..\GameObjectFactory.h" />
