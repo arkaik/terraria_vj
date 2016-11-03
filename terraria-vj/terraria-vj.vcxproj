@@ -16,6 +16,7 @@
     <ClCompile Include="..\CopperOreObj.cpp" />
     <ClCompile Include="..\CreditScene.cpp" />
     <ClCompile Include="..\Enemigo.cpp" />
+    <ClCompile Include="..\Esqueletillo.cpp" />
     <ClCompile Include="..\Estado.cpp" />
     <ClCompile Include="..\EstadoEsq.cpp" />
     <ClCompile Include="..\Estar.cpp" />
@@ -54,15 +55,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Atacar.h" />
-<<<<<<< HEAD
     <ClInclude Include="..\AtacarEsq.h" />
-=======
     <ClInclude Include="..\BasicScene.h" />
->>>>>>> 313d88f182b102fe15c959afa8c917fa11302d2f
     <ClInclude Include="..\CopperOreObj.h" />
     <ClInclude Include="..\CreditScene.h" />
     <ClInclude Include="..\EndScene.h" />
     <ClInclude Include="..\Enemigo.h" />
+    <ClInclude Include="..\Esqueletillo.h" />
     <ClInclude Include="..\Estado.h" />
     <ClInclude Include="..\EstadoEsq.h" />
     <ClInclude Include="..\Estar.h" />
