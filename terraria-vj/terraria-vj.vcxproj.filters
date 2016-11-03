@@ -123,7 +123,7 @@
     <ClCompile Include="..\HelpScene.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="..\Sword.cpp">
+    <ClCompile Include="..\SwordObj.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
@@ -242,7 +242,7 @@
     <ClInclude Include="..\CreditScene.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\Sword.h">
+    <ClInclude Include="..\SwordObj.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

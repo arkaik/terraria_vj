@@ -21,5 +21,6 @@ GameObject * GameObjectFactory::createItemObject(Item i)
 	else if (i == Item::Copper) return new CopperOreObj();
 	else if (i == Item::IronBar) return new IronBarObj();
 	else if (i == Item::GoldBar) return new GoldBarObj();
+	else if (i == Item::Sword) return new SwordObj();
 	return nullptr;
 }

@@ -9,6 +9,7 @@
 #include "CopperOreObj.h"
 #include "IronBarObj.h"
 #include "GoldBarObj.h"
+#include "SwordObj.h"
 #include "Item.h"
 
 class GameObjectFactory
