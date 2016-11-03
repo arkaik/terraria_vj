@@ -9,7 +9,7 @@
 void Inventory::init(ShaderProgram &sp)
 {
 	rb.init();
-
+	
 	rec_mid = std::vector<glm::vec2>(5);
 	for (int ix = 0; ix < 5; ix++) {
 		rec_mid[ix] = glm::vec2(32+52*ix, 350);
