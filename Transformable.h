@@ -17,6 +17,7 @@ public:
 
 	glm::vec2 getPosition();
 	glm::vec2 getScale();
+	glm::vec2 getOrigin();
 
 	glm::mat4 getTransform();
 

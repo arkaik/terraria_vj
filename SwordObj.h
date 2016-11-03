@@ -2,10 +2,10 @@
 
 #include "GameObject.h"
 
-class Pickaxe : public GameObject
+class SwordObj : public GameObject
 {
 public:
-	Pickaxe();
+	SwordObj();
 
 	void action(Player *player, glm::vec2 mouse_pos, TileMap *map);
-}; 
+};

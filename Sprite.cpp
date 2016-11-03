@@ -225,6 +225,7 @@ void Sprite::setColor(glm::vec4 c)
 	color = c;
 }
 
+
 void Sprite::updatePositions()
 {
 	glm::vec4 bounds = getLocalBounds();

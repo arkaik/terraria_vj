@@ -29,4 +29,3 @@ void Pickaxe::action(Player *player, glm::vec2 mouse_pos, TileMap *map)
 	}
 	
 }
-

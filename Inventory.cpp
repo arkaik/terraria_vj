@@ -4,6 +4,7 @@
 
 #include "Game.h"
 #include "Pickaxe.h"
+#include "SwordObj.h"
 
 void Inventory::init(ShaderProgram &sp)
 {
@@ -54,7 +55,8 @@ void Inventory::init(ShaderProgram &sp)
 	inv_obj[0][0] = new Pickaxe();
 	inv_obj[0][0]->setPosition(inv_mid[0][0]);
 	selectObject(0);
-
+	//inv_obj[0][1] = new SwordObj();
+	//inv_obj[0][1]->setPosition(inv_mid[0][1]);
 	swapObjectPos = glm::vec2(-1);
 }
 
@@ -102,9 +104,11 @@ void Inventory::update(int deltatime) {
 			int tx = floor(mp.x / 55.00);
 			Recipe* r = rec_rec[tx];
 			if (r->canBuild(inv_obj)) {
+				r->useComponents(inv_obj);
 				GameObject* go = rec_obj[tx];
 				Item itgo = RecipeBook::stringToItemType(go->getName());
 				addObject(GameObjectFactory::instance().createItemObject(itgo));
+				//updateRecipes = true;
 			}
 			
 		}

@@ -28,6 +28,7 @@ public:
 	void addComponent(string p, int q);
 	Item getType();
 	bool canBuild(vector<vector<GameObject*> > vgo);
+	void useComponents(vector<vector<GameObject*> > vgo);
 
 private:
 	vector<Component> components;

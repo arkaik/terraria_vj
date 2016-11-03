@@ -9,5 +9,6 @@ enum Item {
 	Copper,
 	IronBar,
 	GoldBar,
+	Sword,
 	Size
 };

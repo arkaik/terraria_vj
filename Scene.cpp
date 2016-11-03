@@ -15,6 +15,7 @@
 
 Scene::Scene()
 {
+	background = NULL;
 	map = NULL;
 	player = NULL;
 	gui = NULL;
@@ -36,6 +37,8 @@ Scene::~Scene()
 		delete enemigo;
 	if (gui2 != NULL)
 		delete gui2;
+	if (background != NULL)
+		delete background;
 }
 
 
@@ -61,6 +64,9 @@ void Scene::init()
 	gui2->init(texProgram);
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
+	background = Sprite::createSprite("images/Background_92.png", glm::vec4(0, 0, 1200, 600), &texProgram);
+	background->setScale(glm::vec2(2, 2));
+	background->setFixToCamera(true);
 }
 
 void Scene::update(int deltaTime)
@@ -84,11 +90,18 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniformMatrix4f("ftcMatrix", ftcMatrix);
 	texProgram.default();
+	background->render();
 	map->render();
 	player->render();
 	enemigo->render();
 	gui->render();
 	gui2->render();
+	
+}
+
+BasicScene* Scene::changeState()
+{
+	return this;
 }
 
 void Scene::initShaders()

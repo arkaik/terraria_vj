@@ -35,6 +35,11 @@ void GameObject::setSprite(Sprite * spr)
 	num_text->setPosition(sprite->getPosition() + glm::vec2(8, 4));
 }
 
+Sprite* GameObject::getSprite()
+{
+	return sprite;
+}
+
 void GameObject::setPosition(float x, float y)
 {
 	sprite->setPosition(x, y);
@@ -62,10 +67,12 @@ void GameObject::setAccumulate(bool b)
 
 }
 
+
 bool GameObject::canAccumulate()
 {
 	return accumulate;
 }
+
 
 int GameObject::getNumObj()
 {

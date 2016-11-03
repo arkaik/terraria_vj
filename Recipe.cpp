@@ -55,7 +55,7 @@ bool Recipe::canBuild(vector<vector<GameObject*>> vgo)
 				if (vgo[i][j] != nullptr && vgo[i][j]->getName() == n) {
 					if (vgo[i][j]->getNumObj() < q) return false;
 					else {
-						vgo[i][j]->decrementNum(q);
+						//vgo[i][j]->decrementNum(q);
 						b = false; 
 					}
 				}
@@ -65,9 +65,36 @@ bool Recipe::canBuild(vector<vector<GameObject*>> vgo)
 			i++;
 		}
 			
-		if (i == int(vgo.size()) + 1 && j == int(vgo[j].size()) + 1) { return false; }
+		if (i == int(vgo.size()) && j == int(vgo[0].size())) { return false; }
 
 	}
 
 	return true;
+}
+
+void Recipe::useComponents(vector<vector<GameObject*>> vgo)
+{
+	for (int c = 0; c < int(components.size()); c++)
+	{
+		string n = components[c].prod;
+		int q = components[c].qty;
+		int i = 0;
+		int j = 0;
+		bool b = true;
+		while (i < int(vgo.size()) && b)
+		{
+			j = 0;
+			while (j < int(vgo[0].size()) && b) {
+				if (vgo[i][j] != nullptr && vgo[i][j]->getName() == n) {
+					vgo[i][j]->decrementNum(q);
+					b = false;
+				}
+
+				j++;
+			}
+			i++;
+		}
+
+	}
+
 }

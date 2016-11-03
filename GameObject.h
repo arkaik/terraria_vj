@@ -21,6 +21,7 @@ public:
 	void render();
 
 	void setSprite(Sprite* spr);
+	Sprite* getSprite();
 
 	void setPosition(float x, float y);
 	void setPosition(glm::vec2 pos);

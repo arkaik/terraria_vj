@@ -3,6 +3,7 @@
 
 
 #include <glm/glm.hpp>
+#include "BasicScene.h"
 #include "SoundController.h"
 #include "ShaderProgram.h"
 #include "TileMap.h"
@@ -17,7 +18,7 @@
 
 class Enemigo;
 
-class Scene
+class Scene : public BasicScene
 {
 
 public:
@@ -27,6 +28,7 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	BasicScene* changeState();
 	glm::vec2 getPlayerPos();
 	glm::ivec2 getPlayerPosition();
 	int radioDeteccionPlayer;
@@ -43,6 +45,8 @@ private:
 	glm::mat4 projection;
 	glm::mat4 ftcMatrix;
 	Enemigo* enemigo;
+
+	Sprite* background;
 };
 
 

@@ -14,8 +14,8 @@
     <ClCompile Include="..\Atacar.cpp" />
     <ClCompile Include="..\AtacarEsq.cpp" />
     <ClCompile Include="..\CopperOreObj.cpp" />
+    <ClCompile Include="..\CreditScene.cpp" />
     <ClCompile Include="..\Enemigo.cpp" />
-    <ClCompile Include="..\Esqueletillo.cpp" />
     <ClCompile Include="..\Estado.cpp" />
     <ClCompile Include="..\EstadoEsq.cpp" />
     <ClCompile Include="..\Estar.cpp" />
@@ -27,10 +27,12 @@
     <ClCompile Include="..\GoldOreObj.cpp" />
     <ClCompile Include="..\GroundObj.cpp" />
     <ClCompile Include="..\Health.cpp" />
+    <ClCompile Include="..\HelpScene.cpp" />
     <ClCompile Include="..\Inventory.cpp" />
     <ClCompile Include="..\IronBarObj.cpp" />
     <ClCompile Include="..\IronOreObj.cpp" />
     <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="..\MenuScene.cpp" />
     <ClCompile Include="..\Pickaxe.cpp" />
     <ClCompile Include="..\Player.cpp" />
     <ClCompile Include="..\Recipe.cpp" />
@@ -42,6 +44,7 @@
     <ClCompile Include="..\SilverOreObj.cpp" />
     <ClCompile Include="..\SoundController.cpp" />
     <ClCompile Include="..\Sprite.cpp" />
+    <ClCompile Include="..\SwordObj.cpp" />
     <ClCompile Include="..\Text.cpp" />
     <ClCompile Include="..\Texture.cpp" />
     <ClCompile Include="..\TextureFactory.cpp" />
@@ -51,10 +54,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Atacar.h" />
+<<<<<<< HEAD
     <ClInclude Include="..\AtacarEsq.h" />
+=======
+    <ClInclude Include="..\BasicScene.h" />
+>>>>>>> 313d88f182b102fe15c959afa8c917fa11302d2f
     <ClInclude Include="..\CopperOreObj.h" />
+    <ClInclude Include="..\CreditScene.h" />
+    <ClInclude Include="..\EndScene.h" />
     <ClInclude Include="..\Enemigo.h" />
-    <ClInclude Include="..\Esqueletillo.h" />
     <ClInclude Include="..\Estado.h" />
     <ClInclude Include="..\EstadoEsq.h" />
     <ClInclude Include="..\Estar.h" />
@@ -66,10 +74,12 @@
     <ClInclude Include="..\GoldOreObj.h" />
     <ClInclude Include="..\GroundObj.h" />
     <ClInclude Include="..\Health.h" />
+    <ClInclude Include="..\HelpScene.h" />
     <ClInclude Include="..\Inventory.h" />
     <ClInclude Include="..\IronBarObj.h" />
     <ClInclude Include="..\IronOreObj.h" />
     <ClInclude Include="..\Item.h" />
+    <ClInclude Include="..\MenuScene.h" />
     <ClInclude Include="..\Pickaxe.h" />
     <ClInclude Include="..\Player.h" />
     <ClInclude Include="..\Recipe.h" />
@@ -81,6 +91,7 @@
     <ClInclude Include="..\SilverOreObj.h" />
     <ClInclude Include="..\SoundController.h" />
     <ClInclude Include="..\Sprite.h" />
+    <ClInclude Include="..\SwordObj.h" />
     <ClInclude Include="..\Text.h" />
     <ClInclude Include="..\Texture.h" />
     <ClInclude Include="..\TextureFactory.h" />

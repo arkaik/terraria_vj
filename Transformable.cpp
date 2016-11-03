@@ -57,6 +57,11 @@ glm::vec2 Transformable::getScale()
 	return scale;
 }
 
+glm::vec2 Transformable::getOrigin()
+{
+	return origin;
+}
+
 glm::mat4 Transformable::getTransform()
 {
 	if (needUpdate) {
