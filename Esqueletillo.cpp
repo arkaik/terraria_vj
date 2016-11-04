@@ -45,7 +45,6 @@ void Esqueletillo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgr
 
 void Esqueletillo::update(int deltaTime)
 {
-	sprite->update(deltaTime);
 	EstadoEsq* nuevo = estado->cambiarEstado();
 	if (nuevo != NULL) {
 		if (nuevo != estado) {
@@ -54,6 +53,7 @@ void Esqueletillo::update(int deltaTime)
 		}
 	}
 	estado->update(deltaTime);
+	sprite->update(deltaTime);
 }
 
 void Esqueletillo::render()
@@ -67,7 +67,7 @@ void Esqueletillo::setTileMap(TileMap *tileMap)
 	map = tileMap;
 }
 
-void Esqueletillo::setPosition(const glm::vec2 &pos)
+void Esqueletillo::setPosition(const glm::ivec2 &pos)
 {
 	posEsq = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEsq.x), float(tileMapDispl.y + posEsq.y)));

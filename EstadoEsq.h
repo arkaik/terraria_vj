@@ -20,7 +20,7 @@ protected:
 	glm::ivec2 tileMapDisplay;
 	glm::vec2 getCoordsRealesEsq();
 	TileMap* map;
-	static const float radioDeteccionPlayer;
+	float radioDeteccionPlayer;
 	bool jugadorCerca();
 };
 

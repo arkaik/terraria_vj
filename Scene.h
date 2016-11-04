@@ -11,7 +11,7 @@
 #include "Inventory.h"
 #include "Health.h"
 #include "Esqueletillo.h"
-
+#include "Abeja.h"
 
 
 // Scene contains all the entities of our game.
@@ -53,6 +53,7 @@ private:
 	Sprite* background;
 	bool bend;
 	Esqueletillo* esq;
+	Abeja* ab;
 };
 
 

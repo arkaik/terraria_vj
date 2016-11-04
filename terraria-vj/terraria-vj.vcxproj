@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Abeja.cpp" />
     <ClCompile Include="..\Atacar.cpp" />
     <ClCompile Include="..\AtacarEsq.cpp" />
     <ClCompile Include="..\CopperOreObj.cpp" />
@@ -56,6 +57,7 @@
     <ClCompile Include="..\Transformable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Abeja.h" />
     <ClInclude Include="..\Atacar.h" />
     <ClInclude Include="..\AtacarEsq.h" />
     <ClInclude Include="..\BasicScene.h" />
