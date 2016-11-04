@@ -15,6 +15,10 @@ Estado* Atacar::cambiarEstado() {
 }
 
 void Atacar::update(int deltaTime) {
+	if (*vidaEn <= 5) {
+		furioso = true;
+		spEnem->changeAnimation(3);
+	}
 	if (ataquesRealizados < numAtaques) { 
 		hacerAtaque(deltaTime);
 	}
@@ -54,7 +58,7 @@ void Atacar::hacerAtaque(int deltaTime) {
 			}
 			posPlayerAnterior = posP;
 			posEnemigoAnterior = glm::vec2(posEnemigo->x, posEnemigo->y);
-			velocidad = 1;
+			++velocidadFuria;
 			direccion.x = posP.x - posEnemigo->x; direccion.y = posP.y - posEnemigo->y;
 			float hyp = sqrt(direccion.x*direccion.x + direccion.y*direccion.y);
 			if (hyp != 0) {

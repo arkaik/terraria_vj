@@ -31,4 +31,5 @@ private:
 	TileMap *map;
 	Estado* estado;
 	Scene* sc;
+	int f;
 };

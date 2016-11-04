@@ -6,6 +6,7 @@ Estado::Estado(Scene* sc, glm::ivec2* pe,const glm::ivec2& tMD, Sprite* sp, int*
 	setPosition(pe);
 	setSprite(sp);
 	tileMapDisplay = tMD;
+	vidaEn = vida;
 }
 
 
