@@ -20,6 +20,7 @@ public:
 	void decrementLife(int hp);
 	void incrementLife();
 
+	int getPoints();
 private:
 	Texture tex;
 	// Sprites dels cor

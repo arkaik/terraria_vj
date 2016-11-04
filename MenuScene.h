@@ -28,4 +28,5 @@ private:
 	bool bplay;
 	bool bhelp;
 	bool bcredit;
+	bool bexit;
 };

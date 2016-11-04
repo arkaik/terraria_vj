@@ -38,6 +38,7 @@ void MenuScene::init()
 	bplay = false;
 	bhelp = false;
 	bcredit = false;
+	bexit = false;
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	button1 = Sprite::createSprite("images/gui.png", glm::vec4(0, 0, 64, 32), &texProgram);
@@ -64,6 +65,8 @@ void MenuScene::update(int deltatime)
 			bhelp = true;
 		else if (ppos.y < 400 && ppos.y > 350 && ppos.x > 500)
 			bcredit = true;
+		else if (ppos.y < 450 && ppos.y > 400 && ppos.x > 500)
+			Game::instance().exit();
 	}
 	
 }

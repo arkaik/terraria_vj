@@ -117,6 +117,11 @@ glm::ivec2 Game::getMousePosition() {
 	return mouse_pos;
 }
 
+void Game::exit()
+{
+	bPlay = true;
+}
+
 
 
 

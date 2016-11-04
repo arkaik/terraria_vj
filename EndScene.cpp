@@ -26,7 +26,7 @@ void EndScene::init()
 
 void EndScene::update(int deltatime)
 {
-	if (Game::instance().getReleasedMouseKey(0)) {
+	if (Game::instance().getReleasedKey(27)) {
 		bmenu = true;
 	}
 }

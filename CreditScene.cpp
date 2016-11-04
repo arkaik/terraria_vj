@@ -37,7 +37,7 @@ void CreditScene::init()
 
 void CreditScene::update(int deltatime)
 {
-	if (Game::instance().getReleasedMouseKey(0)) {
+	if (Game::instance().getReleasedKey(27)) {
 		bmenu = true;
 	}
 }

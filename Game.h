@@ -48,6 +48,7 @@ public:
 	bool getReleasedMouseKey(int key);
 	glm::ivec2 getMousePosition();
 
+	void exit();
 private:
 	bool bPlay;                       // Continue to play game?
 	BasicScene* scene;                      // Scene to render
