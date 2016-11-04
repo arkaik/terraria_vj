@@ -5,11 +5,12 @@
 #include "TileMap.h"
 #include "Sprite.h"
 #include "EstadoEsq.h"
+#include "Player.h"
 
 class Esqueletillo
 {
 public:
-	Esqueletillo(glm::vec2* posP, const glm::ivec2& peq);
+	Esqueletillo(Player* p, const glm::ivec2& peq);
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();
@@ -21,7 +22,7 @@ public:
 	glm::vec2 getRealPosition();
 private:
 	glm::ivec2 tileMapDispl, posEsq;
-	glm::vec2* posPlayer;
+	Player* player;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap* map;

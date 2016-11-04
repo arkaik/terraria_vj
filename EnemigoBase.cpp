@@ -31,4 +31,3 @@ void EnemigoBase::lastAction()
 {
 
 }
-

@@ -29,7 +29,6 @@ public:
 	void addToInventory(GameObject *go);
 	void addEnemy(EnemigoBase* eb);
 	vector<EnemigoBase*> * getCloseEnemies();
-	
 private:
 	bool bJumping;
 	glm::ivec2 tileMapDispl, posPlayer;

@@ -9,8 +9,8 @@ enum PlayerAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
 };
 
-Esqueletillo::Esqueletillo(glm::vec2* posP, const glm::ivec2& peq) {
-	posPlayer = posP;
+Esqueletillo::Esqueletillo(Player* p, const glm::ivec2& peq) {
+	player = p;
 	posEsq = peq;
 }
 
@@ -39,7 +39,7 @@ void Esqueletillo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgr
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEsq.x), float(tileMapDispl.y + posEsq.y)));
-	estado = new EstarEsq(posPlayer, &posEsq, tileMapDispl, sprite, map);
+	estado = new EstarEsq(player, &posEsq, tileMapDispl, sprite, map);
 }
 
 void Esqueletillo::update(int deltaTime)
