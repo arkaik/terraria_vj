@@ -6,6 +6,7 @@
 #include "TileMap.h"
 #include "Inventory.h"
 #include "EnemigoBase.h"
+#include "Health.h"
 #include <list>
 
 
@@ -23,6 +24,8 @@ public:
 	
 	void setInventory(Inventory *inv);
 	void setTileMap(TileMap *tileMap);
+	void setHealth(Health* h);
+	void decrementLife();
 	void setPosition(const glm::vec2 &pos);
 	glm::vec2 getPosition();
 	glm::vec2 getMapPosition();
@@ -31,6 +34,7 @@ public:
 	void addEnemy(EnemigoBase* eb);
 	std::list<EnemigoBase*> * getCloseEnemies();
 	bool overlap(glm::vec4 bound);
+	int getHealthPoints();
 private:
 	bool bJumping;
 	glm::ivec2 tileMapDispl, posPlayer;
@@ -39,6 +43,7 @@ private:
 	Sprite *sprite;
 	TileMap *map;
 	Inventory *inventory;
+	Health* heal;
 
 	float radius;
 	std::list<EnemigoBase*> collisionList;

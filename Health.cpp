@@ -63,3 +63,8 @@ void Health::incrementLife()
 	health_points += 1;
 	if (health_points > 10) health_points = 10;
 }
+
+int Health::getPoints()
+{
+	return health_points;
+}

@@ -38,6 +38,7 @@ void MenuScene::init()
 	bplay = false;
 	bhelp = false;
 	bcredit = false;
+	bexit = false;
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	button1 = Sprite::createSprite("images/gui.png", glm::vec4(0, 0, 64, 32), &texProgram);
@@ -58,12 +59,14 @@ void MenuScene::update(int deltatime)
 	if (Game::instance().getReleasedMouseKey(0))
 	{
 		glm::vec2 ppos = Game::instance().getMousePosition();
-		if (ppos.y < 300 && ppos.y > 250 && ppos.x > 500)
+		if (ppos.y < 300 && ppos.y > 250 && ppos.x > 500 && ppos.y < 700)
 			bplay = true;
-		else if (ppos.y < 350 && ppos.y > 300 && ppos.x > 500)
+		else if (ppos.y < 350 && ppos.y > 300 && ppos.x > 500 && ppos.y < 700)
 			bhelp = true;
-		else if (ppos.y < 400 && ppos.y > 350 && ppos.x > 500)
+		else if (ppos.y < 400 && ppos.y > 350 && ppos.x > 500 && ppos.y < 700)
 			bcredit = true;
+		else if (ppos.y < 450 && ppos.y > 400 && ppos.x > 500 && ppos.y < 700)
+			Game::instance().exit();
 	}
 	
 }

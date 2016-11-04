@@ -58,7 +58,7 @@ void Scene::init()
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	player->setTileMap(map);
 	//Al crear el enemigo se le pasa su posicion
-	enemigo = new Enemigo(this, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize() - 20* map->getTileSize()), 10);
+	enemigo = new Enemigo(this, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize() - 20* map->getTileSize()), 50);
 	enemigo->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	enemigo->setTileMap(map);
 	esq = new Esqueletillo(player, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 20* map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()),5);
@@ -70,6 +70,7 @@ void Scene::init()
 	player->setInventory(gui);
 	gui2 = new Health();
 	gui2->init(texProgram);
+	player->setHealth(gui2);
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 	background = Sprite::createSprite("images/Background_92.png", glm::vec4(0, 0, 1200, 600), &texProgram);
@@ -91,6 +92,10 @@ void Scene::update(int deltaTime)
 	float ny = ppos.y - float(SCREEN_HEIGHT) / 2;
 	projection = glm::ortho(nx, ppos.x + float(SCREEN_WIDTH) / 2, ppos.y + float(SCREEN_HEIGHT) / 2, ny);
 	ftcMatrix = glm::translate(glm::mat4(1.f), glm::vec3(nx, ny, 0.f));
+
+	if (player->getHealthPoints() <= 0) {
+		theEnd();
+	}
 }
 
 void Scene::render()

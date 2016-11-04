@@ -28,6 +28,7 @@ Enemigo::Enemigo(Scene* escena, const glm::ivec2 &pos, int vida) : EnemigoBase(v
 
 void Enemigo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
+	setInCollisionList(false);
 	name = "Boss";
 	spritesheet.loadFromFile("images/eye.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(110, 162), glm::vec2(0.107, 0.632), &spritesheet, &shaderProgram);
@@ -88,13 +89,15 @@ void Enemigo::update(int deltaTime)
 	glm::vec2 ppos = sc->getPlayerPosition();
 	glm::ivec2 diff = glm::ivec2(std::abs(ppos.x - posEnemigo.x), std::abs(ppos.y - posEnemigo.y));
 	float dist = std::sqrt(diff.x*diff.x + diff.y*diff.y);
-	if (dist < 96 && !inCollisionList)
+	if (dist < 194 && !inCollisionList)
 	{
 		sc->getPlayer()->addEnemy(this);
 		inCollisionList = true;
 	}
 
-
+	/*if (sc->getPlayer()->overlap(glm::vec4(sprite->getPosition(), 100, 200))) {
+		sc->getPlayer()->decrementLife();
+	}*/
 	
 	sprite->update(deltaTime);
 	Estado* nuevo = estado->cambiarEstado();

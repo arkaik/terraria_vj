@@ -16,6 +16,7 @@ Esqueletillo::Esqueletillo(Player* p, const glm::ivec2& peq, int vida) : Enemigo
 
 void Esqueletillo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, TileMap* m)
 {
+	setInCollisionList(false);
 	setTileMap(m);
 	spritesheet.loadFromFile("images/Skeleton.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(30, 45), glm::vec2(0.75, 1.0), &spritesheet, &shaderProgram);

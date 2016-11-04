@@ -52,6 +52,8 @@ void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 
+
+
 	if (Game::instance().getMouseKey(0))
 	{
 		glm::vec2 mpos = Game::instance().getMousePosition();
@@ -145,6 +147,16 @@ void Player::setTileMap(TileMap *tileMap)
 	map = tileMap;
 }
 
+void Player::setHealth(Health * h)
+{
+	heal = h;
+}
+
+void Player::decrementLife()
+{
+	heal->decrementLife();
+}
+
 void Player::setPosition(const glm::vec2 &pos)
 {
 	posPlayer = pos;
@@ -182,12 +194,16 @@ std::list<EnemigoBase*> * Player::getCloseEnemies()
 
 bool Player::overlap(glm::vec4 bound)
 {
-	/*glm::vec2 ppos = getPosition();
+	glm::vec2 ppos = getPosition();
 
-	if (ppos.x < RectB.Right && ppos.x + 16 > RectB.Left && ppos.y < RectB.Bottom && ppos.y + 32 > RectB.Top)
+	if ((ppos.x < bound.x+bound.z) && (ppos.x + 16 > bound.x) && (ppos.y < bound.y+bound.w) && (ppos.y + 32 > bound.y))
 		return true;
-	*/
-	return false;
+	else return false;
+}
+
+int Player::getHealthPoints()
+{
+	return heal->getPoints();
 }
 
 
