@@ -2,6 +2,7 @@
 #include <cmath>
 #include <glm/glm.hpp>
 #include <string>
+#include "Sprite.h"
 
 class EnemigoBase {
 public:
@@ -15,11 +16,13 @@ public:
 	std::string getName();
 	virtual void lastAction();
 	int getMaxVida();
+	void setInCollisionList(bool b);
 protected:
 	int vidaMax;
 	int vida;
 	glm::vec2 posEnemigo;
 	std::string name;
 	bool inCollisionList;
+	Sprite* sprite;
 };
 

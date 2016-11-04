@@ -57,9 +57,10 @@ void Enemigo::update(int deltaTime)
 	glm::vec2 ppos = sc->getPlayerPos();
 	glm::ivec2 diff = glm::ivec2(std::abs(ppos.x - posEnemigo.x), std::abs(ppos.y - posEnemigo.y));
 	float dist = std::sqrt(diff.x*diff.x + diff.y*diff.y);
-	if (dist < 8)
+	if (dist < 8 & !inCollisionList)
 	{
 		sc->getPlayer()->addEnemy(this);
+		inCollisionList = true;
 	}
 	
 	sprite->update(deltaTime);

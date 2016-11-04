@@ -10,7 +10,7 @@ public:
 private:
 	glm::ivec2 posInicial;
 	bool haciaIzq;
-	static const float distanciaRecorrido;
+	float distanciaRecorrido;
 };
 
 #endif
