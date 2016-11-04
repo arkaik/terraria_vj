@@ -1,4 +1,6 @@
 #include "EndScene.h"
+#include "MenuScene.h"
+#include "Game.h"
 
 EndScene::EndScene()
 {
@@ -14,20 +16,38 @@ EndScene::~EndScene()
 
 void EndScene::init()
 {
+	initShaders();
+	bmenu = false;
+	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+
 	anywhere = Sprite::createSprite("images/gui.png", glm::vec4(288, 320, 192, 32), &texProgram);
+	anywhere->setPosition(450, 300);
 }
 
 void EndScene::update(int deltatime)
 {
+	if (Game::instance().getReleasedMouseKey(0)) {
+		bmenu = true;
+	}
 }
 
 void EndScene::render()
 {
+	texProgram.use();
+	texProgram.setUniformMatrix4f("projection", projection);
+	//texProgram.setUniformMatrix4f("ftcMatrix", ftcMatrix);
+	texProgram.default();
+
 	anywhere->render();
 }
 
 BasicScene * EndScene::changeState()
 {
+	if (bmenu) {
+		BasicScene* bs = new MenuScene();
+		bs->init();
+		return bs;
+	}
 	return this;
 }
 

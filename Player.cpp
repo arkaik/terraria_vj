@@ -181,4 +181,11 @@ std::list<EnemigoBase*> * Player::getCloseEnemies()
 	return &collisionList;
 }
 
+bool Player::overlap(glm::vec4 bound)
+{
+	/*if (RectA.Left < RectB.Right && RectA.Right > RectB.Left &&
+		RectA.Top < RectB.Bottom && RectA.Bottom > RectB.Top)*/
+	return false;
+}
+
 

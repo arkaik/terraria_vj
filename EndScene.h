@@ -23,4 +23,6 @@ private:
 
 	Sprite* end;
 	Sprite* anywhere;
+
+	bool bmenu;
 };

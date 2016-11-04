@@ -141,12 +141,9 @@
     <ClCompile Include="..\EnemigoBase.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="..\EndScene.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-=======
->>>>>>> 9e67d9582fe8e328fa79fbd7f294fc563327bfa1
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Game.h">
