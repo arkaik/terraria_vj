@@ -1,5 +1,5 @@
 #include "EstadoEsq.h"
-const float EstadoEsq::radioDeteccionPlayer = 30.0f;
+
 
 EstadoEsq::EstadoEsq(Player* p, glm::ivec2* posEsq, const glm::ivec2& tMD, Sprite* sp, TileMap* m)
 {
@@ -8,6 +8,7 @@ EstadoEsq::EstadoEsq(Player* p, glm::ivec2* posEsq, const glm::ivec2& tMD, Sprit
 	setSprite(sp);
 	tileMapDisplay = tMD;
 	map = m;
+	radioDeteccionPlayer = 10.0f*map->getTileSize();
 }
 
 

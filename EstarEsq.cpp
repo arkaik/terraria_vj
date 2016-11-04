@@ -74,7 +74,7 @@ void EstarEsq::update(int deltaTime) {
 	posEsq->x = nuevaPos;
 	float posYAnt = posEsq->y;
 	posEsq->y += FALL_STEP;
-	if (map->inbounds(glm::vec2(nuevaPos, posEsq->y))) {
+	if (map->inbounds(glm::vec2(posEsq->x, posEsq->y))) {
 		if (map->collisionMoveDown(*posEsq, glm::ivec2(32, 32), &(posEsq->y))) {
 			posEsq->y = posYAnt;
 		}

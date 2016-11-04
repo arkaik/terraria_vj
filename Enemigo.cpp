@@ -15,8 +15,10 @@
 
 enum EnemigoAnims
 {
-	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
+	 STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, STAND, MOVE, STAND_F, MOVE_F
 };
+
+//STAND_F, MOVE_F, STAND, MOVE,
 
 Enemigo::Enemigo(Scene* escena, const glm::ivec2 &pos, int vida) : EnemigoBase(vida) {
 	sc = escena;
@@ -26,9 +28,37 @@ Enemigo::Enemigo(Scene* escena, const glm::ivec2 &pos, int vida) : EnemigoBase(v
 void Enemigo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	name = "Boss";
+	spritesheet.loadFromFile("images/eye.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(110, 162), glm::vec2(0.107, 0.632), &spritesheet, &shaderProgram);
+	sprite->setNumberAnimations(4);
+
+	sprite->setAnimationSpeed(STAND, 8);
+	sprite->addKeyframe(STAND, glm::vec2(0.f, 0.f));
+
+	sprite->setAnimationSpeed(MOVE, 8);
+	sprite->addKeyframe(MOVE, glm::vec2(0.f, 0.f));
+	sprite->addKeyframe(MOVE, glm::vec2(0.108f, 0.f));
+	sprite->addKeyframe(MOVE, glm::vec2(0.216f, 0.f));
+
+	sprite->setAnimationSpeed(STAND_F, 8);
+	sprite->addKeyframe(STAND_F, glm::vec2(0.324f, 0.f));
+
+	sprite->setAnimationSpeed(MOVE_F, 8);
+	sprite->addKeyframe(MOVE_F, glm::vec2(0.324f, 0.f));
+	sprite->addKeyframe(MOVE_F, glm::vec2(0.432f, 0.f));
+	sprite->addKeyframe(MOVE_F, glm::vec2(0.54f, 0.f));
+
+	sprite->changeAnimation(STAND);
+
+/*	sprite->setAnimationSpeed(MOVE_RIGHT, 8);
+	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25, 0.f));
+	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25, 0.25f));
+	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25, 0.5f));
+
 	spritesheet.loadFromFile("images/bub.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);
+
 
 	sprite->setAnimationSpeed(STAND_LEFT, 8);
 	sprite->addKeyframe(STAND_LEFT, glm::vec2(0.f, 0.f));
@@ -46,7 +76,7 @@ void Enemigo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25, 0.25f));
 	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25, 0.5f));
 
-	sprite->changeAnimation(0);
+	sprite->changeAnimation(0);*/
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemigo.x), float(tileMapDispl.y + posEnemigo.y)));
 	estado = new Estar(sc, &posEnemigo, tileMapDispl,sprite, &vida);

@@ -63,7 +63,7 @@ void Player::update(int deltaTime)
 		}
 	}
 
-	if(Game::instance().getKey('a'))
+	if(Game::instance().getKey('a') || Game::instance().getKey('A'))
 	{  
 		if(sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
@@ -74,7 +74,7 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_LEFT);
 		}
 	}
-	else if(Game::instance().getKey('d'))
+	else if(Game::instance().getKey('d') || Game::instance().getKey('D'))
 	{
 		if(sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);
@@ -118,7 +118,7 @@ void Player::update(int deltaTime)
 		posPlayer.y += FALL_STEP;
 		if(map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
-			if(Game::instance().getKey('w'))
+			if(Game::instance().getKey('w') || Game::instance().getKey('W'))
 			{
 				bJumping = true;
 				jumpAngle = 0;
