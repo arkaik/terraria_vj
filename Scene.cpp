@@ -58,12 +58,11 @@ void Scene::init()
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	player->setTileMap(map);
 	//Al crear el enemigo se le pasa su posicion
-	enemigo = new Enemigo(this, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize() - 20* map->getTileSize()));
+	enemigo = new Enemigo(this, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize() - 20* map->getTileSize()), 10);
 	enemigo->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	enemigo->setTileMap(map);
-	//esq = new Esqueletillo(player, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 20* map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-	//esq->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	//esq->setTileMap(map);
+	esq = new Esqueletillo(player, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 20* map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()),5);
+	esq->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 	gui = new Inventory();
 	gui->init(texProgram);
 	player->setInventory(gui);
@@ -81,7 +80,7 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	enemigo->update(deltaTime);
-	//esq->update(deltaTime);
+	esq->update(deltaTime);
 	gui->update(deltaTime);
 	gui2->update(deltaTime);
 	glm::vec2 ppos = player->getPosition();
@@ -102,6 +101,7 @@ void Scene::render()
 	map->render();
 	player->render();
 	enemigo->render();
+	esq->render();
 	gui->render();
 	gui2->render();
 	

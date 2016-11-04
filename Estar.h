@@ -4,7 +4,7 @@
 #include "Estado.h"
 class Estar : public Estado {
 public:
-	Estar(Scene* sc, glm::ivec2* pe,const glm::ivec2& tMD, Sprite* sp);
+	Estar(Scene* sc, glm::ivec2* pe,const glm::ivec2& tMD, Sprite* sp, int*vida);
 	Estado* cambiarEstado();
 	void update(int deltaTime);
 private:

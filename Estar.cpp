@@ -5,7 +5,7 @@
 #include "Enemigo.h"
 #include <iostream>
 
-Estar::Estar(Scene* sc,glm::ivec2* pe, const glm::ivec2& tMD, Sprite* sp):Estado(sc, pe,tMD, sp) {
+Estar::Estar(Scene* sc,glm::ivec2* pe, const glm::ivec2& tMD, Sprite* sp, int* vida):Estado(sc, pe,tMD, sp, vida) {
 	numVueltas = 0;
 	angulo = 0.0f;
 	posInicial = glm::vec2(pe->x,pe->y);
@@ -14,7 +14,7 @@ Estar::Estar(Scene* sc,glm::ivec2* pe, const glm::ivec2& tMD, Sprite* sp):Estado
 Estado* Estar::cambiarEstado() {
 	if (numVueltas == numCiclos && jugadorCerca()) {
 		std::cout << "cambio a atacar" << std::endl;
-		return new Atacar(escena, posEnemigo,tileMapDisplay,spEnem);
+		return new Atacar(escena, posEnemigo,tileMapDisplay,spEnem, vidaEn);
 	}
 	return this;
 }

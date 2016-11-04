@@ -9,13 +9,14 @@ enum PlayerAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
 };
 
-Esqueletillo::Esqueletillo(Player* p, const glm::ivec2& peq) {
+Esqueletillo::Esqueletillo(Player* p, const glm::ivec2& peq, int vida) : EnemigoBase(vida) {
 	player = p;
 	posEsq = peq;
 }
 
-void Esqueletillo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
+void Esqueletillo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, TileMap* m)
 {
+	setTileMap(m);
 	spritesheet.loadFromFile("images/bub.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);

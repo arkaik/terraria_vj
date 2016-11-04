@@ -10,8 +10,8 @@
 class Esqueletillo : public EnemigoBase
 {
 public:
-	Esqueletillo(Player* p, const glm::ivec2& peq);
-	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
+	Esqueletillo(Player* p, const glm::ivec2& peq, int vida);
+	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, TileMap* m);
 	void update(int deltaTime);
 	void render();
 

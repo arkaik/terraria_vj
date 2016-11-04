@@ -7,7 +7,8 @@ EnemigoBase::EnemigoBase()
 }
 
 EnemigoBase::EnemigoBase(int v) {
-	vida = v;
+	vidaMax = v;
+	vida = vidaMax;
 }
 
 int EnemigoBase::getVida() { return vida; }
@@ -33,6 +34,7 @@ void EnemigoBase::lastAction()
 
 }
 
+int EnemigoBase::getMaxVida() { return vidaMax; }
 void EnemigoBase::setInCollisionList(bool b)
 {
 	inCollisionList = b;

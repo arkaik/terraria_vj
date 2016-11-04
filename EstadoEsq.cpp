@@ -7,7 +7,7 @@ EstadoEsq::EstadoEsq(Player* p, glm::ivec2* posEsq, const glm::ivec2& tMD, Sprit
 	setPosition(posEsq);
 	setSprite(sp);
 	tileMapDisplay = tMD;
-	map = map;
+	map = m;
 }
 
 

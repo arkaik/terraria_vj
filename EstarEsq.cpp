@@ -2,9 +2,10 @@
 #include "AtacarEsq.h"
 #include <iostream>
 
-const float EstarEsq::distanciaRecorrido = 5.0f;
+#define FALL_STEP 4.0f
 
 EstarEsq::EstarEsq(Player* p, glm::ivec2* pe, const glm::ivec2& tMD, Sprite* sp, TileMap* m) :EstadoEsq(p, pe, tMD, sp, m) {
+	distanciaRecorrido = 2.0f*map->getTileSize();
 	posInicial = glm::vec2(pe->x, pe->y);
 	bool choque = false;
 	for (int i = posInicial.x; !choque && i < posInicial.x + distanciaRecorrido; ++i) {
@@ -45,33 +46,39 @@ EstadoEsq* EstarEsq::cambiarEstado() {
 void EstarEsq::update(int deltaTime) {
 	//optimizacion
 	//int nuevaPos = (haciaIzq) ? posInicial.x - 2.0f : posInicial.x + 2.0f;
+	float nuevaPos = posEsq->x;
 	if (haciaIzq) {
-		float nuevaPos = posInicial.x - 2.0f;
-		//TODO: Comprobar si estoy dentro de los limites del mapa
+		nuevaPos -= 2.0f;
 		if (nuevaPos < posInicial.x - distanciaRecorrido) {
 			haciaIzq = false;
 		}
 		else {
 			if (map->collisionMoveLeft(glm::vec2(nuevaPos,posEsq->y), glm::vec2(32, 32))) {
-				posEsq->x = posEsq->x + 2.0f;
+				nuevaPos += 2.0f;//dejo la nueva pos como estaba
 				haciaIzq = false;
 			}
 		}
 	}
 	else {
-		float nuevaPos = posInicial.x + 2.0f;
-		if (map->inbounds(glm::ivec2(nuevaPos,posEsq->y))) {
-
-		}
+		nuevaPos +=  2.0f;
 		if (posInicial.x + distanciaRecorrido < nuevaPos) {
 			haciaIzq = true;
 		}
 		else {
 			if (map->collisionMoveRight(glm::vec2(nuevaPos, posEsq->y), glm::vec2(32, 32))) {
-				posEsq->x = posEsq->x - 2.0f;
+				nuevaPos -= 2.0f;
 				haciaIzq = true;
 			}
 		}
 	}
+	posEsq->x = nuevaPos;
+	float posYAnt = posEsq->y;
+	posEsq->y += FALL_STEP;
+	if (map->inbounds(glm::vec2(nuevaPos, posEsq->y))) {
+		if (map->collisionMoveDown(*posEsq, glm::ivec2(32, 32), &(posEsq->y))) {
+			posEsq->y = posYAnt;
+		}
+	}
+	else posEsq->y = posYAnt;
 	spEsq->setPosition(glm::vec2(float(tileMapDisplay.x + posEsq->x), float(tileMapDisplay.y + posEsq->y)));
 }
