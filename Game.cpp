@@ -119,7 +119,7 @@ glm::ivec2 Game::getMousePosition() {
 
 void Game::exit()
 {
-	bPlay = true;
+	bPlay = false;
 }
 
 

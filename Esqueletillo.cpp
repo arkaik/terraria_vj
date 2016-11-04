@@ -2,6 +2,7 @@
 #include <GL/glut.h>
 #include "Esqueletillo.h"
 #include "EstarEsq.h"
+#include "Scene.h"
 
 const float distanciaRecorrido = 2.0f;
 enum PlayerAnims
@@ -9,9 +10,10 @@ enum PlayerAnims
 	STAND_LEFT
 };
 
-Esqueletillo::Esqueletillo(Player* p, const glm::ivec2& peq, int vida) : EnemigoBase(vida) {
+Esqueletillo::Esqueletillo(Player* p, const glm::ivec2& peq, int vida, Scene* escena) : EnemigoBase(vida) {
 	player = p;
 	posEsq = peq;
+	sc = escena;
 }
 
 void Esqueletillo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, TileMap* m)
@@ -46,6 +48,16 @@ void Esqueletillo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgr
 
 void Esqueletillo::update(int deltaTime)
 {
+	/*glm::vec2 ppos = sc->getPlayerPosition();
+	glm::vec2 epos = sprite->getPosition();
+	glm::ivec2 diff = glm::ivec2(std::abs(ppos.x - epos.x), std::abs(ppos.y - epos.y));
+	float dist = std::sqrt(diff.x*diff.x + diff.y*diff.y);
+	if (dist < 64 && !inCollisionList)
+	{
+		sc->getPlayer()->addEnemy(this);
+		inCollisionList = true;
+	}*/
+
 	EstadoEsq* nuevo = estado->cambiarEstado();
 	if (nuevo != NULL) {
 		if (nuevo != estado) {
@@ -86,4 +98,8 @@ glm::vec2 Esqueletillo::getMapPosition()
 {
 	glm::vec2 ret = (glm::ivec2(sprite->getPosition()) - tileMapDispl) / 16;
 	return glm::vec2(ret.y, ret.x);
+}
+
+void Esqueletillo::lastAction() {
+	
 }

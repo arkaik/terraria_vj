@@ -25,6 +25,8 @@ void EndScene::init()
 	end = Sprite::createSprite("images/gui.png", glm::vec4(288, 386, 192, 32), &texProgram);
 	end->setPosition(450, 200);
 	end->setScale(2, 2);
+	background = Sprite::createSprite("images/MapBG8.png", glm::vec4(0, 0, 112, 65), &texProgram);
+	background->setScale(glm::vec2(12, 12));
 }
 
 void EndScene::update(int deltatime)
@@ -41,6 +43,8 @@ void EndScene::render()
 	//texProgram.setUniformMatrix4f("ftcMatrix", ftcMatrix);
 	texProgram.default();
 
+	background->render();
+	end->render();
 	anywhere->render();
 }
 

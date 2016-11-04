@@ -26,13 +26,16 @@ void CreditScene::init()
 
 	n1 = Sprite::createSprite("images/gui.png",glm::vec4(0,320, 288, 64), &texProgram);
 	//n1->setOrigin(140,32);
-	n1->setPosition(400, 400);
+	n1->setPosition(400, 300);
 	n2 = Sprite::createSprite("images/gui.png", glm::vec4(0, 384, 256, 64), &texProgram);
 	//n2->setOrigin(126, 32);
-	n2->setPosition(400, 450);
+	n2->setPosition(400, 350);
 
 	background = Sprite::createSprite("images/MapBG11.png", glm::vec4(0, 0, 112, 65), &texProgram);
 	background->setScale(glm::vec2(12, 12));
+
+	anywhere = Sprite::createSprite("images/gui.png", glm::vec4(288, 320, 192, 32), &texProgram);
+	anywhere->setPosition(450, 550);
 }
 
 void CreditScene::update(int deltatime)
@@ -52,6 +55,8 @@ void CreditScene::render()
 	background->render();
 	n1->render();
 	n2->render();
+	anywhere->render();
+
 }
 
 BasicScene * CreditScene::changeState()
