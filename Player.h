@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "TileMap.h"
 #include "Inventory.h"
+#include "EnemigoBase.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -26,6 +27,8 @@ public:
 	glm::vec2 getMapPosition();
 	glm::ivec2 getPlayerPosition();
 	void addToInventory(GameObject *go);
+	void addEnemy(EnemigoBase* eb);
+	vector<EnemigoBase*> * getCloseEnemies();
 	
 private:
 	bool bJumping;
@@ -37,7 +40,7 @@ private:
 	Inventory *inventory;
 
 	float radius;
-	//vector<Enemigo> collisionList;
+	vector<EnemigoBase*> collisionList;
 };
 
 

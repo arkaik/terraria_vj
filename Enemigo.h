@@ -3,6 +3,7 @@
 #include "TileMap.h"
 #include "Estado.h"
 #include "Scene.h"
+#include "EnemigoBase.h"
 
 
 // Enemigo is basically a Sprite that represents the Enemigo. As such it has
@@ -11,7 +12,7 @@
 
 class Scene;
 
-class Enemigo
+class Enemigo : public EnemigoBase
 {
 public:
 	Enemigo(Scene* sc, const glm::ivec2 &pos);
@@ -22,6 +23,7 @@ public:
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
 	glm::vec2 getPosition();
+	void lastAction();
 private:
 	glm::ivec2 posEnemigo;
 	glm::ivec2  tileMapDispl;

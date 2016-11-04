@@ -241,7 +241,8 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size)
 	y1 = (pos.y + size.y - 1) / tileSize;
 	for(int y=y0; y<=y1; y++)
 	{
-		if(int(tileMap[y][x].getType()) != 0)
+		Tile::Type type = tileMap[y][x].getType();
+		if(type != Tile::Void && type != Tile::Border)
 			return true;
 	}
 	

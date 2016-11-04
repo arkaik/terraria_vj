@@ -171,4 +171,14 @@ void Player::addToInventory(GameObject *go)
 	inventory->addObject(go);
 }
 
+void Player::addEnemy(EnemigoBase * eb)
+{
+	collisionList.push_back(eb);
+}
+
+vector<EnemigoBase*> * Player::getCloseEnemies()
+{
+	return &collisionList;
+}
+
 

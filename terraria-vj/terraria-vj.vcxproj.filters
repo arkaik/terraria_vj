@@ -138,6 +138,12 @@
     <ClCompile Include="..\Esqueletillo.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="..\EnemigoBase.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\EndScene.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Game.h">
@@ -267,6 +273,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="..\Esqueletillo.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\EnemigoBase.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

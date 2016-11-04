@@ -102,13 +102,15 @@ void Inventory::update(int deltatime) {
 		{
 			glm::vec2 mp = Game::instance().getMousePosition() - glm::ivec2(recipesBounds.x, recipesBounds.y);
 			int tx = floor(mp.x / 55.00);
-			Recipe* r = rec_rec[tx];
-			if (r->canBuild(inv_obj)) {
-				r->useComponents(inv_obj);
-				GameObject* go = rec_obj[tx];
-				Item itgo = RecipeBook::stringToItemType(go->getName());
-				addObject(GameObjectFactory::instance().createItemObject(itgo));
-				//updateRecipes = true;
+			if (rec_rec.size() > 0) {
+				Recipe* r = rec_rec[tx];
+				if (r->canBuild(inv_obj)) {
+					r->useComponents(inv_obj);
+					GameObject* go = rec_obj[tx];
+					Item itgo = RecipeBook::stringToItemType(go->getName());
+					addObject(GameObjectFactory::instance().createItemObject(itgo));
+					//updateRecipes = true;
+				}
 			}
 			
 		}

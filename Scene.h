@@ -31,7 +31,11 @@ public:
 	BasicScene* changeState();
 	glm::vec2 getPlayerPos();
 	glm::ivec2 getPlayerPosition();
+
+	Player* getPlayer();
 	int radioDeteccionPlayer;
+	void theEnd();
+
 private:
 	void initShaders();
 
@@ -47,6 +51,7 @@ private:
 	Enemigo* enemigo;
 
 	Sprite* background;
+	bool bend;
 };
 
 

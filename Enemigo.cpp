@@ -25,6 +25,7 @@ Enemigo::Enemigo(Scene* escena, const glm::ivec2 &pos) {
 
 void Enemigo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
+	name = "Boss";
 	spritesheet.loadFromFile("images/bub.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);
@@ -53,10 +54,13 @@ void Enemigo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 void Enemigo::update(int deltaTime)
 {
-	//glm::vec2 ppos = sc->getPlayerPos();
-	//glm::ivec2 diff = glm::ivec2(std::abs(ppos.x - posEnemigo.x), std::abs(ppos.y - posEnemigo.y));
-	//float dist = std::sqrt(diff.x*diff.x + diff.y*diff.y);
-	//if (dist < 8) 
+	glm::vec2 ppos = sc->getPlayerPos();
+	glm::ivec2 diff = glm::ivec2(std::abs(ppos.x - posEnemigo.x), std::abs(ppos.y - posEnemigo.y));
+	float dist = std::sqrt(diff.x*diff.x + diff.y*diff.y);
+	if (dist < 8)
+	{
+		sc->getPlayer()->addEnemy(this);
+	}
 	
 	sprite->update(deltaTime);
 	Estado* nuevo = estado->cambiarEstado();
@@ -89,4 +93,6 @@ glm::vec2 Enemigo::getPosition() {
 	return sprite->getPosition();
 }
 
-
+void Enemigo::lastAction() {
+	sc->theEnd();
+}

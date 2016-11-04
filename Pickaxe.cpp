@@ -16,7 +16,7 @@ void Pickaxe::action(Player *player, glm::vec2 mouse_pos, TileMap *map)
 		glm::vec2 ppos = player->getMapPosition() + glm::vec2(1, 1);
 		glm::ivec2 dist = glm::vec2(abs(ppos.x - tpos.x), abs(ppos.y - tpos.y));
 		bool lessdist = dist.x <= 3 && dist.y <= 3;
-		if ( t->getType() != Tile::Void && lessdist) {
+		if ( t->getType() != Tile::Void && t->getType() != Tile::Border && lessdist) {
 			SoundController::instance().playSound("../sounds/Dig_1.wav");
 			GameObject* go = GameObjectFactory::instance().createTileObject(t->getType());
 			if (go != nullptr) {

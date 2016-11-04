@@ -14,7 +14,8 @@ public:
 		Iron,
 		Gold,
 		Silver,
-		Copper
+		Copper,
+		Border
 	};
 
 	Tile();

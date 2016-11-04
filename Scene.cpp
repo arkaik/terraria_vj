@@ -2,6 +2,7 @@
 #include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
+#include "EndScene.h"
 #include "Game.h"
 
 
@@ -44,6 +45,7 @@ Scene::~Scene()
 
 void Scene::init()
 {
+	bend = false;
 	initShaders();
 	SoundController::instance().playMusic("../sounds/overworld-day.ogg");
 	GameObject::program = &texProgram;
@@ -101,6 +103,12 @@ void Scene::render()
 
 BasicScene* Scene::changeState()
 {
+	if (bend) {
+		BasicScene* bs = new EndScene();
+		bs->init();
+		return bs;
+	}
+
 	return this;
 }
 
@@ -142,6 +150,16 @@ glm::vec2 Scene::getPlayerPos() {
 
 glm::ivec2 Scene::getPlayerPosition() {
 	return player->getPlayerPosition();
+}
+
+Player * Scene::getPlayer()
+{
+	return player;
+}
+
+void Scene::theEnd()
+{
+
 }
 
 
