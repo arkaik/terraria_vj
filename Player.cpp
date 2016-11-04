@@ -182,11 +182,12 @@ std::list<EnemigoBase*> * Player::getCloseEnemies()
 
 bool Player::overlap(glm::vec4 bound)
 {
-	glm::vec2 ppos = getPosition();
+	/*glm::vec2 ppos = getPosition();
 
 	if (ppos.x < RectB.Right && ppos.x + 16 > RectB.Left && ppos.y < RectB.Bottom && ppos.y + 32 > RectB.Top)
 		return true;
-	else return false;
+	*/
+	return false;
 }
 
 

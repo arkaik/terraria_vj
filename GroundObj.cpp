@@ -15,6 +15,6 @@ void GroundObj::action(Player * player, glm::vec2 mouse_pos, TileMap * map)
 		t->setType(Tile::Ground);
 		decrementNum();
 		glm::vec2 tpos = t->getPosition();
-		map->updateTile(tpos.x, tpos.y, Tile::Type::Ground, t->getTexRect());
+		map->updateTile(tpos.y, tpos.x, Tile::Type::Ground, t->getTexRect());
 	}
 }
