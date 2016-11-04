@@ -9,12 +9,12 @@ GroundObj::GroundObj()
 
 void GroundObj::action(Player * player, glm::vec2 mouse_pos, TileMap * map)
 {
-	Tile *t = map->getTile(mouse_pos.x, mouse_pos.y);
+	Tile *t = map->getTile(mouse_pos.y, mouse_pos.x);
 	if (t != nullptr && t->getType() == Tile::Void)
 	{
 		t->setType(Tile::Ground);
 		decrementNum();
 		glm::vec2 tpos = t->getPosition();
-		map->updateTile(tpos.x, tpos.y, Tile::Type::Rock, t->getTexRect());
+		map->updateTile(tpos.x, tpos.y, Tile::Type::Ground, t->getTexRect());
 	}
 }

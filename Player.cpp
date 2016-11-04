@@ -60,7 +60,6 @@ void Player::update(int deltaTime)
 		glm::vec2 smpos = opos + mpos;
 		if (inventory->getSelectedObject() != nullptr) {
 			inventory->getSelectedObject()->action(this, smpos, map);
-			
 		}
 	}
 
@@ -183,9 +182,11 @@ std::list<EnemigoBase*> * Player::getCloseEnemies()
 
 bool Player::overlap(glm::vec4 bound)
 {
-	/*if (RectA.Left < RectB.Right && RectA.Right > RectB.Left &&
-		RectA.Top < RectB.Bottom && RectA.Bottom > RectB.Top)*/
-	return false;
+	glm::vec2 ppos = getPosition();
+
+	if (ppos.x < RectB.Right && ppos.x + 16 > RectB.Left && ppos.y < RectB.Bottom && ppos.y + 32 > RectB.Top)
+		return true;
+	else return false;
 }
 
 
