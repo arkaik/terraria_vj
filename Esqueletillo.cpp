@@ -9,7 +9,7 @@ enum PlayerAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
 };
 
-Esqueletillo::Esqueletillo(Player* p, const glm::ivec2& peq) {
+Esqueletillo::Esqueletillo(Player* p, const glm::ivec2& peq, int vida) : EnemigoBase(vida) {
 	player = p;
 	posEsq = peq;
 }

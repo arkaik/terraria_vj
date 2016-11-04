@@ -15,7 +15,7 @@ class Scene;
 class Enemigo : public EnemigoBase
 {
 public:
-	Enemigo(Scene* sc, const glm::ivec2 &pos);
+	Enemigo(Scene* sc, const glm::ivec2 &pos, int vida);
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();
@@ -28,7 +28,6 @@ private:
 	glm::ivec2 posEnemigo;
 	glm::ivec2  tileMapDispl;
 	Texture spritesheet;
-	Sprite *sprite;
 	TileMap *map;
 	Estado* estado;
 	Scene* sc;

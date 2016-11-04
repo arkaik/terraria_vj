@@ -1,6 +1,6 @@
 #include "Estado.h"
 
-Estado::Estado(Scene* sc, glm::ivec2* pe,const glm::ivec2& tMD, Sprite* sp)
+Estado::Estado(Scene* sc, glm::ivec2* pe,const glm::ivec2& tMD, Sprite* sp, int* vida)
 {
 	escena = sc;
 	setPosition(pe);

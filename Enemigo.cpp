@@ -18,7 +18,7 @@ enum EnemigoAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
 };
 
-Enemigo::Enemigo(Scene* escena, const glm::ivec2 &pos) {
+Enemigo::Enemigo(Scene* escena, const glm::ivec2 &pos, int vida) : EnemigoBase(vida) {
 	sc = escena;
 	posEnemigo = pos;
 }
@@ -49,7 +49,7 @@ void Enemigo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemigo.x), float(tileMapDispl.y + posEnemigo.y)));
-	estado = new Estar(sc, &posEnemigo, tileMapDispl,sprite);
+	estado = new Estar(sc, &posEnemigo, tileMapDispl,sprite, &vida);
 }
 
 void Enemigo::update(int deltaTime)

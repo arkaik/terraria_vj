@@ -7,10 +7,10 @@
 #include "EstadoEsq.h"
 #include "Player.h"
 
-class Esqueletillo
+class Esqueletillo : public EnemigoBase
 {
 public:
-	Esqueletillo(Player* p, const glm::ivec2& peq);
+	Esqueletillo(Player* p, const glm::ivec2& peq, int vida);
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();
@@ -24,7 +24,6 @@ private:
 	glm::ivec2 tileMapDispl, posEsq;
 	Player* player;
 	Texture spritesheet;
-	Sprite *sprite;
 	TileMap* map;
 	EstadoEsq* estado;
 };

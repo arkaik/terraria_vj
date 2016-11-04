@@ -7,7 +7,7 @@
 
 class Estado {
 public:
-	Estado(Scene* sc, glm::ivec2* posEnemigo,const glm::ivec2& tMD, Sprite* sp);
+	Estado(Scene* sc, glm::ivec2* posEnemigo,const glm::ivec2& tMD, Sprite* sp, int* vida);
 	virtual Estado* cambiarEstado() abstract;
 	void setPosition(glm::ivec2* pe);
 	void setSprite(Sprite* sp);
@@ -18,6 +18,7 @@ protected:
 	Sprite* spEnem;
 	glm::ivec2 tileMapDisplay;
 	glm::vec2 getCoordsRealesEnem();
+	int* vidaEn;
 };
 
 #endif

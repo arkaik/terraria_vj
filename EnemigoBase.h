@@ -14,7 +14,9 @@ public:
 	glm::vec2 getPosition();
 	std::string getName();
 	virtual void lastAction();
+	int getMaxVida();
 protected:
+	int vidaMax;
 	int vida;
 	glm::vec2 posEnemigo;
 	std::string name;

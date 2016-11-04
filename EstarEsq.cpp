@@ -73,5 +73,15 @@ void EstarEsq::update(int deltaTime) {
 			}
 		}
 	}
+	/*posPlayer.y += FALL_STEP;
+	if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
+	{
+		if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+		{
+			bJumping = true;
+			jumpAngle = 0;
+			startY = posPlayer.y;
+		}
+	}*/
 	spEsq->setPosition(glm::vec2(float(tileMapDisplay.x + posEsq->x), float(tileMapDisplay.y + posEsq->y)));
 }
