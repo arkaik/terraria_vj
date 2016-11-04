@@ -24,6 +24,7 @@ private:
 	Sprite* button4;
 
 	Sprite* background;
+	Sprite* title;
 
 	bool bplay;
 	bool bhelp;

@@ -22,5 +22,6 @@ private:
 	Sprite* n1;
 	Sprite* n2;
 	Sprite* background;
+	Sprite* anywhere;
 	bool bmenu;
 };
