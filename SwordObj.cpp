@@ -15,7 +15,7 @@ void SwordObj::action(Player * player, glm::vec2 mouse_pos, TileMap * map)
 		glm::vec2 epos = (*i)->getPosition();
 		glm::ivec2 diff = glm::ivec2(std::abs(ppos.x - epos.x), std::abs(ppos.y - epos.y));
 		float dist = std::sqrt(diff.x*diff.x + diff.y*diff.y);
-		if (dist < 32) {
+		if (dist < 80) {
 			(*i)->disminuirVida(3);
 			if ((*i)->estaMuerto()) {
 				(*i)->lastAction();

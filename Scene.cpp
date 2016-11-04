@@ -165,7 +165,7 @@ Player * Scene::getPlayer()
 
 void Scene::theEnd()
 {
-
+	bend = true;
 }
 
 

@@ -2,14 +2,19 @@
 
 EndScene::EndScene()
 {
+	anywhere = NULL;
 }
 
 EndScene::~EndScene()
 {
+	if (anywhere != NULL)
+		delete anywhere;
+
 }
 
 void EndScene::init()
 {
+	anywhere = Sprite::createSprite("images/gui.png", glm::vec4(288, 320, 192, 32), &texProgram);
 }
 
 void EndScene::update(int deltatime)
@@ -18,11 +23,12 @@ void EndScene::update(int deltatime)
 
 void EndScene::render()
 {
+	anywhere->render();
 }
 
 BasicScene * EndScene::changeState()
 {
-	return nullptr;
+	return this;
 }
 
 void EndScene::initShaders()
