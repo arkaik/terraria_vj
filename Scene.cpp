@@ -114,6 +114,7 @@ void Scene::render()
 BasicScene* Scene::changeState()
 {
 	if (bend) {
+		SoundController::instance().stopSounds();
 		BasicScene* bs = new EndScene();
 		bs->init();
 		return bs;

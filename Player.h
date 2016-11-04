@@ -30,6 +30,7 @@ public:
 	void addToInventory(GameObject *go);
 	void addEnemy(EnemigoBase* eb);
 	std::list<EnemigoBase*> * getCloseEnemies();
+	bool overlap(glm::vec4 bound);
 private:
 	bool bJumping;
 	glm::ivec2 tileMapDispl, posPlayer;

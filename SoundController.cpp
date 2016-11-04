@@ -23,3 +23,8 @@ void SoundController::playSound(std::string s) {
 void SoundController::playMusic(std::string s) {
 	engine->play2D(s.c_str(), true);
 }
+
+void SoundController::stopSounds()
+{
+	engine->stopAllSounds();
+}
