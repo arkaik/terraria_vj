@@ -19,9 +19,12 @@ void HelpScene::init()
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 
-	instructions = Sprite::createSprite("images/gui.png", glm::vec4(128, 0, 352, 256), &texProgram);
+	instructions = Sprite::createSprite("images/gui.png", glm::vec4(128, 0, 352, 320), &texProgram);
 	//n1->setOrigin(140,32);
 	instructions->setPosition(450, 200);
+
+	anywhere = Sprite::createSprite("images/gui.png", glm::vec4(288, 320, 192, 32), &texProgram);
+	anywhere->setPosition(450, 550);
 
 	background = Sprite::createSprite("images/MapBG1.png", glm::vec4(0, 0, 112, 65), &texProgram);
 	background->setScale(glm::vec2(12, 12));
@@ -43,6 +46,7 @@ void HelpScene::render()
 
 	background->render();
 	instructions->render();
+	anywhere->render();
 }
 
 BasicScene * HelpScene::changeState()
