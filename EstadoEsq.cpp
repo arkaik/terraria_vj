@@ -1,8 +1,9 @@
 #include "EstadoEsq.h"
+const float EstadoEsq::radioDeteccionPlayer = 30.0f;
 
-EstadoEsq::EstadoEsq(glm::vec2* posP, glm::ivec2* posEsq, const glm::ivec2& tMD, Sprite* sp, TileMap* m)
+EstadoEsq::EstadoEsq(Player* p, glm::ivec2* posEsq, const glm::ivec2& tMD, Sprite* sp, TileMap* m)
 {
-	posPlayer = posP;
+	player = p;
 	setPosition(posEsq);
 	setSprite(sp);
 	tileMapDisplay = tMD;
@@ -20,4 +21,13 @@ void EstadoEsq::setSprite(Sprite* sp) {
 
 glm::vec2 EstadoEsq::getCoordsRealesEsq() {
 	return glm::vec2(float(tileMapDisplay.x + posEsq->x), float(tileMapDisplay.y + posEsq->y));
+}
+
+bool EstadoEsq::jugadorCerca() {
+	//x+y = rdp es la circumferencia si x^2+y^2 <= rdp^2 esta dentro sino fuera
+
+	glm::vec2 posP = player->getPosition();//Coordenadas reales;
+	glm::vec2 posE = glm::vec2(posEsq->x + float(tileMapDisplay.x), posEsq->y + float(tileMapDisplay.y));//Coordenadas reales;;
+	glm::vec2 pp = glm::vec2(posP.x - posE.x, posP.y - posE.y);
+	return pp.x*pp.x + pp.y*pp.y <= radioDeteccionPlayer*radioDeteccionPlayer;
 }

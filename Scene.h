@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Inventory.h"
 #include "Health.h"
+#include "Esqueletillo.h"
 
 
 
@@ -45,8 +46,8 @@ private:
 	glm::mat4 projection;
 	glm::mat4 ftcMatrix;
 	Enemigo* enemigo;
-
 	Sprite* background;
+	Esqueletillo* esq;
 };
 
 

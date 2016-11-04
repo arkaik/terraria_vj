@@ -45,7 +45,6 @@ public:
 	void setCText(bool ct);
 	glm::vec4 getLocalBounds() const;
 	void setColor(glm::vec4 c);
-
 private:
 	void updatePositions();
 	void updateTexCoords();

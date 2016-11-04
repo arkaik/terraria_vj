@@ -22,7 +22,7 @@ Scene::Scene()
 	enemigo = NULL;
 	radioDeteccionPlayer = 0;
 	gui2 = NULL;
-	
+	esq = NULL;
 }
 
 Scene::~Scene()
@@ -39,6 +39,8 @@ Scene::~Scene()
 		delete gui2;
 	if (background != NULL)
 		delete background;
+	if (esq != NULL)
+		delete enemigo;
 }
 
 
@@ -57,6 +59,9 @@ void Scene::init()
 	enemigo = new Enemigo(this, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize() - 20* map->getTileSize()));
 	enemigo->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	enemigo->setTileMap(map);
+	//esq = new Esqueletillo(player, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 20* map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+	//esq->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	//esq->setTileMap(map);
 	gui = new Inventory();
 	gui->init(texProgram);
 	player->setInventory(gui);
@@ -74,6 +79,7 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	enemigo->update(deltaTime);
+	//esq->update(deltaTime);
 	gui->update(deltaTime);
 	gui2->update(deltaTime);
 	glm::vec2 ppos = player->getPosition();

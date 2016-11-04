@@ -26,7 +26,7 @@ public:
 	glm::vec2 getMapPosition();
 	glm::ivec2 getPlayerPosition();
 	void addToInventory(GameObject *go);
-	
+	glm::vec2* getPunteroPos();
 private:
 	bool bJumping;
 	glm::ivec2 tileMapDispl, posPlayer;
