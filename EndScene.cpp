@@ -21,7 +21,10 @@ void EndScene::init()
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 
 	anywhere = Sprite::createSprite("images/gui.png", glm::vec4(288, 320, 192, 32), &texProgram);
-	anywhere->setPosition(450, 300);
+	anywhere->setPosition(450, 400);
+	end = Sprite::createSprite("images/gui.png", glm::vec4(288, 386, 192, 32), &texProgram);
+	end->setPosition(450, 200);
+	end->setScale(2, 2);
 }
 
 void EndScene::update(int deltatime)
