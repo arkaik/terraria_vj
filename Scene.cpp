@@ -63,7 +63,7 @@ void Scene::init()
 	enemigo->setTileMap(map);
 	esq = new Esqueletillo(player, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 20* map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()),5);
 	esq->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
-	ab = new Abeja(player, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 100 * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize() - 5 * map->getTileSize()), 3);
+	ab = new Abeja(player, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 100 * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize() + 20 * map->getTileSize()), 3);
 	ab->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 	gui = new Inventory();
 	gui->init(texProgram);
