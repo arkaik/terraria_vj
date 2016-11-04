@@ -176,7 +176,7 @@ void Player::addEnemy(EnemigoBase * eb)
 	collisionList.push_back(eb);
 }
 
-vector<EnemigoBase*> * Player::getCloseEnemies()
+std::list<EnemigoBase*> * Player::getCloseEnemies()
 {
 	return &collisionList;
 }

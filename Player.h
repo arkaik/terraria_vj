@@ -6,6 +6,7 @@
 #include "TileMap.h"
 #include "Inventory.h"
 #include "EnemigoBase.h"
+#include <list>
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -28,7 +29,7 @@ public:
 	glm::ivec2 getPlayerPosition();
 	void addToInventory(GameObject *go);
 	void addEnemy(EnemigoBase* eb);
-	vector<EnemigoBase*> * getCloseEnemies();
+	std::list<EnemigoBase*> * getCloseEnemies();
 private:
 	bool bJumping;
 	glm::ivec2 tileMapDispl, posPlayer;
@@ -39,7 +40,7 @@ private:
 	Inventory *inventory;
 
 	float radius;
-	vector<EnemigoBase*> collisionList;
+	std::list<EnemigoBase*> collisionList;
 };
 
 

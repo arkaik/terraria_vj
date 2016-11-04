@@ -28,7 +28,6 @@ private:
 	glm::ivec2 posEnemigo;
 	glm::ivec2  tileMapDispl;
 	Texture spritesheet;
-	Sprite *sprite;
 	TileMap *map;
 	Estado* estado;
 	Scene* sc;

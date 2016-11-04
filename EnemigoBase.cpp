@@ -1,5 +1,6 @@
 #include "EnemigoBase.h"
 
+
 EnemigoBase::EnemigoBase()
 {
 	inCollisionList = false;
@@ -19,7 +20,7 @@ void EnemigoBase::disminuirVida(int dis) {
 
 glm::vec2 EnemigoBase::getPosition()
 {
-	return posEnemigo;
+	return sprite->getPosition();
 }
 
 std::string EnemigoBase::getName()
@@ -30,4 +31,9 @@ std::string EnemigoBase::getName()
 void EnemigoBase::lastAction()
 {
 
+}
+
+void EnemigoBase::setInCollisionList(bool b)
+{
+	inCollisionList = b;
 }
