@@ -22,4 +22,5 @@ private:
 	glm::mat4 projection;
 
 	Sprite* end;
+	Sprite* anywhere;
 };
