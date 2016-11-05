@@ -29,11 +29,11 @@ void Abeja::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Til
 	setTileMap(m);
 	radioDeteccionPlayer = 10.0f*map->getTileSize();
 	spritesheet.loadFromFile("images/enchanted_sword.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(57, 60), glm::vec2(1.0, 1.0), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(58, 60), glm::vec2(1.0, 1.0), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(1);
 
-	sprite->setAnimationSpeed(0, 4);
-	sprite->addKeyframe(0, glm::vec2(0.f, 0.f));
+	sprite->setAnimationSpeed(STAND_LEFT, 4);
+	sprite->addKeyframe(STAND_LEFT, glm::vec2(0.f, 0.f));
 
 	/*sprite->setAnimationSpeed(STAND_RIGHT, 8);
 	sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.25f, 0.f));
