@@ -24,6 +24,8 @@ Enemigo::Enemigo(Scene* escena, const glm::ivec2 &pos, int vida) : EnemigoBase(v
 	sc = escena;
 	posEnemigo = pos;
 	f = 7;
+	delay = 0;
+	delayMax = 20;
 }
 
 void Enemigo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
@@ -95,9 +97,16 @@ void Enemigo::update(int deltaTime)
 		inCollisionList = true;
 	}
 
-	/*if (sc->getPlayer()->overlap(glm::vec4(sprite->getPosition(), 100, 200))) {
-		sc->getPlayer()->decrementLife();
-	}*/
+	if (sc->getPlayer()->overlap(glm::vec4(sprite->getPosition(), 100, 200))) {
+		std::cout << "overlap" << std::endl;
+		if (delay == 0) {
+			sc->getPlayer()->decrementLife();
+			std::cout << " life " << sc->getPlayer()->getHealthPoints() << std::endl;
+		}
+		++delay;
+		if (delay == delayMax) delay = 0;
+	}
+	else delay = 0;
 	
 	sprite->update(deltaTime);
 	Estado* nuevo = estado->cambiarEstado();
