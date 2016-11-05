@@ -12,6 +12,7 @@ class Scene;
 class Esqueletillo : public EnemigoBase
 {
 public:
+	~Esqueletillo();
 	Esqueletillo(Player* p, const glm::ivec2& peq, int vida, Scene* escena);
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, TileMap* m);
 	void update(int deltaTime);

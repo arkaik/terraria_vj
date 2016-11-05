@@ -10,6 +10,11 @@ enum PlayerAnims
 	STAND_LEFT
 };
 
+Esqueletillo::~Esqueletillo()
+{
+	if (estado != NULL) delete estado;
+}
+
 Esqueletillo::Esqueletillo(Player* p, const glm::ivec2& peq, int vida, Scene* escena) : EnemigoBase(vida) {
 	player = p;
 	posEsq = peq;
@@ -48,7 +53,7 @@ void Esqueletillo::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgr
 
 void Esqueletillo::update(int deltaTime)
 {
-	/*glm::vec2 ppos = sc->getPlayerPosition();
+	glm::vec2 ppos = sc->getPlayerPosition();
 	glm::vec2 epos = sprite->getPosition();
 	glm::ivec2 diff = glm::ivec2(std::abs(ppos.x - epos.x), std::abs(ppos.y - epos.y));
 	float dist = std::sqrt(diff.x*diff.x + diff.y*diff.y);
@@ -56,7 +61,7 @@ void Esqueletillo::update(int deltaTime)
 	{
 		sc->getPlayer()->addEnemy(this);
 		inCollisionList = true;
-	}*/
+	}
 
 	EstadoEsq* nuevo = estado->cambiarEstado();
 	if (nuevo != NULL) {
@@ -101,9 +106,11 @@ glm::vec2 Esqueletillo::getMapPosition()
 }
 
 void Esqueletillo::lastAction() {
-	
+	this->~Esqueletillo();
 }
 
 float Esqueletillo::getWidth() { return 20.0f; }
 
 float Esqueletillo::getHeight() { return 25.0f; }
+	
+

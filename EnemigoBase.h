@@ -6,6 +6,7 @@
 
 class EnemigoBase {
 public:
+	virtual ~EnemigoBase();
 	EnemigoBase();
 	EnemigoBase(int vida);
 	int getVida();
