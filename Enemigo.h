@@ -32,4 +32,5 @@ private:
 	Estado* estado;
 	Scene* sc;
 	int f;
+	int delay, delayMax;
 };
