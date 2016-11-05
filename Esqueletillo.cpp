@@ -103,3 +103,7 @@ glm::vec2 Esqueletillo::getMapPosition()
 void Esqueletillo::lastAction() {
 	
 }
+
+float Esqueletillo::getWidth() { return 20.0f; }
+
+float Esqueletillo::getHeight() { return 25.0f; }

@@ -37,7 +37,7 @@ EstarEsq::EstarEsq(Player* p, glm::ivec2* pe, const glm::ivec2& tMD, Sprite* sp,
 
 EstadoEsq* EstarEsq::cambiarEstado() {
 	if (jugadorCerca()) {
-		std::cout << "Esqueletillo cambio a atacar" << std::endl;
+		//std::cout << "Esqueletillo cambio a atacar" << std::endl;
 		return new AtacarEsq(player, posEsq, tileMapDisplay, spEsq, map);
 	}
 	return this;

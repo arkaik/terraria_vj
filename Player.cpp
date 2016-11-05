@@ -20,6 +20,7 @@ enum PlayerAnims
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
+	delayMax = 20;
 	bJumping = false;
 	radius = 8;
 
@@ -128,6 +129,7 @@ void Player::update(int deltaTime)
 			}
 		}
 	}
+	whoOverlap();
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	
 }
@@ -185,6 +187,7 @@ void Player::addToInventory(GameObject *go)
 void Player::addEnemy(EnemigoBase * eb)
 {
 	collisionList.push_back(eb);
+	delays.push_back(0);
 }
 
 std::list<EnemigoBase*> * Player::getCloseEnemies()
@@ -199,6 +202,20 @@ bool Player::overlap(glm::vec4 bound)
 	if ((ppos.x < bound.x+bound.z) && (ppos.x + 16 > bound.x) && (ppos.y < bound.y+bound.w) && (ppos.y + 32 > bound.y))
 		return true;
 	else return false;
+}
+
+void Player::whoOverlap() {
+	int i = 0;
+	list<int>::iterator it1 = delays.begin();
+	for (list<EnemigoBase*>::iterator it = collisionList.begin() ; it != collisionList.end(); ++it) {
+		if (overlap(glm::vec4((*it)->getPosition(), (*it)->getWidth(), (*it)->getHeight()))) {
+			if (*it1 == 0) decrementLife(); 
+			++*it1;
+			if (*it1 == delayMax) *it1 = 0;
+		}
+		else *it1 = 0;
+		++it1;
+	}
 }
 
 int Player::getHealthPoints()

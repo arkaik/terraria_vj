@@ -149,3 +149,6 @@ bool Abeja::distanciaActualVsDistanciaAnterior(const glm::vec2 posP) {
 		((posEnemigoAnterior.x - posAb.x)*(posEnemigoAnterior.x - posAb.x) +
 		(posEnemigoAnterior.y - posAb.y)*(posEnemigoAnterior.y - posAb.y));
 }
+
+float Abeja::getWidth() { return 30.0f; }
+float Abeja::getHeight() { return 35.0f; }

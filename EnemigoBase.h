@@ -17,6 +17,8 @@ public:
 	virtual void lastAction();
 	int getMaxVida();
 	void setInCollisionList(bool b);
+	virtual float getWidth();
+	virtual float getHeight();
 protected:
 	int vidaMax;
 	int vida;

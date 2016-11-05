@@ -39,3 +39,8 @@ void EnemigoBase::setInCollisionList(bool b)
 {
 	inCollisionList = b;
 }
+
+float EnemigoBase::getWidth() {
+	return 0;
+}
+float EnemigoBase::getHeight() { return 0; }

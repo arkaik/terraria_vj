@@ -44,9 +44,11 @@ private:
 	TileMap *map;
 	Inventory *inventory;
 	Health* heal;
-
+	void whoOverlap();
 	float radius;
 	std::list<EnemigoBase*> collisionList;
+	std::list<int> delays;
+	int delayMax;
 };
 
 

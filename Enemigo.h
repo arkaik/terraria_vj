@@ -24,6 +24,8 @@ public:
 	void setPosition(const glm::vec2 &pos);
 	glm::vec2 getPosition();
 	void lastAction();
+	float Enemigo::getWidth();
+	float Enemigo::getHeight();
 private:
 	glm::ivec2 posEnemigo;
 	glm::ivec2  tileMapDispl;

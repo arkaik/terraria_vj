@@ -13,7 +13,7 @@ Estar::Estar(Scene* sc,glm::ivec2* pe, const glm::ivec2& tMD, Sprite* sp, int* v
 
 Estado* Estar::cambiarEstado() {
 	if (numVueltas == numCiclos && jugadorCerca()) {
-		std::cout << "cambio a atacar" << std::endl;
+		//std::cout << "cambio a atacar" << std::endl;
 		return new Atacar(escena, posEnemigo,tileMapDisplay,spEnem, vidaEn);
 	}
 	return this;

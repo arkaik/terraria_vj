@@ -97,16 +97,16 @@ void Enemigo::update(int deltaTime)
 		inCollisionList = true;
 	}
 
-	if (sc->getPlayer()->overlap(glm::vec4(sprite->getPosition(), 100, 200))) {
-		std::cout << "overlap" << std::endl;
+	/*if (sc->getPlayer()->overlap(glm::vec4(sprite->getPosition(), 100, 200))) {
+		//std::cout << "overlap" << std::endl;
 		if (delay == 0) {
 			sc->getPlayer()->decrementLife();
-			std::cout << " life " << sc->getPlayer()->getHealthPoints() << std::endl;
+			//std::cout << " life " << sc->getPlayer()->getHealthPoints() << std::endl;
 		}
 		++delay;
 		if (delay == delayMax) delay = 0;
 	}
-	else delay = 0;
+	else delay = 0;*/
 	
 	sprite->update(deltaTime);
 	Estado* nuevo = estado->cambiarEstado();
@@ -142,3 +142,7 @@ glm::vec2 Enemigo::getPosition() {
 void Enemigo::lastAction() {
 	sc->theEnd();
 }
+
+float Enemigo::getWidth(){ return 100; }
+
+float Enemigo::getHeight() { return 200; }

@@ -23,6 +23,8 @@ public:
 	glm::vec2 getMapPosition();
 	glm::ivec2 getPosition();
 	glm::vec2 getRealPosition();
+	float getWidth();
+	float getHeight();
 private:
 	glm::ivec2 tileMapDispl, posEsq;
 	Player* player;
