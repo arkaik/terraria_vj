@@ -63,7 +63,7 @@ void Scene::init()
 	enemigo->setTileMap(map);
 	esq = new Esqueletillo(player, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 20* map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()),5, this);
 	esq->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
-	ab = new Abeja(player, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 100 * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize() + 20 * map->getTileSize()), 3);
+	ab = new Abeja(player, glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() + 100 * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize() + 20 * map->getTileSize()), 3, this);
 	ab->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 	gui = new Inventory();
 	gui->init(texProgram);
@@ -83,9 +83,15 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	enemigo->update(deltaTime);
-	esq->update(deltaTime);
+	if (esq != NULL && esq->estaMuerto()) {
+		esq = NULL;
+	}
+	if (esq != NULL) esq->update(deltaTime);
+	if (ab != NULL && ab->estaMuerto()) {
+		ab = NULL;
+	}
 	if (ab != NULL) ab->update(deltaTime);
-	if (ab->estaMuerto()) delete ab;
+	
 	gui->update(deltaTime);
 	gui2->update(deltaTime);
 	glm::vec2 ppos = player->getPosition();
@@ -110,8 +116,8 @@ void Scene::render()
 	map->render();
 	player->render();
 	enemigo->render();
-	esq->render();
-	ab->render();
+	if (esq != NULL) esq->render();
+	if (ab != NULL) ab->render();
 	gui->render();
 	gui2->render();
 	

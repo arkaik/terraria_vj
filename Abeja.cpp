@@ -2,6 +2,7 @@
 #include <GL/glut.h>
 #include "Abeja.h"
 #include "EstarEsq.h"
+#include "Scene.h"
 
 const float distanciaRecorrido = 2.0f;
 enum PlayerAnims
@@ -11,7 +12,11 @@ enum PlayerAnims
 
 enum AbState {STAY, ATTACK};
 
-Abeja::Abeja(Player* p, const glm::ivec2& peq, int vida) : EnemigoBase(vida) {
+Abeja::~Abeja() {
+	
+}
+
+Abeja::Abeja(Player* p, const glm::ivec2& peq, int vida, Scene* escena) : EnemigoBase(vida) {
 	player = p;
 	posAb = peq;
 	state = STAY;
@@ -22,10 +27,12 @@ Abeja::Abeja(Player* p, const glm::ivec2& peq, int vida) : EnemigoBase(vida) {
 	direccion.y = 0;
 	delay = 0;
 	delayMax = 100;
+	sc = escena;
 }
 
 void Abeja::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, TileMap* m)
 {
+	setInCollisionList(false);
 	setTileMap(m);
 	radioDeteccionPlayer = 10.0f*map->getTileSize();
 	spritesheet.loadFromFile("images/enchanted_sword.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -55,6 +62,17 @@ void Abeja::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Til
 
 void Abeja::update(int deltaTime)
 {
+
+	glm::vec2 ppos = sc->getPlayerPosition();
+	glm::vec2 epos = sprite->getPosition();
+	glm::ivec2 diff = glm::ivec2(std::abs(ppos.x - epos.x), std::abs(ppos.y - epos.y));
+	float dist = std::sqrt(diff.x*diff.x + diff.y*diff.y);
+	if (dist < 64 && !inCollisionList)
+	{
+		sc->getPlayer()->addEnemy(this);
+		inCollisionList = true;
+	}
+
 	sprite->update(deltaTime);
 	if (state == STAY && jugadorCerca()) {
 		state = ATTACK;
@@ -148,4 +166,8 @@ bool Abeja::distanciaActualVsDistanciaAnterior(const glm::vec2 posP) {
 		(posPlayerAnterior.y - posEnemigoAnterior.y)*(posPlayerAnterior.y - posEnemigoAnterior.y)) <=
 		((posEnemigoAnterior.x - posAb.x)*(posEnemigoAnterior.x - posAb.x) +
 		(posEnemigoAnterior.y - posAb.y)*(posEnemigoAnterior.y - posAb.y));
+}
+
+void Abeja::lastAction() {
+	this->~Abeja();
 }

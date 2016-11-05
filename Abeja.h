@@ -7,13 +7,17 @@
 #include "EstadoEsq.h"
 #include "Player.h"
 
+class Scene;
+
 class Abeja : public EnemigoBase
 {
 public:
-	Abeja(Player* p, const glm::ivec2& peq, int vida);
+	~Abeja();
+	Abeja(Player* p, const glm::ivec2& peq, int vida, Scene* escena);
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, TileMap* m);
 	void update(int deltaTime);
 	void render();
+	void lastAction();
 
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::ivec2 &pos);
@@ -36,5 +40,6 @@ private:
 	bool tocado;//Para cambiar solo una vez la aceleracion
 	bool distanciaActualVsDistanciaAnterior(const glm::vec2 posP);
 	int delay, delayMax;
+	Scene* sc;
 };
 #endif

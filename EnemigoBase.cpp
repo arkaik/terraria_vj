@@ -1,6 +1,11 @@
 #include "EnemigoBase.h"
 
 
+EnemigoBase::~EnemigoBase()
+{
+	if (sprite != NULL) delete sprite;
+}
+
 EnemigoBase::EnemigoBase()
 {
 	inCollisionList = false;
@@ -13,7 +18,7 @@ EnemigoBase::EnemigoBase(int v) {
 
 int EnemigoBase::getVida() { return vida; }
 void EnemigoBase::setVida(int v) { vida = v; }
-bool EnemigoBase::estaMuerto() { return vida == 0; }
+bool EnemigoBase::estaMuerto() { return vida <= 0; }
 void EnemigoBase::disminuirVida(int dis) { 
 	vida = vida-dis;
 	if (vida < 0) vida = 0;

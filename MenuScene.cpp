@@ -53,7 +53,7 @@ void MenuScene::init()
 	background = Sprite::createSprite("images/MapBG9.png", glm::vec4(0, 0, 112, 65), &texProgram);
 	background->setScale(glm::vec2(12,12));
 
-	title = Sprite::createSprite("images/gui.png", glm::vec4(0, 448, 160, 64), &texProgram);
+	title = Sprite::createSprite("images/gui.png", glm::vec4(0, 448, 192, 64), &texProgram);
 	title->setPosition(glm::vec2(350, 50));
 	title->setScale(3, 3);
 }
